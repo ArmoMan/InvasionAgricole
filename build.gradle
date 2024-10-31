@@ -26,7 +26,7 @@ tasks.withType(JavaCompile) {
 
 application {
   mainModule = 'ca.qc.bdeb.sim.invasionagricole'
-  mainClass = 'ca.qc.bdeb.sim.invasionagricole.InvasionAgricole'
+  mainClass = 'ca.qc.bdeb.sim.invasionagricole.InvasionAgricoleJavaFX'
 }
 
 javafx {
