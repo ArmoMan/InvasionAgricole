@@ -25,7 +25,7 @@ public class Niveau {
         genererGrangesEtTracteurs();
     }
 
-    public void afficherNiveau(GraphicsContext context){
+    public void dessinerNiveau(GraphicsContext context){
         afficherArrierePlan(context);
     }
 

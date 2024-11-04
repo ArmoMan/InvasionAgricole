@@ -7,6 +7,6 @@ public class ControleurJeu {
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
         Niveau n = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000);
-        n.afficherNiveau(context);
+        n.dessinerNiveau(context);
     }
 }
