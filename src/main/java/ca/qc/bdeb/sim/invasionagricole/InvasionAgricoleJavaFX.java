@@ -1,27 +1,31 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class InvasionAgricoleJavaFX extends Application {
-    private final static int LARGEUR_FENETRE = 900;
-    private final static int HAUTEUR_FENETRE = 520;
+    public final static int LARGEUR_FENETRE = 900;
+    public final static int HAUTEUR_FENETRE = 520;
+
 
 
     @Override
     public void start(Stage stage) throws IOException {
         stage.setScene(creerScencAcceuil(stage));
+
         stage.show();
     }
-    
+
     
 
     private Scene creerScencAcceuil(Stage stage) throws IOException {
@@ -63,6 +67,7 @@ public class InvasionAgricoleJavaFX extends Application {
         containeurDeButtons.getChildren().addAll(buttonJouer,buttonInfos);
 
         root.getChildren().addAll(containeurDeButtons);
+        ajouterDetectionTouche(scene);
         return scene;
     }
 
@@ -105,14 +110,25 @@ public class InvasionAgricoleJavaFX extends Application {
                 throw new RuntimeException(e);
             }
         });
-
         root.getChildren().addAll(hBoxVisagesAnimaux, buttonRetournerAcceuil);
+        ajouterDetectionTouche(scene);
         return scene;
+    }
+
+    public void ajouterDetectionTouche(Scene scene){
+        scene.setOnKeyPressed((e) -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                Platform.exit();
+            } else {
+                Input.setKeyPressed(e.getCode(), true);
+            }
+        });
     }
 
     private Scene creerSceneJouer(Stage stage) throws IOException {
         var root = new VBox();
         Scene scene = new Scene(root, LARGEUR_FENETRE, HAUTEUR_FENETRE);
+        ajouterDetectionTouche(scene);
 
         return scene;
     }
