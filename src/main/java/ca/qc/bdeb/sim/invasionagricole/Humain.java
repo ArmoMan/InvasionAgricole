@@ -1,12 +1,13 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public class Humain extends ObjetPhysique {
 
 
-    public Humain(int posX, int posY) {
-        super(posX, posY);
+    public Humain(int posX, int posY, String pathImageHumain) {
+        super(posX, posY, pathImageHumain);
     }
 
     @Override
@@ -15,7 +16,7 @@ public class Humain extends ObjetPhysique {
     }
 
     @Override
-    protected void desssiner(GraphicsContext context) {
+    protected void dessiner(GraphicsContext context, Camera camera) {
 
     }
 }

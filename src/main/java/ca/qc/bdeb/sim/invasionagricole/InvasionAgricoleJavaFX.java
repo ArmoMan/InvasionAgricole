@@ -1,14 +1,18 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -128,6 +132,29 @@ public class InvasionAgricoleJavaFX extends Application {
     private Scene creerSceneJouer(Stage stage) throws IOException {
         var root = new VBox();
         Scene scene = new Scene(root, LARGEUR_FENETRE, HAUTEUR_FENETRE);
+        Canvas canvas = new Canvas(LARGEUR_FENETRE, HAUTEUR_FENETRE);
+        GraphicsContext context = canvas.getGraphicsContext2D();
+
+        // Ca cest un test !! À effacer plus tard !!!!!!!
+        ControleurJeu c = new ControleurJeu();
+        c.dessiner(context);
+        var timer = new AnimationTimer() {
+            long lastTime = System.nanoTime();
+
+            @Override
+            public void handle(long now) {
+
+                double deltaTemps = (now - lastTime) * 1e-9;
+
+
+
+                lastTime = now;
+            }
+        };
+        timer.start();
+        ///////////////////
+
+        root.getChildren().add(canvas);
         ajouterDetectionTouche(scene);
 
         return scene;

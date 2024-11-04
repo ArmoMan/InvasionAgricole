@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Vache extends ObjetPhysique {
     public Vache(int posX, int posY) {
-        super(posX, posY);
+        super(posX, posY, "vache.png");
     }
 
     @Override
@@ -13,7 +13,7 @@ public class Vache extends ObjetPhysique {
     }
 
     @Override
-    protected void desssiner(GraphicsContext context) {
+    protected void dessiner(GraphicsContext context, Camera camera) {
 
     }
 }
