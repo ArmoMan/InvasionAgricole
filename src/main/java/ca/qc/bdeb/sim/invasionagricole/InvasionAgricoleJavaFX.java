@@ -22,7 +22,6 @@ public class InvasionAgricoleJavaFX extends Application {
     public final static int HAUTEUR_FENETRE = 520;
 
 
-
     @Override
     public void start(Stage stage) throws IOException {
         stage.setScene(creerScencAcceuil(stage));
@@ -30,7 +29,6 @@ public class InvasionAgricoleJavaFX extends Application {
         stage.show();
     }
 
-    
 
     private Scene creerScencAcceuil(Stage stage) throws IOException {
         var root = new VBox();
@@ -40,7 +38,7 @@ public class InvasionAgricoleJavaFX extends Application {
 
         // Arriere plan
         Image arrierePlanImageAcceuil = new Image("intro.png");
-        root.setBackground(new Background(new BackgroundImage(arrierePlanImageAcceuil,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        root.setBackground(new Background(new BackgroundImage(arrierePlanImageAcceuil, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         // Buttons
         VBox containeurDeButtons = new VBox();
@@ -68,7 +66,7 @@ public class InvasionAgricoleJavaFX extends Application {
             }
         });
 
-        containeurDeButtons.getChildren().addAll(buttonJouer,buttonInfos);
+        containeurDeButtons.getChildren().addAll(buttonJouer, buttonInfos);
 
         root.getChildren().addAll(containeurDeButtons);
         ajouterDetectionTouche(scene);
@@ -79,29 +77,8 @@ public class InvasionAgricoleJavaFX extends Application {
         var root = new VBox();
         Scene scene = new Scene(root, LARGEUR_FENETRE, HAUTEUR_FENETRE);
 
-        // Positionner les images d'allien et vache
-        Image visageAllien = new Image("icone.png");
-        Image visageVache = new Image("mini-vache.png");
-
-        //Generer un sur deux les images et les placer en haut
-        HBox hBoxVisagesAnimaux = new HBox();
-        hBoxVisagesAnimaux.setAlignment(Pos.CENTER);
-
-        double tailleTotalImageAjouter = 0;
-        boolean estCeTourVache = false;
-        while (tailleTotalImageAjouter < LARGEUR_FENETRE) {
-            if (estCeTourVache){
-                ImageView imageViewVache = new ImageView(visageVache);
-                hBoxVisagesAnimaux.getChildren().add(imageViewVache);
-                tailleTotalImageAjouter += visageVache.getWidth();
-                estCeTourVache = false;
-            }else{
-                ImageView imageViewAllien = new ImageView(visageAllien);
-                hBoxVisagesAnimaux.getChildren().add(imageViewAllien);
-                tailleTotalImageAjouter += visageAllien.getWidth();
-                estCeTourVache = true;
-            }
-        }
+        // Baniere de visage d'animaux
+        HBox hBoxVisagesAnimaux = creerBanniereAliensVaches();
 
         // Buttons
         Button buttonRetournerAcceuil = creerButton("Retourner");
@@ -114,12 +91,13 @@ public class InvasionAgricoleJavaFX extends Application {
                 throw new RuntimeException(e);
             }
         });
+
         root.getChildren().addAll(hBoxVisagesAnimaux, buttonRetournerAcceuil);
         ajouterDetectionTouche(scene);
         return scene;
     }
 
-    public void ajouterDetectionTouche(Scene scene){
+    public void ajouterDetectionTouche(Scene scene) {
         scene.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) {
                 Platform.exit();
@@ -147,7 +125,6 @@ public class InvasionAgricoleJavaFX extends Application {
                 double deltaTemps = (now - lastTime) * 1e-9;
 
 
-
                 lastTime = now;
             }
         };
@@ -158,6 +135,33 @@ public class InvasionAgricoleJavaFX extends Application {
         ajouterDetectionTouche(scene);
 
         return scene;
+    }
+
+    private HBox creerBanniereAliensVaches(){
+        // Positionner les images d'allien et vache
+
+        Image visageAlien = new Image("icone.png");
+        Image visageVache = new Image("mini-vache.png");
+
+        //Generer un sur deux les images et les placer en haut
+        HBox hBoxVisagesAnimaux = new HBox();
+        hBoxVisagesAnimaux.setAlignment(Pos.CENTER);
+
+        double tailleTotalImageAjouter = 0;
+        boolean estCeTourVache = false;
+        while (tailleTotalImageAjouter < LARGEUR_FENETRE) {
+            // Choisir l'image d'apres le boolean
+            ImageView imageView = estCeTourVache ? new ImageView(visageVache) : new ImageView(visageAlien);
+            hBoxVisagesAnimaux.getChildren().add(imageView);
+
+            // Augmenter le nombre de la taille des images
+            tailleTotalImageAjouter += imageView.getImage().getWidth();
+
+            // Changer le boolean par son inverse, comme ca, ca va faire des images un sur deux
+            estCeTourVache = !estCeTourVache;
+        }
+
+        return hBoxVisagesAnimaux;
     }
 
     private Button creerButton(String texteButton) throws IOException {
