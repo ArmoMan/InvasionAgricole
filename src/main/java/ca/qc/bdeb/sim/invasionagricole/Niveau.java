@@ -11,7 +11,8 @@ public class Niveau {
     private int numeroDuNiveau;
     private double graviteDuNiveau;
     private final int HAUTEUR_SOL_VERT = 20;
-
+    // Largeur de l'ecran / fenetre
+    private double largeurFenetre;
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
 
     public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau) {
@@ -20,7 +21,7 @@ public class Niveau {
         this.hauteurNiveau = hauteurFenetre;
         // taille du niveau 4 fois la taille de la fenetre
         this.largeurNiveau = largeurFenetre*4;
-
+        this.largeurFenetre = largeurFenetre;
         genererEtoiles(100);
         genererGrangesEtTracteurs();
     }
@@ -35,7 +36,7 @@ public class Niveau {
 
         // Dessiner les objets
         for (ObjetArrierePlan obj : objetsArrierePlan){
-            obj.dessiner(context);
+            obj.dessiner(context, new Camera(largeurFenetre));
         }
 
     }

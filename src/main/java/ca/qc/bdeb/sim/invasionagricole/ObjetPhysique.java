@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public abstract class ObjetPhysique {
 
-    private int posX, posY;
-    private int vX, vY;
-    private int aX, aY;
+    protected double posX, posY;
+    protected double vX, vY;
+    protected double aX = 0, aY = 0;
     private Image imagePersonnage;
     protected double largeur, hauteur;
 
@@ -19,16 +19,23 @@ public abstract class ObjetPhysique {
         this.imagePersonnage = new Image(pathImagePersonnage);
     }
 
-    protected abstract void  updatePhysique(double deltaTemps);
+
+    protected void updatePhysique(double deltaTemps) {
+
+        vX += deltaTemps * aX;
+        vY += deltaTemps * aY;
+        posX += deltaTemps * vX;
+        posY += deltaTemps * vY;
+    }
 
     protected abstract void dessiner(GraphicsContext context, Camera camera);
 
 
-    public int getPosX() {
+    public double getPosX() {
         return posX;
     }
 
-    public int getPosY() {
+    public double getPosY() {
         return posY;
     }
 }

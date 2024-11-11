@@ -11,6 +11,7 @@ public class Etoile extends ObjetArrierePlan {
 
     private int taillePolice;
 
+
     public Etoile(int posX, int posY) {
         super(posX, posY);
 
@@ -20,7 +21,8 @@ public class Etoile extends ObjetArrierePlan {
     }
 
     @Override
-    protected void dessiner(GraphicsContext context) {
+    protected void dessiner(GraphicsContext context,Camera camera) {
+        super.dessiner(context, camera);
         context.setFill(Color.WHITE);
         context.fillText(symboleAffichage, posX, posY);
     }
