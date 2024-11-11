@@ -11,6 +11,7 @@ public class Vaisseau extends ObjetPhysique {
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
     private double limiteVitesse = 600;
     private boolean estLumierAllumer = false;
+
     public Vaisseau(int posX, int posY, String pathImageAlien) {
         super(posX, posY, pathImageAlien);
         this.largeur = 100;
@@ -50,8 +51,8 @@ public class Vaisseau extends ObjetPhysique {
 
         limiterVitesse();
 
-        // Si il y a acceleration alors mettre estLumierAllumer True sinon False
-        estLumierAllumer = (this.aX != 0|| this.aY != 0);
+        // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
+        estLumierAllumer = (left||right||up||down);
 
     }
 

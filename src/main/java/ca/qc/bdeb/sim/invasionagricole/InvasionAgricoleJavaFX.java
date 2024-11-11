@@ -98,12 +98,18 @@ public class InvasionAgricoleJavaFX extends Application {
     }
 
     public void ajouterDetectionTouche(Scene scene) {
+        // Ajouter touche a input ou sortir du programme
         scene.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) {
                 Platform.exit();
             } else {
                 Input.setKeyPressed(e.getCode(), true);
             }
+        });
+
+        //Enlever la touche quand on n'appuie plus
+        scene.setOnKeyReleased((e) -> {
+            Input.setKeyPressed(e.getCode(), false);
         });
     }
 
