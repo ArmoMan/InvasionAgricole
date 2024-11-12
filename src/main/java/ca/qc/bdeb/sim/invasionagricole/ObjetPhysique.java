@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public abstract class ObjetPhysique {
     protected double posX, posY;
     protected double vX, vY;
     protected double aX = 0, aY = 0;
-    private Image imagePersonnage;
+    protected Image imagePersonnage;
     protected double largeur, hauteur;
 
     public ObjetPhysique(int posX, int posY, String pathImagePersonnage) {
@@ -19,6 +20,7 @@ public abstract class ObjetPhysique {
         this.imagePersonnage = new Image(pathImagePersonnage);
     }
 
+    public abstract void update(double deltaTime);
 
     protected void updatePhysique(double deltaTemps) {
 
@@ -28,7 +30,21 @@ public abstract class ObjetPhysique {
         posY += deltaTemps * vY;
     }
 
-    protected abstract void dessiner(GraphicsContext context, Camera camera);
+    public abstract void dessiner(GraphicsContext context, Camera camera);
+
+    /**
+     * Methode pour dessiner les lignes jaunes des ObjetPhysiques selon largeur et longeur
+     * @param context
+     * @param camera
+     */
+    protected void dessinerDebug(GraphicsContext context, Camera camera) {
+        double xEcran = camera.calculerEcranX(posX);
+        double yEcran = camera.calculerEcranY(posY);
+
+        context.setStroke(Color.YELLOW);
+        context.setLineWidth(2);
+        context.strokeRect(xEcran, yEcran, largeur, hauteur);
+    }
 
 
     public double getPosX() {

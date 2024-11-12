@@ -14,16 +14,30 @@ public class Niveau {
     // Largeur de l'ecran / fenetre
     private double largeurFenetre;
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
+    private Camera camera;
 
-    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau) {
+    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau, Camera camera) {
         this.numeroDuNiveau = numeroDuNiveau;
         this.graviteDuNiveau = graviteDuNiveau;
         this.hauteurNiveau = hauteurFenetre;
         // taille du niveau 4 fois la taille de la fenetre
         this.largeurNiveau = largeurFenetre*4;
         this.largeurFenetre = largeurFenetre;
+        this.camera = camera;
         genererEtoiles(100);
         genererGrangesEtTracteurs();
+    }
+
+    public double getLargeurNiveau() {
+        return largeurNiveau;
+    }
+
+    public double getHauteurNiveau() {
+        return hauteurNiveau;
+    }
+
+    public int getNumeroDuNiveau() {
+        return numeroDuNiveau;
     }
 
     public void dessinerNiveau(GraphicsContext context){
@@ -36,7 +50,7 @@ public class Niveau {
 
         // Dessiner les objets
         for (ObjetArrierePlan obj : objetsArrierePlan){
-            obj.dessiner(context, new Camera(largeurFenetre));
+            obj.dessiner(context,this.camera);
         }
 
     }

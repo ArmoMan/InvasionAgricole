@@ -15,4 +15,6 @@ public class Input {
     public static void setKeyPressed(KeyCode code, boolean isPressed) {
         touches.put(code, isPressed);
     }
+
+
 }

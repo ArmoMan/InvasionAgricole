@@ -8,12 +8,17 @@ public class Vache extends ObjetPhysique {
     }
 
     @Override
+    public void update(double deltaTime) {
+
+    }
+
+    @Override
     protected void updatePhysique(double deltaTemps) {
 
     }
 
     @Override
-    protected void dessiner(GraphicsContext context, Camera camera) {
+    public void dessiner(GraphicsContext context, Camera camera) {
 
     }
 }

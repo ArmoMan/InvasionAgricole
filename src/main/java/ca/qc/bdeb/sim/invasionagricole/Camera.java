@@ -20,14 +20,20 @@ public class Camera {
         return yObjet - yCamera;
     }
 
-    // A editer cette partie !!!!!!!!!!!!!!!!!!!!!
-    public void suivre(Vaisseau alien) {
-        if(alien.getGauche() < this.xCamera) {
-            this.xCamera = alien.getGauche();
+    public void suivre(Vaisseau vaisseau, double largeurNiveau) {
+        double limiteGauche = xCamera + largeurEcran * 0.3;
+        double limiteDroite = xCamera + largeurEcran * 0.7;
+        double xCameraMax =  largeurNiveau - largeurEcran;
+
+        // Si le vaisseau est moins 30% de l'ecran et que la camera n'est pas a son minimmum, alors deplacer la camera
+        if(vaisseau.getGauche() < limiteGauche && xCamera > 0) {
+            this.xCamera = Math.max( vaisseau.getGauche() - largeurEcran*0.3,0);
         }
 
-        if(alien.getDroite() > this.xCamera+largeurEcran) {
-            this.xCamera = alien.getDroite()-largeurEcran;
+        // Si le vaisseau depasse 70% de l'ecran et que la camera n'est pas a son maximum, alors deplacer la camera
+        if(vaisseau.getDroite() > limiteDroite && xCamera < xCameraMax){
+            this.xCamera = Math.min( vaisseau.getDroite()-largeurEcran*0.7, xCameraMax);
         }
+
     }
 }

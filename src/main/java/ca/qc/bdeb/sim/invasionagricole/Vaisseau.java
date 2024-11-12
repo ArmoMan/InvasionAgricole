@@ -11,13 +11,16 @@ public class Vaisseau extends ObjetPhysique {
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
     private double limiteVitesse = 600;
     private boolean estLumierAllumer = false;
+    private double largeurNiveau,hauteurNiveau;
 
-    public Vaisseau(int posX, int posY, String pathImageAlien) {
+    public Vaisseau(int posX, int posY, String pathImageAlien, double largeurNiveau, double hauteurNiveau) {
         super(posX, posY, pathImageAlien);
         this.largeur = 100;
         this.hauteur = 140;
         this.vX = 0;
         this.vY = 0;
+        this.largeurNiveau = largeurNiveau;
+        this.hauteurNiveau = hauteurNiveau;
     }
 
     public double getGauche(){
@@ -29,7 +32,7 @@ public class Vaisseau extends ObjetPhysique {
     }
 
     @Override
-    protected void updatePhysique(double deltaTemps) {
+    public void update(double deltaTime) {
         boolean left = Input.isKeyPressed(KeyCode.LEFT);
         boolean right = Input.isKeyPressed(KeyCode.RIGHT);
         boolean up = Input.isKeyPressed(KeyCode.UP);
@@ -65,12 +68,43 @@ public class Vaisseau extends ObjetPhysique {
             }
         }
 
-        super.updatePhysique(deltaTemps);
+        updatePhysique(deltaTime);
 
         limiterVitesse();
 
+        // Verifier que ca ne depasse pas les limites du niveau
+        verifierQuePasHorsEcran(largeurNiveau, hauteurNiveau);
+
         // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
         estLumierAllumer = estCeQueButtonMouvementAppuyer();
+    }
+
+
+    /**
+     * Methode pour verifier que le vaisseau n'est pas hors ecran et qu'il respecte la limite de hauteur
+     * @param largeurMax du niveau
+     * @param hauteurMax du niveau
+     */
+    private void verifierQuePasHorsEcran(double largeurMax, double hauteurMax){
+
+        // verifier la limite horizontale
+        if (posX + largeur > largeurMax) {
+            posX = largeurMax - largeur;
+            vX = 0;
+        }else if (posX < 0) {
+            posX = 0;
+            vX = 0;
+        }
+
+        // verifier que le vaisseau ne depasse pas 60% de l'hauteur du niveau
+        double limiteDeHauteur = hauteurMax * 0.6;
+        if (posY + hauteur > limiteDeHauteur) {
+            posY = limiteDeHauteur - hauteur;
+            vY = 0;
+        }else if (posY < 0) {
+            posY = 0;
+            vY = 0;
+        }
 
     }
 
@@ -86,14 +120,42 @@ public class Vaisseau extends ObjetPhysique {
      * Methode pour limiter la vitesse a 600px/s
      */
     private void limiterVitesse(){
+        // Marge de vitesse pour arreter les oscillations
+        double margeDeVitesse = 1.0;
+
         // Si plus que 600 ou moins que -600, alors remettre la vitesse a 600 avec la bonne signe
         if (Math.abs(this.vX) > limiteVitesse) vX = 600*Math.signum(this.vX);
+
+        // Arreter les petits oscillations quand le vaisseau essaye d'arriver a un arret
+        if (Math.abs(this.vX) < margeDeVitesse){
+            vX = 0;
+            aX = 0;
+        }
+        if (Math.abs(this.vY) < margeDeVitesse){
+            vY = 0;
+            aY = 0;
+        }
     }
 
     @Override
-    protected void dessiner(GraphicsContext context, Camera camera) {
+    public void dessiner(GraphicsContext context, Camera camera) {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);
-        context.drawImage(vaisseauLumiereOff, xEcran, yEcran, largeur, 100);
+
+
+        if (estLumierAllumer){
+            context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeur)/2), yEcran + (this.hauteur-vaisseauLumiereOn.getHeight()));
+        }else {
+            context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeur)/2), yEcran + (this.hauteur-vaisseauLumiereOff.getHeight()));
+        }
+
+        context.drawImage(this.imagePersonnage, (xEcran+( this.largeur - this.imagePersonnage.getWidth())/2),yEcran + this.hauteur-vaisseauLumiereOff.getHeight()-this.imagePersonnage.getHeight() );
+
+        context.setFill(couleurVitre);
+        context.fillOval(xEcran, yEcran,  this.largeur,  this.hauteur);
+
+
+
+        dessinerDebug(context, camera);
     }
 }
