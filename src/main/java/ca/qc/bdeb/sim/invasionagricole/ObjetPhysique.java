@@ -24,7 +24,6 @@ public abstract class ObjetPhysique {
     public abstract void update(double deltaTime);
 
     protected void updatePhysique(double deltaTemps) {
-
         vX += deltaTemps * aX;
         vY += deltaTemps * aY;
         posX += deltaTemps * vX;
