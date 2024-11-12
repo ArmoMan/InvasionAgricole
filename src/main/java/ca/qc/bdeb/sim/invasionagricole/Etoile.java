@@ -24,6 +24,6 @@ public class Etoile extends ObjetArrierePlan {
     protected void dessiner(GraphicsContext context,Camera camera) {
         super.dessiner(context, camera);
         context.setFill(Color.WHITE);
-        context.fillText(symboleAffichage, posX, posY);
+        context.fillText(symboleAffichage, xEcran, yEcran);
     }
 }

@@ -121,7 +121,7 @@ public class InvasionAgricoleJavaFX extends Application {
 
         // Ca cest un test !! À effacer plus tard !!!!!!!
         ControleurJeu c = new ControleurJeu();
-        c.dessiner(context);
+
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
 
@@ -129,8 +129,8 @@ public class InvasionAgricoleJavaFX extends Application {
             public void handle(long now) {
 
                 double deltaTemps = (now - lastTime) * 1e-9;
-
-
+                c.dessiner(context);
+                c.update(deltaTemps);
                 lastTime = now;
             }
         };

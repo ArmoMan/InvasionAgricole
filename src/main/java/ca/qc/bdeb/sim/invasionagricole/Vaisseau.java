@@ -35,25 +35,51 @@ public class Vaisseau extends ObjetPhysique {
         boolean up = Input.isKeyPressed(KeyCode.UP);
         boolean down = Input.isKeyPressed(KeyCode.DOWN);
 
-        if (left)
+        // Acceleration horizontale
+        if (left) {
             aX = -2000;
-        else if (right)
+        } else if (right) {
             aX = 2000;
-        else
-            if (aX < 0)
+        } else{
+            if (vX > 0) {
                 aX = -500;
-            else if (aX > 0 )
-                aX= 500;
-            else
+            } else if (vX < 0) {
+                aX = 500;
+            } else {
                 aX = 0;
+            }
+        }
+
+        // Acceleration verticale
+        if (up) {
+            aY = -2000;
+        } else if (down) {
+            aY = 2000;
+        } else{
+            if (vY > 0) {
+                aY = -500;
+            } else if (vY < 0) {
+                aY = 500;
+            } else {
+                aY = 0;
+            }
+        }
 
         super.updatePhysique(deltaTemps);
 
         limiterVitesse();
 
         // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
-        estLumierAllumer = (left||right||up||down);
+        estLumierAllumer = estCeQueButtonMouvementAppuyer();
 
+    }
+
+    private boolean estCeQueButtonMouvementAppuyer(){
+        boolean left = Input.isKeyPressed(KeyCode.LEFT);
+        boolean right = Input.isKeyPressed(KeyCode.RIGHT);
+        boolean up = Input.isKeyPressed(KeyCode.UP);
+        boolean down = Input.isKeyPressed(KeyCode.DOWN);
+        return (left||right||up||down);
     }
 
     /**
@@ -66,6 +92,8 @@ public class Vaisseau extends ObjetPhysique {
 
     @Override
     protected void dessiner(GraphicsContext context, Camera camera) {
-
+        double xEcran = camera.calculerEcranX(posX);
+        double yEcran = camera.calculerEcranY(posY);
+        context.drawImage(vaisseauLumiereOff, xEcran, yEcran, largeur, 100);
     }
 }

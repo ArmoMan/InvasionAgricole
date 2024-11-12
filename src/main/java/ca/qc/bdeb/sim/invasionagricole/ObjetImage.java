@@ -17,6 +17,6 @@ public class ObjetImage extends ObjetArrierePlan{
     @Override
     protected void dessiner(GraphicsContext context,Camera camera) {
         super.dessiner(context, camera);
-        context.drawImage(image, this.posX, this.posY, largeur, longeur);
+        context.drawImage(image, this.xEcran, this.yEcran, largeur, longeur);
     }
 }
