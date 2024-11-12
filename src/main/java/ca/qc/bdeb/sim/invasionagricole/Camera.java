@@ -12,7 +12,6 @@ public class Camera {
         this.largeurEcran = largeurEcran;
     }
 
-
     public double calculerEcranX(double xObjet) {
         return xObjet - xCamera;
     }
