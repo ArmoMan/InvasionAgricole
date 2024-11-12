@@ -21,6 +21,10 @@ public class Vaisseau extends ObjetPhysique {
         this.vY = 0;
         this.largeurNiveau = largeurNiveau;
         this.hauteurNiveau = hauteurNiveau;
+
+        // L'alien commence avec 4 vies
+        this.nombreDeVie = 4;
+
     }
 
     public double getGauche(){

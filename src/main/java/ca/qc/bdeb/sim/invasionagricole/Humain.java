@@ -8,6 +8,7 @@ public class Humain extends ObjetPhysique {
 
     public Humain(int posX, int posY, String pathImageHumain) {
         super(posX, posY, pathImageHumain);
+        this.nombreDeVie = 1;
     }
 
     @Override

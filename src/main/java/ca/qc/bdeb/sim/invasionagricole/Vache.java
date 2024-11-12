@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Vache extends ObjetPhysique {
     public Vache(int posX, int posY) {
         super(posX, posY, "vache.png");
+        this.nombreDeVie = 1;
     }
 
     @Override

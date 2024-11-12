@@ -13,6 +13,7 @@ public abstract class ObjetPhysique {
     protected double aX = 0, aY = 0;
     protected Image imagePersonnage;
     protected double largeur, hauteur;
+    protected int nombreDeVie;
 
     public ObjetPhysique(int posX, int posY, String pathImagePersonnage) {
         this.posX = posX;
@@ -53,5 +54,21 @@ public abstract class ObjetPhysique {
 
     public double getPosY() {
         return posY;
+    }
+
+    public int getNombreDeVie() {
+        return nombreDeVie;
+    }
+
+    public void setNombreDeVie(int nombreDeVie) {
+        this.nombreDeVie = nombreDeVie;
+    }
+
+    public double getHauteur() {
+        return hauteur;
+    }
+
+    public double getLargeur() {
+        return largeur;
     }
 }
