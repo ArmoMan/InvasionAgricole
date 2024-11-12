@@ -2,12 +2,17 @@ package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class ControleurJeu {
 
     private Vaisseau alien = new Vaisseau(0,0,"icone.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
     private RayonEnlevement rayonEnlevement = new RayonEnlevement(alien);
     private Camera camera = new Camera();
     Niveau n = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera);
+    ArrayList<ObjetPhysique> objets = new ArrayList<>();
+    MiniCarte miniCarte = new MiniCarte(10,50,100,objets);
 
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
@@ -16,9 +21,14 @@ public class ControleurJeu {
         alien.dessiner(context,camera);
         rayonEnlevement.dessinerRayon(context, camera);
         rayonEnlevement.dessinerBatterie(context,100,20,10,10,"batterie.png");
+        miniCarte.dessiner(context,n.getLargeurNiveau());
     }
     public void update(double deltaTime){
         alien.update(deltaTime);
         rayonEnlevement.update(deltaTime);
+
+        // pour map
+        objets.clear();
+        objets.add(alien);
     }
 }
