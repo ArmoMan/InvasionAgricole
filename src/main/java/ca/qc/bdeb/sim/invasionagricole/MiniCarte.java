@@ -3,7 +3,6 @@ package ca.qc.bdeb.sim.invasionagricole;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class MiniCarte {

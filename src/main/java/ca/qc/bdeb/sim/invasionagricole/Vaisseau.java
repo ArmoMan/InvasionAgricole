@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class Vaisseau extends ObjetPhysique {
     private Color couleurVitre =  Color.rgb(255, 255, 0, 0.6);
@@ -12,6 +14,7 @@ public class Vaisseau extends ObjetPhysique {
     private double limiteVitesse = 600;
     private boolean estLumierAllumer = false;
     private double largeurNiveau,hauteurNiveau;
+    private int nombreDeVacheCapturer = 0;
 
     public Vaisseau(int posX, int posY, String pathImageAlien, double largeurNiveau, double hauteurNiveau) {
         super(posX, posY, pathImageAlien);
@@ -155,5 +158,57 @@ public class Vaisseau extends ObjetPhysique {
 
 
         dessinerDebug(context, camera);
+    }
+
+    public void dessinerCompteurVieEtVacheCapturer(GraphicsContext context,double posXdessin, double posYdessin, String pathImageVache, double hauteurImages, double espacementDesElements) {
+        Image imageVache = new Image(pathImageVache);
+
+        // Hauteur des images selon le largeur voulu
+        double largeurImageVache = calculerNouveauLargeurImage(imageVache, hauteurImages);
+        double largeurImageAlien = calculerNouveauLargeurImage(this.imagePersonnage, hauteurImages);
+
+        // Image de vache
+        context.drawImage(imageVache, posXdessin, posYdessin,largeurImageVache , hauteurImages);
+
+        // Mettre le font des textes
+        context.setFont(new Font(hauteurImages));
+
+        // Mettre la couleur des textes
+        context.setFill(Color.WHITE);
+
+        // A chauque fois le texte est plus bas que voulu, donc le baisser moin
+        double valeurASoustraire = hauteurImages*0.15;
+        double  posYTextes = posYdessin+hauteurImages-valeurASoustraire;
+        // Texte de vache
+        double posXCompteurVache = posXdessin + largeurImageVache + espacementDesElements;
+        context.fillText(String.valueOf(this.nombreDeVacheCapturer), posXCompteurVache, posYTextes);
+
+        // Image d'Alien
+        double posXAlien = posXCompteurVache + espacementDesElements + context.getFont().getSize();
+        context.drawImage(this.imagePersonnage, posXAlien, posYdessin,largeurImageAlien ,hauteurImages );
+
+        // Texte de nombre de vie Alien
+        double posXCompteurVie = posXAlien + largeurImageAlien + espacementDesElements;
+        context.fillText(String.valueOf(this.nombreDeVie), posXCompteurVie, posYTextes);
+
+    }
+
+    /**
+     * Methode pour recevoir la taille (hauteur) voulu d'une image et de calculer sa nouvelle largeur sans
+     * l'ecraser.
+     * @param image est l'image que l'on veut calculer la nouvelle largeur
+     * @param nouveauHauteur est l'hauteur qui va être donné à l'image
+     * @return la nouvelle largeur en respectant la taille de l'image de base
+     */
+    private double calculerNouveauLargeurImage(Image image, double nouveauHauteur ){
+        return image.getWidth() * nouveauHauteur / image.getHeight();
+    }
+
+    public int getNombreDeVacheCapturer() {
+        return nombreDeVacheCapturer;
+    }
+
+    public void setNombreDeVacheCapturer(int nombreDeVacheCapturer) {
+        this.nombreDeVacheCapturer = nombreDeVacheCapturer;
     }
 }
