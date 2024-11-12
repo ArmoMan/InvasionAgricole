@@ -71,4 +71,12 @@ public abstract class ObjetPhysique {
     public double getLargeur() {
         return largeur;
     }
+
+    public double getGauche(){
+        return this.getPosX();
+    }
+
+    public double getDroite(){
+        return this.getPosX() + this.largeur;
+    }
 }

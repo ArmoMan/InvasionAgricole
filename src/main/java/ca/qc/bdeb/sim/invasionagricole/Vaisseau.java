@@ -27,13 +27,7 @@ public class Vaisseau extends ObjetPhysique {
 
     }
 
-    public double getGauche(){
-        return this.getPosX();
-    }
 
-    public double getDroite(){
-        return this.getPosX() + this.largeur;
-    }
 
     @Override
     public void update(double deltaTime) {

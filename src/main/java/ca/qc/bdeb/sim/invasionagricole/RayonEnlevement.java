@@ -34,14 +34,14 @@ public class RayonEnlevement {
             hauteurRayon += vitessseExtensionRayon * deltaTime;
             chargePresentBatterie -= vitesseDeDechargeBatterie * deltaTime;
             estRayonActiver = true;
-        }else {
+        } else {
             // Si pas de charge ou pas de button appuyer, alors charger la batterie
             hauteurRayon = 0;
 
             // Si completement decharger, alors empecher utilisateur de l'utiliser
-            if (chargePresentBatterie <= 0){
+            if (chargePresentBatterie <= 0) {
                 estCeQueBatteriePeutEtreUtiliser = false;
-            }else if(chargePresentBatterie >= 1){
+            } else if (chargePresentBatterie >= 1) {
                 estCeQueBatteriePeutEtreUtiliser = true;
             }
 
@@ -57,33 +57,47 @@ public class RayonEnlevement {
         }
     }
 
-//    public boolean estRayonEnColisionAvec(ObjetPhysique objetPhysique){
-//        // Si rayon est inactif, alors ignorer
-//        if (!estRayonActiver) {
-//            return false;
-//        }
-//
-//        // Verifier si touche le haut de l'objet
-//        if (vaisseau.getPosX() < objetPhysique.getPosX()) {}
-//
-//    }
+    public boolean estRayonEnColisionAvec(ObjetPhysique objetPhysique) {
+        // Si rayon est inactif, alors ignorer
+        if (!estRayonActiver) {
+            return false;
+        }
 
-    public void dessinerRayon(GraphicsContext context, Camera camera){
+        // Verifier si objet est entre les x du rayon
+        boolean estCeQuePlusGaucheQuePartieDroiteRayon = vaisseau.getGauche()
+                + largeurRayon > objetPhysique.getGauche();
+        boolean estCeQuePlusDroiteQuePartieGaucheRayon = vaisseau.getGauche() < objetPhysique.getDroite();
+
+        // Verifier si objet est entre les y du rayon
+        // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut du rayon
+        boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < objetPhysique.getPosY()
+                + objetPhysique.getHauteur();
+        // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas du rayon
+        boolean estCeQuePlusHautQuePartieBasRayon = objetPhysique.getPosY() < vaisseau.getPosY() + hauteurRayon;
+
+
+        return estCeQuePlusBasQuePartieHautRayon && estCeQuePlusHautQuePartieBasRayon
+                && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon;
+
+    }
+
+    public void dessinerRayon(GraphicsContext context, Camera camera) {
         if (estRayonActiver && chargePresentBatterie > 0) {
             double xEcran = camera.calculerEcranX(vaisseau.getPosX());
             double yEcran = camera.calculerEcranY(vaisseau.getPosY() + vaisseau.getHauteur());
             context.setFill(couleurRayon);
-            context.fillRect(xEcran, yEcran, largeurRayon, hauteurRayon );
+            context.fillRect(xEcran, yEcran, largeurRayon, hauteurRayon);
         }
     }
 
-    public void dessinerBatterie(GraphicsContext context, double largeurBatterie, double hauteurBatterie, double posX, double posY, String pathImageBatterie) {
+    public void dessinerBatterie(GraphicsContext context, double largeurBatterie,
+                                 double hauteurBatterie, double posX, double posY, String pathImageBatterie) {
         Color couleurBatterie;
 
         if (estCeQueBatteriePeutEtreUtiliser) {
             if (chargePresentBatterie <= 0.2) {
                 couleurBatterie = Color.ORANGE;
-            }else {
+            } else {
                 couleurBatterie = Color.YELLOW;
             }
         } else {
@@ -93,7 +107,7 @@ public class RayonEnlevement {
 
         // La charge interrieur
         context.setFill(couleurBatterie);
-        context.fillRect(posX, posY, largeurBatterie*chargePresentBatterie, hauteurBatterie);
+        context.fillRect(posX, posY, largeurBatterie * chargePresentBatterie, hauteurBatterie);
 
         // Le contour de la batterie
         context.setStroke(couleurBatterie);
@@ -102,8 +116,8 @@ public class RayonEnlevement {
 
         // Image de la betterie
         Image imageBatterie = new Image(pathImageBatterie);
-        double largeurImage = hauteurBatterie*imageBatterie.getWidth()/imageBatterie.getHeight();
-        context.drawImage(imageBatterie, posX+5, posY, largeurImage , hauteurBatterie);
+        double largeurImage = hauteurBatterie * imageBatterie.getWidth() / imageBatterie.getHeight();
+        context.drawImage(imageBatterie, posX + 5, posY, largeurImage, hauteurBatterie);
 
     }
 
