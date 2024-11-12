@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Vaisseau extends ObjetPhysique {
+
     private Color couleurVitre =  Color.rgb(255, 255, 0, 0.6);
     private Image vaisseauLumiereOn = new Image("base-vaisseau-on.png");
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
@@ -29,8 +30,6 @@ public class Vaisseau extends ObjetPhysique {
         this.nombreDeVie = 4;
 
     }
-
-
 
     @Override
     public void update(double deltaTime) {
