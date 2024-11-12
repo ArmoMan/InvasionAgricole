@@ -5,7 +5,7 @@ public class Camera {
     private double largeurEcran;
 
     // Modifier cette classe !!! Ca c'est juste un essai !!!!
-    public Camera(double largeurEcran) {
+    public Camera() {
         // Camera commence a la position 0,0
         this.xCamera = 0;
         this.yCamera = 0;
@@ -20,7 +20,7 @@ public class Camera {
         return yObjet - yCamera;
     }
 
-    public void suivre(Vaisseau vaisseau, double largeurNiveau) {
+    public void suivre(Vaisseau vaisseau, double largeurNiveau,double largeurEcran) {
         double limiteGauche = xCamera + largeurEcran * 0.3;
         double limiteDroite = xCamera + largeurEcran * 0.7;
         double xCameraMax =  largeurNiveau - largeurEcran;
