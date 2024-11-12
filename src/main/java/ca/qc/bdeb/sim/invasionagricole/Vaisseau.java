@@ -71,7 +71,7 @@ public class Vaisseau extends ObjetPhysique {
         limiterVitesse();
 
         // Verifier que ca ne depasse pas les limites du niveau
-        verifierQuePasHorsEcran(largeurNiveau, hauteurNiveau);
+        verifierQuePasHorsNiveau(largeurNiveau, hauteurNiveau);
 
         // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
         estLumierAllumer = estCeQueButtonMouvementAppuyer();
@@ -83,7 +83,7 @@ public class Vaisseau extends ObjetPhysique {
      * @param largeurMax du niveau
      * @param hauteurMax du niveau
      */
-    private void verifierQuePasHorsEcran(double largeurMax, double hauteurMax){
+    private void verifierQuePasHorsNiveau(double largeurMax, double hauteurMax){
 
         // verifier la limite horizontale
         if (posX + largeur > largeurMax) {
