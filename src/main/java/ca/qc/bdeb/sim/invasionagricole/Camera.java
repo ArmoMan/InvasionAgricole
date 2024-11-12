@@ -2,14 +2,12 @@ package ca.qc.bdeb.sim.invasionagricole;
 
 public class Camera {
     private double xCamera, yCamera;
-    private double largeurEcran;
 
     // Modifier cette classe !!! Ca c'est juste un essai !!!!
     public Camera() {
         // Camera commence a la position 0,0
         this.xCamera = 0;
         this.yCamera = 0;
-        this.largeurEcran = largeurEcran;
     }
 
     public double calculerEcranX(double xObjet) {
