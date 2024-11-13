@@ -10,7 +10,7 @@ public abstract class ObjetPhysique {
 
     protected double posX, posY;
     protected double vX, vY;
-    protected double aX = 0, aY = 0;
+    protected double aX = 1, aY = 1; // jai changer de 0 a 1 pour l'acceleration, je sais pas si ca brise quelque chose
     protected Image imagePersonnage;
     protected double largeur, hauteur;
     protected int nombreDeVie;

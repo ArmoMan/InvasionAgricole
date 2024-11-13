@@ -13,6 +13,7 @@ public class ControleurJeu {
     Niveau n = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera);
     ArrayList<ObjetPhysique> objets = new ArrayList<>();
     MiniCarte miniCarte = new MiniCarte(10,50,100,objets);
+    ArrayList<Vache> vaches = n.vaches;
 
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
@@ -23,6 +24,9 @@ public class ControleurJeu {
         rayonEnlevement.dessinerBatterie(context,100,30,10,10,"batterie.png");
         miniCarte.dessiner(context,n.getLargeurNiveau());
         alien.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
+        for (Vache vache : vaches) {
+            vache.dessiner(context, camera);
+        }
     }
     public void update(double deltaTime){
         alien.update(deltaTime);

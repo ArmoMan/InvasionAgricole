@@ -16,6 +16,8 @@ public class Niveau {
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
 
+    public ArrayList<Vache> vaches = new ArrayList<>(); // contient les vaches du niveau, ne devrait pas etre public (pour tester seulement)
+
     public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau, Camera camera) {
         this.numeroDuNiveau = numeroDuNiveau;
         this.graviteDuNiveau = graviteDuNiveau;
@@ -26,6 +28,7 @@ public class Niveau {
         this.camera = camera;
         genererEtoiles(100);
         genererGrangesEtTracteurs();
+        genererVaches();
     }
 
     public double getLargeurNiveau() {
@@ -102,6 +105,14 @@ public class Niveau {
                 estCeTourTracteur = true;
             }
             positionX += prochaineDistanceAjouter;
+        }
+    }
+
+    private void genererVaches() {
+        vaches.clear();
+        for (int i = 0; i < calculerNombreDeVache(); i++) {
+            Vache vache = new Vache((int) (Math.random() * largeurNiveau), 0);
+            vaches.add(vache);
         }
     }
 

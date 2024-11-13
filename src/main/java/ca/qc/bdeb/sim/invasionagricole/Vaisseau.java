@@ -14,7 +14,7 @@ public class Vaisseau extends ObjetPhysique {
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
     private double limiteVitesse = 600;
     private boolean estLumierAllumer = false;
-    private double largeurNiveau,hauteurNiveau;
+    private double largeurNiveau, hauteurNiveau;
     private int nombreDeVacheCapturer = 0;
 
     public Vaisseau(int posX, int posY, String pathImageAlien, double largeurNiveau, double hauteurNiveau) {
