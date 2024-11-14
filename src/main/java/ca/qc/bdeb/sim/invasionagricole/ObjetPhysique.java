@@ -14,12 +14,15 @@ public abstract class ObjetPhysique {
     protected Image imagePersonnage;
     protected double largeur, hauteur;
     protected int nombreDeVie;
+    protected double largeurNiveau, hauteurNiveau;
 
 
-    public ObjetPhysique(double posX, double posY, String pathImagePersonnage) {
+    public ObjetPhysique(double posX, double posY, String pathImagePersonnage,double largeurNiveau, double hauteurNiveau) {
         this.posX = posX;
         this.posY = posY;
         this.imagePersonnage = new Image(pathImagePersonnage);
+        this.largeurNiveau = largeurNiveau;
+        this.hauteurNiveau = hauteurNiveau;
     }
 
     public abstract void update(double deltaTime);
@@ -52,7 +55,7 @@ public abstract class ObjetPhysique {
      * @param largeurMax du niveau
      * @param hauteurMax du niveau
      */
-    protected void verifierQuePasHorsNiveau(double largeurMax, double hauteurMax){
+    protected void verifierQuePasHorsNiveau(double largeurMax, double hauteurMax, double pourcentageHauteurANePasDepasser){
 
         // verifier la limite horizontale
         if (posX + largeur > largeurMax) {
@@ -63,8 +66,8 @@ public abstract class ObjetPhysique {
             vX = 0;
         }
 
-        // verifier que le vaisseau ne depasse pas 60% de l'hauteur du niveau
-        double limiteDeHauteur = hauteurMax * 0.6;
+        // verifier que le vaisseau ne depasse pas pourcentageHauteurANePasDepasser de l'hauteur du niveau
+        double limiteDeHauteur = hauteurMax * (pourcentageHauteurANePasDepasser/100);
         if (posY + hauteur > limiteDeHauteur) {
             posY = limiteDeHauteur - hauteur;
             vY = 0;

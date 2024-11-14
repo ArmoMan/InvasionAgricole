@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
 public class Humain extends ObjetPhysique {
 
 
-    public Humain(double posX, double posY, String pathImageHumain) {
-        super(posX, posY, pathImageHumain);
+    public Humain(double posX, double posY, String pathImageHumain,double largeurNiveau, double hauteurNiveau) {
+        super(posX, posY, pathImageHumain,largeurNiveau,hauteurNiveau);
         this.nombreDeVie = 1;
     }
 

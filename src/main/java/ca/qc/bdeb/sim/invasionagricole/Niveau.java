@@ -113,7 +113,7 @@ public class Niveau {
         System.out.println(hauteurNiveau);
         vaches.clear();
         for (int i = 0; i < calculerNombreDeVache(); i++) {
-            Vache vache = new Vache((int) (Math.random() * largeurNiveau), positionYDesVaches);
+            Vache vache = new Vache((int) (Math.random() * largeurNiveau), positionYDesVaches, largeurNiveau, hauteurNiveau);
             vaches.add(vache);
         }
     }

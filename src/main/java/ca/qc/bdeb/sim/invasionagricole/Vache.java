@@ -4,9 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Vache extends ObjetPhysique {
 
-    public Vache(double posX, double posY) {
+    public Vache(double posX, double posY,double largeurNiveau, double hauteurNiveau) {
 
-        super(posX, posY, "vache.png");
+        super(posX, posY, "vache.png", largeurNiveau, hauteurNiveau);
         this.nombreDeVie = 1;
         this.vY = 0;
 
@@ -20,6 +20,7 @@ public class Vache extends ObjetPhysique {
     @Override
     public void update(double deltaTime) {
         updatePhysique(deltaTime);
+        verifierQuePasHorsNiveau(this.largeurNiveau, this.hauteurNiveau, 100);
     }
 
     // determine une vitesse de depart entre 10 et 50 px/s vers la droite ou la gauche

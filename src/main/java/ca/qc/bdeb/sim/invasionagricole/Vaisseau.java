@@ -14,17 +14,14 @@ public class Vaisseau extends ObjetPhysique {
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
     private double limiteVitesse = 600;
     private boolean estLumierAllumer = false;
-    private double largeurNiveau, hauteurNiveau;
     private int nombreDeVacheCapturer = 0;
 
-    public Vaisseau(double posX, double posY, String pathImageAlien, double largeurNiveau, double hauteurNiveau) {
-        super(posX, posY, pathImageAlien);
+    public Vaisseau(double posX, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
+        super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau);
         this.largeur = 100;
         this.hauteur = 140;
         this.vX = 0;
         this.vY = 0;
-        this.largeurNiveau = largeurNiveau;
-        this.hauteurNiveau = hauteurNiveau;
 
         // L'alien commence avec 4 vies
         this.nombreDeVie = 4;
@@ -73,7 +70,7 @@ public class Vaisseau extends ObjetPhysique {
         limiterVitesse();
 
         // Verifier que ca ne depasse pas les limites du niveau
-        verifierQuePasHorsNiveau(largeurNiveau, hauteurNiveau);
+        verifierQuePasHorsNiveau(largeurNiveau, hauteurNiveau, 60);
 
         // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
         estLumierAllumer = estCeQueButtonMouvementAppuyer();
@@ -131,6 +128,7 @@ public class Vaisseau extends ObjetPhysique {
 
         dessinerDebug(context, camera);
     }
+    
 
     public void dessinerCompteurVieEtVacheCapturer(GraphicsContext context,double posXdessin, double posYdessin, String pathImageVache, double hauteurImages, double espacementDesElements) {
         Image imageVache = new Image(pathImageVache);
