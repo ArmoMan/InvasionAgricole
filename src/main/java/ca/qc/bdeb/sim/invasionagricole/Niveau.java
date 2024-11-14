@@ -18,7 +18,7 @@ public class Niveau {
     private double largeurFenetre;
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
-    double positionYDesObjets; // code se repete
+    double positionYSol; // code se repete
 
     private ArrayList<Vache> vaches = new ArrayList<>();
     private ArrayList<Humain> humains = new ArrayList<>();
@@ -31,7 +31,7 @@ public class Niveau {
         this.largeurNiveau = largeurFenetre*4;
         this.largeurFenetre = largeurFenetre;
         this.camera = camera;
-        this.positionYDesObjets = hauteurNiveau - HAUTEUR_SOL_VERT;
+        this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
         // Generer le contenu du niveau
         genererEtoiles(100);
         genererGrangesEtTracteurs();
@@ -136,7 +136,7 @@ public class Niveau {
     private void genererVaches() {
         vaches.clear();
         for (int i = 0; i < calculerNombreDeVache(); i++) {
-            Vache vache = new Vache( positionYDesObjets, largeurNiveau, hauteurNiveau);
+            Vache vache = new Vache(positionYSol, largeurNiveau, positionYSol);
             vaches.add(vache);
         }
     }
@@ -144,7 +144,7 @@ public class Niveau {
     private void genererHumains() {
         humains.clear();
         for (int i = 0; i < calculerNombreDeHumains() ; i++) {
-            Humain humain = new Humain( positionYDesObjets, largeurNiveau, hauteurNiveau, determinerImageHumain());
+            Humain humain = new Humain(positionYSol, largeurNiveau, positionYSol, determinerImageHumain());
             humains.add(humain);
         }
     }

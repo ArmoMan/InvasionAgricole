@@ -27,6 +27,7 @@ public class Vaisseau extends ObjetPhysique {
 
         // L'alien commence avec 4 vies
         this.nombreDeVie = 4;
+        this.aY = 0;
 
     }
 

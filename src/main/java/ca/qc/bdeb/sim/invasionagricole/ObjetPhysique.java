@@ -15,7 +15,7 @@ public abstract class ObjetPhysique {
     protected double largeur, hauteur;
     protected int nombreDeVie;
     protected double largeurNiveau, hauteurNiveau;
-
+    protected double garvite = 1000;
     // Boolean pour voir si l'objet est en collsion entre les limites horizontales du niveau
     protected boolean estEnCollisionHorizontal = false;
 
@@ -25,6 +25,7 @@ public abstract class ObjetPhysique {
         this.imagePersonnage = new Image(pathImagePersonnage);
         this.largeurNiveau = largeurNiveau;
         this.hauteurNiveau = hauteurNiveau;
+        this.aY = garvite;
     }
 
     public abstract void update(double deltaTime);
