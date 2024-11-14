@@ -5,6 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Classe qui génère et contrôle les niveaux, contrôle la mini-carte, et génère l'alien
+ */
 public class ControleurJeu {
 
     private Vaisseau alien = new Vaisseau(0,0,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
