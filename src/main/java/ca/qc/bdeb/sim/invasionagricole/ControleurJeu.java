@@ -38,7 +38,6 @@ public class ControleurJeu {
         rayonEnlevement.update(deltaTime);
 
         // Verifier si rayon touche un objet physique (vache et humain)
-
         for (ObjetPhysique obj : niveau.getObjetPhysiquesNiveau()){
             if (rayonEnlevement.estRayonEnColisionAvec(obj)){
                 System.out.println("En col");
@@ -46,6 +45,7 @@ public class ControleurJeu {
                 obj.setvY(100);
             }
         }
+
         // Update la map
         objetsAffichageMap.clear();
         for (Vache vache : vaches) {
