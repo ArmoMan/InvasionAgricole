@@ -1,13 +1,14 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
 public class Camera {
-    private double xCamera, yCamera;
+    private double xCamera, yCamera,largeurEcran;
 
     // Modifier cette classe !!! Ca c'est juste un essai !!!!
-    public Camera() {
+    public Camera(double largeurEcran) {
         // Camera commence a la position 0,0
         this.xCamera = 0;
         this.yCamera = 0;
+        this.largeurEcran = largeurEcran;
     }
 
     public double calculerEcranX(double xObjet) {
@@ -18,10 +19,10 @@ public class Camera {
         return yObjet - yCamera;
     }
 
-    public void suivre(Vaisseau vaisseau, double largeurNiveau,double largeurEcran) {
-        double limiteGauche = xCamera + largeurEcran * 0.3;
-        double limiteDroite = xCamera + largeurEcran * 0.7;
-        double xCameraMax =  largeurNiveau - largeurEcran;
+    public void suivre(Vaisseau vaisseau, double largeurNiveau) {
+        double limiteGauche = xCamera + this.largeurEcran * 0.3;
+        double limiteDroite = xCamera + this.largeurEcran * 0.7;
+        double xCameraMax =  largeurNiveau - this.largeurEcran;
 
         // Si le vaisseau est moins 30% de l'ecran et que la camera n'est pas a son minimmum, alors deplacer la camera
         if(vaisseau.getGauche() < limiteGauche && xCamera > 0) {
@@ -34,4 +35,12 @@ public class Camera {
         }
 
     }
+
+    public double getXGauche() {
+        return xCamera;
+    }
+    public double getXDauche() {
+        return xCamera+largeurEcran;
+    }
+
 }

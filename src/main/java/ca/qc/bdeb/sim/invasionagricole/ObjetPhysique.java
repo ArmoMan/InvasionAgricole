@@ -143,4 +143,8 @@ public abstract class ObjetPhysique {
     public double getDroite(){
         return this.getPosX() + this.largeur;
     }
+
+    public double getGarvite() {
+        return garvite;
+    }
 }

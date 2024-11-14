@@ -12,7 +12,7 @@ public class ControleurJeu {
 
     private Vaisseau alien = new Vaisseau(0,0,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
     private RayonEnlevement rayonEnlevement = new RayonEnlevement(alien);
-    private Camera camera = new Camera();
+    private Camera camera = new Camera(InvasionAgricoleJavaFX.LARGEUR_FENETRE);
     Niveau niveau = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera);
     ArrayList<ObjetPhysique> objets = new ArrayList<>();
     MiniCarte miniCarte = new MiniCarte(10,50,100,objets);
@@ -22,7 +22,7 @@ public class ControleurJeu {
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
         niveau.dessinerNiveau(context);
-        camera.suivre(alien, niveau.getLargeurNiveau(), InvasionAgricoleJavaFX.LARGEUR_FENETRE);
+        camera.suivre(alien, niveau.getLargeurNiveau());
         alien.dessiner(context,camera);
         rayonEnlevement.dessinerRayon(context, camera);
         rayonEnlevement.dessinerBatterie(context,100,30,10,10,"batterie.png");
@@ -31,14 +31,19 @@ public class ControleurJeu {
 
     }
     public void update(double deltaTime){
+
+        // Update l'alien
         alien.update(deltaTime);
         rayonEnlevement.update(deltaTime);
+
+
+
+        // Update la map
         objets.clear();
         for (Vache vache : vaches) {
             vache.update(deltaTime);
             objets.add(vache);
-        }        // pour map
-
+        }
         objets.add(alien);
     }
 }
