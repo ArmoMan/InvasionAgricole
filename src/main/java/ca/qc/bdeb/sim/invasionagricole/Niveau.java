@@ -18,6 +18,7 @@ public class Niveau {
     private double largeurFenetre;
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
+    //double positionYDesObjets = hauteurNiveau - HAUTEUR_SOL_VERT;
 
     private ArrayList<Vache> vaches = new ArrayList<>();
     private ArrayList<Humain> humains = new ArrayList<>();
@@ -35,6 +36,7 @@ public class Niveau {
         genererEtoiles(100);
         genererGrangesEtTracteurs();
         genererVaches();
+        genererHumains();
     }
 
     public ArrayList<Vache> getVaches() {
@@ -62,6 +64,11 @@ public class Niveau {
         for (Vache vache : vaches) {
             vache.dessiner(context, camera);
             vache.dessinerDebug(context, camera);
+        }
+
+        for (Humain humain : humains) {
+            humain.dessiner(context, camera);
+            humain.dessinerDebug(context, camera);
         }
     }
 
@@ -127,12 +134,29 @@ public class Niveau {
     }
 
     private void genererVaches() {
-        double positionYDesVaches = hauteurNiveau - HAUTEUR_SOL_VERT;
+        double positionYDesObjets = hauteurNiveau - HAUTEUR_SOL_VERT; // code se repete
         System.out.println(hauteurNiveau);
         vaches.clear();
         for (int i = 0; i < calculerNombreDeVache(); i++) {
-            Vache vache = new Vache((int) (Math.random() * largeurNiveau), positionYDesVaches, largeurNiveau, hauteurNiveau);
+            Vache vache = new Vache((int) (Math.random() * largeurNiveau), positionYDesObjets, largeurNiveau, hauteurNiveau);
             vaches.add(vache);
+        }
+    }
+
+    private void genererHumains() {
+        double positionYDesObjets = hauteurNiveau - HAUTEUR_SOL_VERT; // code se repete
+        humains.clear();
+        for (int i = 0; i < calculerNombreDeHumains() ; i++) {
+            Humain humain = new Humain((int) (Math.random() * largeurNiveau), positionYDesObjets, largeurNiveau, hauteurNiveau, determinerImageHumain());
+            humains.add(humain);
+        }
+    }
+
+    private String determinerImageHumain() {
+        if (Math.random() < 0.5) {
+            return "fermier.png";
+        } else {
+            return "fermiere.png";
         }
     }
 

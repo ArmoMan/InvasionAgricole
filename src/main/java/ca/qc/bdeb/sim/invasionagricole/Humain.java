@@ -6,9 +6,13 @@ import javafx.scene.image.Image;
 public class Humain extends ObjetPhysique {
 
 
-    public Humain(double posX, double posY, String pathImageHumain,double largeurNiveau, double hauteurNiveau) {
+    public Humain(double posX, double posY, double largeurNiveau, double hauteurNiveau, String pathImageHumain) {
         super(posX, posY, pathImageHumain,largeurNiveau,hauteurNiveau);
         this.nombreDeVie = 1;
+
+        this.largeur = 83;
+        this.hauteur = 185;
+        this.posY = posY - this.hauteur;
     }
 
     @Override
@@ -16,13 +20,12 @@ public class Humain extends ObjetPhysique {
 
     }
 
-    @Override
-    protected void updatePhysique(double deltaTemps) {
-
-    }
 
     @Override
     public void dessiner(GraphicsContext context, Camera camera) {
+        double xEcran = camera.calculerEcranX(posX);
+        double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
+        context.drawImage(this.imagePersonnage, xEcran, yEcran);
     }
 }
