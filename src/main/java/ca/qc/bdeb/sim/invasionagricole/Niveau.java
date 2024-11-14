@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * La classe niveau permet de genrere les decors, les vaches, les humains et contient une methode qui peut les dessiner
+ */
 public class Niveau {
     private double largeurNiveau, hauteurNiveau;
     private int numeroDuNiveau;
@@ -16,7 +19,8 @@ public class Niveau {
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
 
-    public ArrayList<Vache> vaches = new ArrayList<>(); // contient les vaches du niveau, ne devrait pas etre public (pour tester seulement)
+    private ArrayList<Vache> vaches = new ArrayList<>();
+    private ArrayList<Humain> humains = new ArrayList<>();
 
     public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau, Camera camera) {
         this.numeroDuNiveau = numeroDuNiveau;
@@ -29,6 +33,14 @@ public class Niveau {
         genererEtoiles(100);
         genererGrangesEtTracteurs();
         genererVaches();
+    }
+
+    public ArrayList<Vache> getVaches() {
+        return vaches;
+    }
+
+    public ArrayList<Humain> getHumains() {
+        return humains;
     }
 
     public double getLargeurNiveau() {

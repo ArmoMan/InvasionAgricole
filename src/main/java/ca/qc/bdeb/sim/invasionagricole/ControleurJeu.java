@@ -16,7 +16,7 @@ public class ControleurJeu {
     Niveau n = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera);
     ArrayList<ObjetPhysique> objets = new ArrayList<>();
     MiniCarte miniCarte = new MiniCarte(10,50,100,objets);
-    ArrayList<Vache> vaches = n.vaches;
+    ArrayList<Vache> vaches = n.getVaches();
 
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
