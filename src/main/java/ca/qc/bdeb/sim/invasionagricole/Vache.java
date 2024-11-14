@@ -4,10 +4,16 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Vache extends ObjetPhysique {
 
-    public Vache(int posX, int posY) {
+    public Vache(double posX, double posY) {
+
         super(posX, posY, "vache.png");
         this.nombreDeVie = 1;
         this.vY = 0;
+
+        // Commencer sur terre
+        this.largeur = 136;
+        this.hauteur = 134;
+        this.posY = posY - this.hauteur;
         this.vX = determinerVitesse();
     }
 
@@ -38,6 +44,6 @@ public class Vache extends ObjetPhysique {
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
         // l'affichage n'est pas bon ici
-        context.drawImage(this.imagePersonnage, (xEcran+(this.largeur - this.imagePersonnage.getWidth())/2),yEcran + this.imagePersonnage.getHeight() );
+        context.drawImage(this.imagePersonnage, xEcran, yEcran);
     }
 }

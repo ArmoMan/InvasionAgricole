@@ -109,9 +109,11 @@ public class Niveau {
     }
 
     private void genererVaches() {
+        double positionYDesVaches = hauteurNiveau - HAUTEUR_SOL_VERT;
+        System.out.println(hauteurNiveau);
         vaches.clear();
         for (int i = 0; i < calculerNombreDeVache(); i++) {
-            Vache vache = new Vache((int) (Math.random() * largeurNiveau), 0);
+            Vache vache = new Vache((int) (Math.random() * largeurNiveau), positionYDesVaches);
             vaches.add(vache);
         }
     }

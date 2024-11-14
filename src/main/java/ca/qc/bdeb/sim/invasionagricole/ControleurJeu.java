@@ -26,13 +26,15 @@ public class ControleurJeu {
         alien.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
         for (Vache vache : vaches) {
             vache.dessiner(context, camera);
+            vache.dessinerDebug(context, camera);
         }
     }
     public void update(double deltaTime){
         alien.update(deltaTime);
         rayonEnlevement.update(deltaTime);
-
-        // pour map
+        for (Vache vache : vaches) {
+            vache.update(deltaTime);
+        }        // pour map
         objets.clear();
         objets.add(alien);
     }

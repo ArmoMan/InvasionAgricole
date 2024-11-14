@@ -10,12 +10,13 @@ public abstract class ObjetPhysique {
 
     protected double posX, posY;
     protected double vX, vY;
-    protected double aX = 1, aY = 1; // jai changer de 0 a 1 pour l'acceleration, je sais pas si ca brise quelque chose
+    protected double aX = 0, aY = 0; // jai changer de 0 a 1 pour l'acceleration, je sais pas si ca brise quelque chose
     protected Image imagePersonnage;
     protected double largeur, hauteur;
     protected int nombreDeVie;
 
-    public ObjetPhysique(int posX, int posY, String pathImagePersonnage) {
+
+    public ObjetPhysique(double posX, double posY, String pathImagePersonnage) {
         this.posX = posX;
         this.posY = posY;
         this.imagePersonnage = new Image(pathImagePersonnage);
@@ -44,6 +45,34 @@ public abstract class ObjetPhysique {
         context.setStroke(Color.YELLOW);
         context.setLineWidth(2);
         context.strokeRect(xEcran, yEcran, largeur, hauteur);
+    }
+
+    /**
+     * Methode pour verifier que le vaisseau n'est pas hors ecran et qu'il respecte la limite de hauteur
+     * @param largeurMax du niveau
+     * @param hauteurMax du niveau
+     */
+    protected void verifierQuePasHorsNiveau(double largeurMax, double hauteurMax){
+
+        // verifier la limite horizontale
+        if (posX + largeur > largeurMax) {
+            posX = largeurMax - largeur;
+            vX = 0;
+        }else if (posX < 0) {
+            posX = 0;
+            vX = 0;
+        }
+
+        // verifier que le vaisseau ne depasse pas 60% de l'hauteur du niveau
+        double limiteDeHauteur = hauteurMax * 0.6;
+        if (posY + hauteur > limiteDeHauteur) {
+            posY = limiteDeHauteur - hauteur;
+            vY = 0;
+        }else if (posY < 0) {
+            posY = 0;
+            vY = 0;
+        }
+
     }
 
 

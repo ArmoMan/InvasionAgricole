@@ -17,7 +17,7 @@ public class Vaisseau extends ObjetPhysique {
     private double largeurNiveau, hauteurNiveau;
     private int nombreDeVacheCapturer = 0;
 
-    public Vaisseau(int posX, int posY, String pathImageAlien, double largeurNiveau, double hauteurNiveau) {
+    public Vaisseau(double posX, double posY, String pathImageAlien, double largeurNiveau, double hauteurNiveau) {
         super(posX, posY, pathImageAlien);
         this.largeur = 100;
         this.hauteur = 140;
@@ -80,33 +80,6 @@ public class Vaisseau extends ObjetPhysique {
     }
 
 
-    /**
-     * Methode pour verifier que le vaisseau n'est pas hors ecran et qu'il respecte la limite de hauteur
-     * @param largeurMax du niveau
-     * @param hauteurMax du niveau
-     */
-    private void verifierQuePasHorsNiveau(double largeurMax, double hauteurMax){
-
-        // verifier la limite horizontale
-        if (posX + largeur > largeurMax) {
-            posX = largeurMax - largeur;
-            vX = 0;
-        }else if (posX < 0) {
-            posX = 0;
-            vX = 0;
-        }
-
-        // verifier que le vaisseau ne depasse pas 60% de l'hauteur du niveau
-        double limiteDeHauteur = hauteurMax * 0.6;
-        if (posY + hauteur > limiteDeHauteur) {
-            posY = limiteDeHauteur - hauteur;
-            vY = 0;
-        }else if (posY < 0) {
-            posY = 0;
-            vY = 0;
-        }
-
-    }
 
     private boolean estCeQueButtonMouvementAppuyer(){
         boolean left = Input.isKeyPressed(KeyCode.LEFT);
