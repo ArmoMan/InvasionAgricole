@@ -4,8 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Girouette extends Projectile {
 
-    public Girouette(double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau) {
-        super(posY, pathImageProjectile, largeurNiveau, hauteurNiveau);
+    public Girouette(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau) {
+        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau);
     }
 
     @Override

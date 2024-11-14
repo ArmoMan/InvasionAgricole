@@ -72,13 +72,13 @@ public class ControleurJeu {
     private Projectile determinerProjectile(int choix) {
         switch (choix) {
             case 1 -> {
-                return new Girouette();
+                return new Girouette(0,0,"girouette.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
             }
             case 2 -> {
-                return new AimantFerCheval();
+                return new AimantFerCheval(0,0,"girouette.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
             }
             case 3 -> {
-                return new PotDeFleurs();
+                return new PotDeFleurs(0,0,"girouette.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
             }
         }
         return null;
