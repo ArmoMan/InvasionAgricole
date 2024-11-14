@@ -7,7 +7,7 @@ public class Humain extends ObjetPhysique {
 
 
     public Humain(double posY, double largeurNiveau, double hauteurNiveau, String pathImageHumain) {
-        super( posY, pathImageHumain,largeurNiveau,hauteurNiveau);
+        super(0 ,posY, pathImageHumain,largeurNiveau,hauteurNiveau);
         this.nombreDeVie = 1;
         this.largeur = 83;
         this.hauteur = 185;

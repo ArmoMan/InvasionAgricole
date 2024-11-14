@@ -70,13 +70,15 @@ public class RayonEnlevement {
 
         // Verifier si objet est entre les y du rayon
         // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut du rayon
-        boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < objetPhysique.getPosY()
-                + objetPhysique.getHauteur();
+//        boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < objetPhysique.getPosY()
+//                + objetPhysique.getHauteur();
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas du rayon
         boolean estCeQuePlusHautQuePartieBasRayon = objetPhysique.getPosY() < vaisseau.getPosY() + hauteurRayon;
 
 
-        return estCeQuePlusBasQuePartieHautRayon && estCeQuePlusHautQuePartieBasRayon
+
+
+        return  estCeQuePlusHautQuePartieBasRayon
                 && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon;
 
     }

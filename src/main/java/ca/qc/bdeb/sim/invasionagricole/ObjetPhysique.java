@@ -20,8 +20,9 @@ public abstract class ObjetPhysique {
     protected boolean estEnCollisionHorizontal = false;
 
 
-    public ObjetPhysique(double posY, String pathImagePersonnage,double largeurNiveau, double hauteurNiveau) {
+    public ObjetPhysique(double posX, double posY, String pathImagePersonnage,double largeurNiveau, double hauteurNiveau) {
         this.posY = posY;
+        this.posX = posX;
         this.imagePersonnage = new Image(pathImagePersonnage);
         this.largeurNiveau = largeurNiveau;
         this.hauteurNiveau = hauteurNiveau;
@@ -146,5 +147,21 @@ public abstract class ObjetPhysique {
 
     public double getGarvite() {
         return garvite;
+    }
+
+    public void setvX(double vX) {
+        this.vX = vX;
+    }
+
+    public void setvY(double vY) {
+        this.vY = vY;
+    }
+
+    public void setaX(double aX) {
+        this.aX = aX;
+    }
+
+    public void setaY(double aY) {
+        this.aY = aY;
     }
 }

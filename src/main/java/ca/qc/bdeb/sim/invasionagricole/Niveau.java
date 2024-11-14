@@ -18,7 +18,8 @@ public class Niveau {
     private double largeurFenetre;
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
-    double positionYSol; // code se repete
+    private  double positionYSol; // code se repete
+    private ArrayList<ObjetPhysique> objetPhysiquesNiveau = new ArrayList<>();
 
     private ArrayList<Vache> vaches = new ArrayList<>();
     private ArrayList<Humain> humains = new ArrayList<>();
@@ -37,6 +38,11 @@ public class Niveau {
         genererGrangesEtTracteurs();
         genererVaches();
         genererHumains();
+        creerTableauObjetsPhysiquesNiveau();
+    }
+
+    public ArrayList<ObjetPhysique> getObjetPhysiquesNiveau() {
+        return objetPhysiquesNiveau;
     }
 
     public ArrayList<Vache> getVaches() {
@@ -57,6 +63,11 @@ public class Niveau {
 
     public int getNumeroDuNiveau() {
         return numeroDuNiveau;
+    }
+
+    public void creerTableauObjetsPhysiquesNiveau(){
+        objetPhysiquesNiveau.addAll(vaches);
+        objetPhysiquesNiveau.addAll(humains);
     }
 
     public void dessinerNiveau(GraphicsContext context){

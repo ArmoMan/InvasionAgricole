@@ -3,7 +3,6 @@ package ca.qc.bdeb.sim.invasionagricole;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Classe qui génère et contrôle les niveaux, contrôle la mini-carte, et génère l'alien
@@ -14,8 +13,8 @@ public class ControleurJeu {
     private RayonEnlevement rayonEnlevement = new RayonEnlevement(alien);
     private Camera camera = new Camera(InvasionAgricoleJavaFX.LARGEUR_FENETRE);
     Niveau niveau = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera);
-    ArrayList<ObjetPhysique> objets = new ArrayList<>();
-    MiniCarte miniCarte = new MiniCarte(10,50,100,objets);
+    ArrayList<ObjetPhysique> objetsAffichageMap = new ArrayList<>();
+    MiniCarte miniCarte = new MiniCarte(10,50,100, objetsAffichageMap);
     ArrayList<Vache> vaches = niveau.getVaches();
     ArrayList<Humain> humains = niveau.getHumains();
 
@@ -32,18 +31,25 @@ public class ControleurJeu {
     }
     public void update(double deltaTime){
 
-        // Update l'alien
+        // Update l'alien et rayon
         alien.update(deltaTime);
         rayonEnlevement.update(deltaTime);
 
+        // Verifier si rayon touche un objet physique (vache et humain)
 
-
+        for (ObjetPhysique obj : niveau.getObjetPhysiquesNiveau()){
+            if (rayonEnlevement.estRayonEnColisionAvec(obj)){
+                System.out.println("En col");
+                obj.setaY(-10000);
+                obj.setvY(100);
+            }
+        }
         // Update la map
-        objets.clear();
+        objetsAffichageMap.clear();
         for (Vache vache : vaches) {
             vache.update(deltaTime);
-            objets.add(vache);
+            objetsAffichageMap.add(vache);
         }
-        objets.add(alien);
+        objetsAffichageMap.add(alien);
     }
 }

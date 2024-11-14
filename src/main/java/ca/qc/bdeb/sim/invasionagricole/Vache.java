@@ -7,14 +7,16 @@ public class Vache extends ObjetPhysique {
     private double vitessePrecedente = 0;
     public Vache( double posY,double largeurNiveau, double hauteurNiveau) {
 
-        super( posY, "vache.png", largeurNiveau, hauteurNiveau);
+        super( 0, posY, "vache.png", largeurNiveau, hauteurNiveau);
         this.nombreDeVie = 1;
         this.vY = 0;
 
         // Commencer sur terre
         this.largeur = 136;
         this.hauteur = 134;
-        this.posY = posY - this.hauteur;
+
+        this.posY = posY - this.hauteur; // Ce code ne marche pas, elle ne change pas le posY
+
         this.posX = genererPositionX();
         this.vX = determinerVitesse();
         // Changer image selon vitesse
