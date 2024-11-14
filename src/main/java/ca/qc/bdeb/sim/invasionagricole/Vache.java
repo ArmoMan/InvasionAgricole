@@ -1,9 +1,10 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public class Vache extends ObjetPhysique {
-
+    private double vitesseInitiale = 0;
     public Vache(double posX, double posY,double largeurNiveau, double hauteurNiveau) {
 
         super(posX, posY, "vache.png", largeurNiveau, hauteurNiveau);
@@ -21,12 +22,31 @@ public class Vache extends ObjetPhysique {
     public void update(double deltaTime) {
         updatePhysique(deltaTime);
         verifierQuePasHorsNiveau(this.largeurNiveau, this.hauteurNiveau, 100);
+
+        // Si objet en collision, alors changer de direction de vitesse et changer image
+        if (this.estEnCollisionHorizontal){
+            // Quand l'objet est en collision, ca vX devient 0, donc il faut reinitialiser la vitesse
+            vX = -1 * vitesseInitiale;
+            changerImageSelonVitesse();
+        }
+
+    }
+
+    private void changerImageSelonVitesse(){
+        if (vX < 0){
+            this.imagePersonnage = new Image("vache.png");
+        }else{
+            System.out.println(vX);
+            this.imagePersonnage = new Image("vache-droite.png");
+        }
     }
 
     // determine une vitesse de depart entre 10 et 50 px/s vers la droite ou la gauche
     private double determinerVitesse() {
         double vitesse = 10 + (Math.random() * (50 - 10 + 1));
         vitesse *= determinerDirection();
+        vitesseInitiale = vitesse;
+        changerImageSelonVitesse();
         return vitesse;
     }
 

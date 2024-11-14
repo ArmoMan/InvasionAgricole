@@ -27,10 +27,7 @@ public class ControleurJeu {
         rayonEnlevement.dessinerBatterie(context,100,30,10,10,"batterie.png");
         miniCarte.dessiner(context,n.getLargeurNiveau());
         alien.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
-        for (Vache vache : vaches) {
-            vache.dessiner(context, camera);
-            vache.dessinerDebug(context, camera);
-        }
+
     }
     public void update(double deltaTime){
         alien.update(deltaTime);

@@ -128,7 +128,7 @@ public class Vaisseau extends ObjetPhysique {
 
         dessinerDebug(context, camera);
     }
-    
+
 
     public void dessinerCompteurVieEtVacheCapturer(GraphicsContext context,double posXdessin, double posYdessin, String pathImageVache, double hauteurImages, double espacementDesElements) {
         Image imageVache = new Image(pathImageVache);

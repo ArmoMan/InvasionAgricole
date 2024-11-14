@@ -30,6 +30,8 @@ public class Niveau {
         this.largeurNiveau = largeurFenetre*4;
         this.largeurFenetre = largeurFenetre;
         this.camera = camera;
+
+        // Generer le contenu du niveau
         genererEtoiles(100);
         genererGrangesEtTracteurs();
         genererVaches();
@@ -57,6 +59,10 @@ public class Niveau {
 
     public void dessinerNiveau(GraphicsContext context){
         afficherArrierePlan(context);
+        for (Vache vache : vaches) {
+            vache.dessiner(context, camera);
+            vache.dessinerDebug(context, camera);
+        }
     }
 
     private void afficherArrierePlan(GraphicsContext context){

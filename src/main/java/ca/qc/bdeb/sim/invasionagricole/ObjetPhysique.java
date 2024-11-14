@@ -16,6 +16,9 @@ public abstract class ObjetPhysique {
     protected int nombreDeVie;
     protected double largeurNiveau, hauteurNiveau;
 
+    // Boolean pour voir si l'objet est en collsion entre les limites horizontales du niveau
+    protected boolean estEnCollisionHorizontal = false;
+
 
     public ObjetPhysique(double posX, double posY, String pathImagePersonnage,double largeurNiveau, double hauteurNiveau) {
         this.posX = posX;
@@ -57,6 +60,7 @@ public abstract class ObjetPhysique {
      */
     protected void verifierQuePasHorsNiveau(double largeurMax, double hauteurMax, double pourcentageHauteurANePasDepasser){
 
+        estEnCollisionHorizontal = true;
         // verifier la limite horizontale
         if (posX + largeur > largeurMax) {
             posX = largeurMax - largeur;
@@ -64,6 +68,9 @@ public abstract class ObjetPhysique {
         }else if (posX < 0) {
             posX = 0;
             vX = 0;
+        }else {
+            // si pas hors limites
+            estEnCollisionHorizontal = false;
         }
 
         // verifier que le vaisseau ne depasse pas pourcentageHauteurANePasDepasser de l'hauteur du niveau
