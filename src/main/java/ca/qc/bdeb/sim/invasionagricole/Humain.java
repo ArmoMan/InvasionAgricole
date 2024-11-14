@@ -28,4 +28,20 @@ public class Humain extends ObjetPhysique {
 
         context.drawImage(this.imagePersonnage, xEcran, yEcran);
     }
+
+    public boolean estVisible(Camera camera) {
+        if (posX > camera.getXGauche() || posX < camera.getXDroite()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public double getPosCentreX() {
+        return posX + this.largeur / 2;
+    }
+
+    public double getPosCentreY() {
+        return posY + this.hauteur / 2;
+    }
 }

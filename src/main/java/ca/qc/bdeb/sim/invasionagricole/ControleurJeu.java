@@ -3,6 +3,7 @@ package ca.qc.bdeb.sim.invasionagricole;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Classe qui génère et contrôle les niveaux, contrôle la mini-carte, et génère l'alien
@@ -17,6 +18,7 @@ public class ControleurJeu {
     MiniCarte miniCarte = new MiniCarte(10,50,100, objetsAffichageMap);
     ArrayList<Vache> vaches = niveau.getVaches();
     ArrayList<Humain> humains = niveau.getHumains();
+    ArrayList<Projectile> projectiles = new ArrayList<>();
 
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
@@ -51,5 +53,34 @@ public class ControleurJeu {
             objetsAffichageMap.add(vache);
         }
         objetsAffichageMap.add(alien);
+    }
+
+
+    public void update2(double deltaTime){
+       // Update humains et projectiles
+        for (Humain humain : humains) {
+            if (humain.estVisible(camera)) {
+                lancerProjectile(humain.getPosCentreX(), humain.getPosCentreY());
+            }
+        }
+    }
+
+    private void lancerProjectile(double posX, double posY) {
+        projectiles.add(determinerProjectile(1 + (int) (Math.random() * 3)));
+    }
+
+    private Projectile determinerProjectile(int choix) {
+        switch (choix) {
+            case 1 -> {
+                return new Girouette();
+            }
+            case 2 -> {
+                return new AimantFerCheval();
+            }
+            case 3 -> {
+                return new PotDeFleurs();
+            }
+        }
+        return null;
     }
 }

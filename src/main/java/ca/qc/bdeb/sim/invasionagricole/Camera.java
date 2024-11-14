@@ -1,7 +1,7 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
 public class Camera {
-    private double xCamera, yCamera,largeurEcran;
+    private double xCamera, yCamera, largeurEcran;
 
     // Modifier cette classe !!! Ca c'est juste un essai !!!!
     public Camera(double largeurEcran) {
@@ -39,7 +39,7 @@ public class Camera {
     public double getXGauche() {
         return xCamera;
     }
-    public double getXDauche() {
+    public double getXDroite() {
         return xCamera+largeurEcran;
     }
 
