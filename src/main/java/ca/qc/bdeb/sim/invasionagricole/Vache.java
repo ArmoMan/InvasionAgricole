@@ -4,10 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Vache extends ObjetPhysique {
-    private double vitesseInitiale = 0;
-    public Vache(double posX, double posY,double largeurNiveau, double hauteurNiveau) {
+    private double vitessePrecedente = 0;
+    public Vache( double posY,double largeurNiveau, double hauteurNiveau) {
 
-        super(posX, posY, "vache.png", largeurNiveau, hauteurNiveau);
+        super( posY, "vache.png", largeurNiveau, hauteurNiveau);
         this.nombreDeVie = 1;
         this.vY = 0;
 
@@ -15,7 +15,10 @@ public class Vache extends ObjetPhysique {
         this.largeur = 136;
         this.hauteur = 134;
         this.posY = posY - this.hauteur;
+        this.posX = genererPositionX();
         this.vX = determinerVitesse();
+        // Changer image selon vitesse
+        changerImageSelonVitesse();
     }
 
     @Override
@@ -25,8 +28,9 @@ public class Vache extends ObjetPhysique {
 
         // Si objet en collision, alors changer de direction de vitesse et changer image
         if (this.estEnCollisionHorizontal){
-            // Quand l'objet est en collision, ca vX devient 0, donc il faut reinitialiser la vitesse
-            vX = -1 * vitesseInitiale;
+            // Quand l'objet est en collision, son vX devient 0, donc il faut reinitialiser la vitesse
+            vX = -1 * vitessePrecedente;
+            vitessePrecedente = vX;
             changerImageSelonVitesse();
         }
 
@@ -36,7 +40,6 @@ public class Vache extends ObjetPhysique {
         if (vX < 0){
             this.imagePersonnage = new Image("vache.png");
         }else{
-            System.out.println(vX);
             this.imagePersonnage = new Image("vache-droite.png");
         }
     }
@@ -45,8 +48,7 @@ public class Vache extends ObjetPhysique {
     private double determinerVitesse() {
         double vitesse = 10 + (Math.random() * (50 - 10 + 1));
         vitesse *= determinerDirection();
-        vitesseInitiale = vitesse;
-        changerImageSelonVitesse();
+        vitessePrecedente = vitesse;
         return vitesse;
     }
 

@@ -6,12 +6,12 @@ import javafx.scene.image.Image;
 public class Humain extends ObjetPhysique {
 
 
-    public Humain(double posX, double posY, double largeurNiveau, double hauteurNiveau, String pathImageHumain) {
-        super(posX, posY, pathImageHumain,largeurNiveau,hauteurNiveau);
+    public Humain(double posY, double largeurNiveau, double hauteurNiveau, String pathImageHumain) {
+        super( posY, pathImageHumain,largeurNiveau,hauteurNiveau);
         this.nombreDeVie = 1;
-
         this.largeur = 83;
         this.hauteur = 185;
+        this.posX = genererPositionX();
         this.posY = posY - this.hauteur;
     }
 

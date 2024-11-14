@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public abstract class ObjetPhysique {
 
-    protected double posX, posY;
+    protected double posX=0, posY=0;
     protected double vX, vY;
     protected double aX = 0, aY = 0; // jai changer de 0 a 1 pour l'acceleration, je sais pas si ca brise quelque chose
     protected Image imagePersonnage;
@@ -20,8 +20,7 @@ public abstract class ObjetPhysique {
     protected boolean estEnCollisionHorizontal = false;
 
 
-    public ObjetPhysique(double posX, double posY, String pathImagePersonnage,double largeurNiveau, double hauteurNiveau) {
-        this.posX = posX;
+    public ObjetPhysique(double posY, String pathImagePersonnage,double largeurNiveau, double hauteurNiveau) {
         this.posY = posY;
         this.imagePersonnage = new Image(pathImagePersonnage);
         this.largeurNiveau = largeurNiveau;
@@ -83,6 +82,14 @@ public abstract class ObjetPhysique {
             vY = 0;
         }
 
+    }
+
+    /**
+     * Methode pour generer une position x entre 0 et largeurNiveau - largeur (image)
+     * @return
+     */
+    protected double genererPositionX(){
+        return (Math.random() * (largeurNiveau-largeur));
     }
 
     public boolean estEnCollisionAvec(ObjetPhysique objetPhysique) {

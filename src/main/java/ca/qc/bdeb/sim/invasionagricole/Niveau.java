@@ -135,10 +135,9 @@ public class Niveau {
 
     private void genererVaches() {
         double positionYDesObjets = hauteurNiveau - HAUTEUR_SOL_VERT; // code se repete
-        System.out.println(hauteurNiveau);
         vaches.clear();
         for (int i = 0; i < calculerNombreDeVache(); i++) {
-            Vache vache = new Vache((int) (Math.random() * largeurNiveau), positionYDesObjets, largeurNiveau, hauteurNiveau);
+            Vache vache = new Vache( positionYDesObjets, largeurNiveau, hauteurNiveau);
             vaches.add(vache);
         }
     }
@@ -147,7 +146,7 @@ public class Niveau {
         double positionYDesObjets = hauteurNiveau - HAUTEUR_SOL_VERT; // code se repete
         humains.clear();
         for (int i = 0; i < calculerNombreDeHumains() ; i++) {
-            Humain humain = new Humain((int) (Math.random() * largeurNiveau), positionYDesObjets, largeurNiveau, hauteurNiveau, determinerImageHumain());
+            Humain humain = new Humain( positionYDesObjets, largeurNiveau, hauteurNiveau, determinerImageHumain());
             humains.add(humain);
         }
     }

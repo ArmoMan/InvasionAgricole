@@ -17,9 +17,11 @@ public class Vaisseau extends ObjetPhysique {
     private int nombreDeVacheCapturer = 0;
 
     public Vaisseau(double posX, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
-        super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau);
+        super( posY, pathImageAlien, largeurNiveau, hauteurNiveau);
         this.largeur = 100;
         this.hauteur = 140;
+        this.posX = posX;
+
         this.vX = 0;
         this.vY = 0;
 
