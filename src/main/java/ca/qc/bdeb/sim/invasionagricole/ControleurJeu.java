@@ -13,19 +13,20 @@ public class ControleurJeu {
     private Vaisseau alien = new Vaisseau(0,0,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
     private RayonEnlevement rayonEnlevement = new RayonEnlevement(alien);
     private Camera camera = new Camera();
-    Niveau n = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera);
+    Niveau niveau = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera);
     ArrayList<ObjetPhysique> objets = new ArrayList<>();
     MiniCarte miniCarte = new MiniCarte(10,50,100,objets);
-    ArrayList<Vache> vaches = n.getVaches();
+    ArrayList<Vache> vaches = niveau.getVaches();
+    ArrayList<Humain> humains = niveau.getHumains();
 
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
-        n.dessinerNiveau(context);
-        camera.suivre(alien, n.getLargeurNiveau(), InvasionAgricoleJavaFX.LARGEUR_FENETRE);
+        niveau.dessinerNiveau(context);
+        camera.suivre(alien, niveau.getLargeurNiveau(), InvasionAgricoleJavaFX.LARGEUR_FENETRE);
         alien.dessiner(context,camera);
         rayonEnlevement.dessinerRayon(context, camera);
         rayonEnlevement.dessinerBatterie(context,100,30,10,10,"batterie.png");
-        miniCarte.dessiner(context,n.getLargeurNiveau());
+        miniCarte.dessiner(context, niveau.getLargeurNiveau());
         alien.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
 
     }
