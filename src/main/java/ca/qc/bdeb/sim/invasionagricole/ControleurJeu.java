@@ -32,10 +32,12 @@ public class ControleurJeu {
     public void update(double deltaTime){
         alien.update(deltaTime);
         rayonEnlevement.update(deltaTime);
+        objets.clear();
         for (Vache vache : vaches) {
             vache.update(deltaTime);
+            objets.add(vache);
         }        // pour map
-        objets.clear();
+
         objets.add(alien);
     }
 }
