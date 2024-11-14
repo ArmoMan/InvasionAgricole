@@ -31,6 +31,7 @@ public class ControleurJeu {
         alien.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
 
     }
+
     public void update(double deltaTime){
 
         // Update l'alien et rayon
@@ -48,37 +49,43 @@ public class ControleurJeu {
 
         // Update la map
         objetsAffichageMap.clear();
+
+
+        // Update vaches
         for (Vache vache : vaches) {
             vache.update(deltaTime);
             objetsAffichageMap.add(vache);
         }
+
+        // Update humains et projectiles
+        for (Humain humain : humains) {
+            if (humain.estVisible(camera)) {
+                //lancerProjectile(humain.getPosCentreX(), humain.getPosCentreY()); attention, cette ligne va manger toute ta ram
+            }
+        }
+
+        for (Projectile projectile : projectiles) {
+            System.out.println(projectile.getPosX());
+            projectile.update(deltaTime);
+        }
+
         objetsAffichageMap.add(alien);
     }
 
-
-    public void update2(double deltaTime){
-       // Update humains et projectiles
-        for (Humain humain : humains) {
-            if (humain.estVisible(camera)) {
-                lancerProjectile(humain.getPosCentreX(), humain.getPosCentreY());
-            }
-        }
-    }
-
     private void lancerProjectile(double posX, double posY) {
-        projectiles.add(determinerProjectile(1 + (int) (Math.random() * 3)));
+        projectiles.add(creerProjectile((1 + (int) (Math.random() * 3)), posX, posY));
     }
 
-    private Projectile determinerProjectile(int choix) {
+    private Projectile creerProjectile(int choix, double posX, double posY) {
         switch (choix) {
             case 1 -> {
-                return new Girouette(0,0,"girouette.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
+                return new Girouette(posX,posY,"girouette.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
             }
             case 2 -> {
-                return new AimantFerCheval(0,0,"girouette.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
+                return new AimantFerCheval(posX,posY,"aimant.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
             }
             case 3 -> {
-                return new PotDeFleurs(0,0,"girouette.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
+                return new PotDeFleurs(posX,posY,"pot-de-fleurs.png", niveau.getLargeurNiveau(), niveau.getHauteurNiveau());
             }
         }
         return null;

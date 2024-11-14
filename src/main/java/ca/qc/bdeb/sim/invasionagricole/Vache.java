@@ -40,9 +40,9 @@ public class Vache extends ObjetPhysique {
 
     private void changerImageSelonVitesse(){
         if (vX < 0){
-            this.imagePersonnage = new Image("vache.png");
+            this.image = new Image("vache.png");
         }else{
-            this.imagePersonnage = new Image("vache-droite.png");
+            this.image = new Image("vache-droite.png");
         }
     }
 
@@ -68,7 +68,6 @@ public class Vache extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        // l'affichage n'est pas bon ici
-        context.drawImage(this.imagePersonnage, xEcran, yEcran);
+        context.drawImage(this.image, xEcran, yEcran);
     }
 }

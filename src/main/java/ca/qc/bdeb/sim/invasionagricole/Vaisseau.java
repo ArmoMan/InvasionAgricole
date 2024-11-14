@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class Vaisseau extends ObjetPhysique {
 
@@ -121,7 +120,7 @@ public class Vaisseau extends ObjetPhysique {
             context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeur)/2), yEcran + (this.hauteur-vaisseauLumiereOff.getHeight()));
         }
 
-        context.drawImage(this.imagePersonnage, (xEcran+( this.largeur - this.imagePersonnage.getWidth())/2),yEcran + this.hauteur-vaisseauLumiereOff.getHeight()-this.imagePersonnage.getHeight() );
+        context.drawImage(this.image, (xEcran+( this.largeur - this.image.getWidth())/2),yEcran + this.hauteur-vaisseauLumiereOff.getHeight()-this.image.getHeight() );
 
         context.setFill(couleurVitre);
         context.fillOval(xEcran, yEcran,  this.largeur,  this.hauteur);
@@ -137,7 +136,7 @@ public class Vaisseau extends ObjetPhysique {
 
         // Hauteur des images selon le largeur voulu
         double largeurImageVache = calculerNouveauLargeurImage(imageVache, hauteurImages);
-        double largeurImageAlien = calculerNouveauLargeurImage(this.imagePersonnage, hauteurImages);
+        double largeurImageAlien = calculerNouveauLargeurImage(this.image, hauteurImages);
 
         // Image de vache
         context.drawImage(imageVache, posXdessin, posYdessin,largeurImageVache , hauteurImages);
@@ -157,7 +156,7 @@ public class Vaisseau extends ObjetPhysique {
 
         // Image d'Alien
         double posXAlien = posXCompteurVache + espacementDesElements + context.getFont().getSize();
-        context.drawImage(this.imagePersonnage, posXAlien, posYdessin,largeurImageAlien ,hauteurImages );
+        context.drawImage(this.image, posXAlien, posYdessin,largeurImageAlien ,hauteurImages );
 
         // Texte de nombre de vie Alien
         double posXCompteurVie = posXAlien + largeurImageAlien + espacementDesElements;

@@ -4,29 +4,27 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-
 public abstract class ObjetPhysique {
 
     protected double posX=0, posY=0;
     protected double vX, vY;
     protected double aX = 0, aY = 0;
-    protected Image imagePersonnage;
+    protected Image image;
     protected double largeur, hauteur;
     protected int nombreDeVie;
     protected double largeurNiveau, hauteurNiveau;
-    protected double garvite = 1000;
-    // Boolean pour voir si l'objet est en collsion entre les limites horizontales du niveau
+    protected double gravite = 1000;
+    // Boolean pour voir si l'objet est en collision entre les limites horizontales du niveau
     protected boolean estEnCollisionHorizontal = false;
 
 
-    public ObjetPhysique(double posX, double posY, String pathImagePersonnage,double largeurNiveau, double hauteurNiveau) {
+    public ObjetPhysique(double posX, double posY, String pathImage,double largeurNiveau, double hauteurNiveau) {
         this.posY = posY;
         this.posX = posX;
-        this.imagePersonnage = new Image(pathImagePersonnage);
+        this.image = new Image(pathImage);
         this.largeurNiveau = largeurNiveau;
         this.hauteurNiveau = hauteurNiveau;
-        this.aY = garvite;
+        this.aY = gravite;
     }
 
     public abstract void update(double deltaTime);
@@ -113,6 +111,11 @@ public abstract class ObjetPhysique {
                 && estCeQuePlusDroiteQuePartieGaucheDeCa && estCeQuePlusGaucheQuePartieDroiteDeCa;
 
     }
+
+
+
+
+
     public double getPosX() {
         return posX;
     }
@@ -145,8 +148,8 @@ public abstract class ObjetPhysique {
         return this.getPosX() + this.largeur;
     }
 
-    public double getGarvite() {
-        return garvite;
+    public double getGravite() {
+        return gravite;
     }
 
     public void setvX(double vX) {
