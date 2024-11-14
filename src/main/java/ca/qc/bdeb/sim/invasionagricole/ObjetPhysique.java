@@ -78,7 +78,25 @@ public abstract class ObjetPhysique {
 
     }
 
+    public boolean estEnCollisionAvec(ObjetPhysique objetPhysique) {
 
+        // Verifier si objet est entre les x du rayon
+        boolean estCeQuePlusGaucheQuePartieDroiteDeCa = this.getGauche()
+                + this.largeur > objetPhysique.getGauche();
+        boolean estCeQuePlusDroiteQuePartieGaucheDeCa = this.getGauche() < objetPhysique.getDroite();
+
+        // Verifier si objet est entre les y du rayon
+        // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut de this object
+        boolean estCeQuePlusBasQuePartieHautDeCa = this.getPosY() < objetPhysique.getPosY()
+                + objetPhysique.getHauteur();
+        // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas de this object
+        boolean estCeQuePlusHautQuePartieBasDeCa = objetPhysique.getPosY() < this.getPosY() + hauteur;
+
+
+        return estCeQuePlusBasQuePartieHautDeCa && estCeQuePlusHautQuePartieBasDeCa
+                && estCeQuePlusDroiteQuePartieGaucheDeCa && estCeQuePlusGaucheQuePartieDroiteDeCa;
+
+    }
     public double getPosX() {
         return posX;
     }
