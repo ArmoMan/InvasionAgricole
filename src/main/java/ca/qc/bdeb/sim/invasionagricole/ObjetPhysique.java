@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 public abstract class ObjetPhysique {
 
     protected double posX=0, posY=0;
-    protected double vX, vY;
+    protected double vX = 0, vY =0;
     protected double aX = 0, aY = 0;
     protected Image image;
     protected double largeur, hauteur;
@@ -16,7 +16,10 @@ public abstract class ObjetPhysique {
     protected double gravite = 1000;
     // Boolean pour voir si l'objet est en collision entre les limites horizontales du niveau
     protected boolean estEnCollisionHorizontal = false;
-
+    // Boolean pour voir si le physique du rayon doit s'appliquer
+    protected boolean estMonter = false;
+    // Variable pour garder en memoire une vitesse passé
+    protected double ancienVitesse ;
 
     public ObjetPhysique(double posX, double posY, String pathImage,double largeurNiveau, double hauteurNiveau) {
         this.posY = posY;
@@ -34,6 +37,17 @@ public abstract class ObjetPhysique {
         vY += deltaTemps * aY;
         posX += deltaTemps * vX;
         posY += deltaTemps * vY;
+    }
+
+    protected void updateMonterPhysique() {
+        if (estMonter){
+            vY = -100;
+            vX = 0;
+            aY = 0;
+        }else{
+            aY = this.gravite;
+            vX = this.ancienVitesse;
+        }
     }
 
     public abstract void dessiner(GraphicsContext context, Camera camera);
@@ -57,7 +71,7 @@ public abstract class ObjetPhysique {
      * @param largeurMax du niveau
      * @param hauteurMax du niveau
      */
-    protected void verifierQuePasHorsNiveau(double largeurMax, double hauteurMax, double pourcentageHauteurANePasDepasser){
+    protected void verifierQuePasHorsLimites(double largeurMax, double hauteurMax, double pourcentageHauteurANePasDepasser){
 
         estEnCollisionHorizontal = true;
         // verifier la limite horizontale
@@ -94,21 +108,22 @@ public abstract class ObjetPhysique {
 
     public boolean estEnCollisionAvec(ObjetPhysique objetPhysique) {
 
-        // Verifier si objet est entre les x du rayon
-        boolean estCeQuePlusGaucheQuePartieDroiteDeCa = this.getGauche()
+        // Verifier si objet est entre les x de l'objet actuel
+        boolean estCeQuePlusGaucheQuePartieDroiteActuel = this.getGauche()
                 + this.largeur > objetPhysique.getGauche();
-        boolean estCeQuePlusDroiteQuePartieGaucheDeCa = this.getGauche() < objetPhysique.getDroite();
+        boolean estCeQuePlusDroiteQuePartieGaucheActuel = this.getGauche() < objetPhysique.getDroite();
 
-        // Verifier si objet est entre les y du rayon
-        // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut de this object
-        boolean estCeQuePlusBasQuePartieHautDeCa = this.getPosY() < objetPhysique.getPosY()
+        // Verifier si objet est entre les y de l'objet actuel
+        // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut de l'objet actuel
+        boolean estCeQuePlusBasQuePartieHautActuel = this.getPosY() < objetPhysique.getPosY()
                 + objetPhysique.getHauteur();
-        // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas de this object
-        boolean estCeQuePlusHautQuePartieBasDeCa = objetPhysique.getPosY() < this.getPosY() + hauteur;
+
+        // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas de l'objet actuel
+        boolean estCeQuePlusHautQuePartieBasActuel = objetPhysique.getPosY() < this.getPosY() + this.hauteur;
 
 
-        return estCeQuePlusBasQuePartieHautDeCa && estCeQuePlusHautQuePartieBasDeCa
-                && estCeQuePlusDroiteQuePartieGaucheDeCa && estCeQuePlusGaucheQuePartieDroiteDeCa;
+        return estCeQuePlusBasQuePartieHautActuel && estCeQuePlusHautQuePartieBasActuel
+                && estCeQuePlusDroiteQuePartieGaucheActuel && estCeQuePlusGaucheQuePartieDroiteActuel;
 
     }
 
@@ -166,5 +181,9 @@ public abstract class ObjetPhysique {
 
     public void setaY(double aY) {
         this.aY = aY;
+    }
+
+    public void setEstMonter(boolean estMonter) {
+        this.estMonter = estMonter;
     }
 }

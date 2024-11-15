@@ -4,7 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Vache extends ObjetPhysique {
-    private double vitessePrecedente = 0;
+    private double vitessePrecedenteCollision = 0;
+
     public Vache( double posY,double largeurNiveau, double hauteurNiveau) {
 
         super( 0, posY, "vache.png", largeurNiveau, hauteurNiveau);
@@ -19,24 +20,34 @@ public class Vache extends ObjetPhysique {
 
         this.posX = genererPositionX();
         this.vX = determinerVitesse();
+        this.ancienVitesse = this.vX;
         // Changer image selon vitesse
         changerImageSelonVitesse();
     }
 
     @Override
     public void update(double deltaTime) {
-        updatePhysique(deltaTime);
-        verifierQuePasHorsNiveau(this.largeurNiveau, this.hauteurNiveau, 100);
 
         // Si objet en collision, alors changer de direction de vitesse et changer image
         if (this.estEnCollisionHorizontal){
             // Quand l'objet est en collision, son vX devient 0, donc il faut reinitialiser la vitesse
-            vX = -1 * vitessePrecedente;
-            vitessePrecedente = vX;
+            vX = -1 * vitessePrecedenteCollision;
+            vitessePrecedenteCollision = vX;
             changerImageSelonVitesse();
+
+            // Update la vitesse pour le rayon enlevement
+            this.ancienVitesse = this.vX;
         }
+        updateMonterPhysique();
+        updatePhysique(deltaTime);
+
+        verifierQuePasHorsLimites(this.largeurNiveau, this.hauteurNiveau, 100);
+
+
 
     }
+
+
 
     private void changerImageSelonVitesse(){
         if (vX < 0){
@@ -50,7 +61,7 @@ public class Vache extends ObjetPhysique {
     private double determinerVitesse() {
         double vitesse = 10 + (Math.random() * (50 - 10 + 1));
         vitesse *= determinerDirection();
-        vitessePrecedente = vitesse;
+        vitessePrecedenteCollision = vitesse;
         return vitesse;
     }
 

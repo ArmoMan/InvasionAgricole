@@ -3,7 +3,6 @@ package ca.qc.bdeb.sim.invasionagricole;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Classe qui génère et contrôle les niveaux, contrôle la mini-carte, et génère l'alien
@@ -38,12 +37,23 @@ public class ControleurJeu {
         alien.update(deltaTime);
         rayonEnlevement.update(deltaTime);
 
-        // Verifier si rayon touche un objet physique (vache et humain)
-        for (ObjetPhysique obj : niveau.getObjetPhysiquesNiveau()){
-            if (rayonEnlevement.estRayonEnColisionAvec(obj)){
-                System.out.println("En col");
-                obj.setaY(-10000);
-                obj.setvY(100);
+        // Verifier si rayon touche un objet physique (vache et humain) et update le compteur de vache capturer
+        for (ObjetPhysique personnage : niveau.getObjetPhysiques()){
+
+            // Dessider si personnage doit "voler" vers le vasiseau ou pas
+            personnage.setEstMonter(rayonEnlevement.estRayonEnColisionAvec(personnage));
+
+            // Si en collision et en vie alors augmenter compteur, enlever vie au vache et enlever la vache
+            if (alien.estEnCollisionAvec(personnage) && personnage.getNombreDeVie() > 0){
+                personnage.setNombreDeVie(0);
+
+                // Enlever la vache ou l'humain et augmenter compteur de capture
+                if (personnage.getClass() == Humain.class){
+                    humains.remove(personnage);
+                }else  if (personnage.getClass() == Vache.class){
+                    vaches.remove(personnage);
+                    alien.setNombreDeVacheCapturer(alien.getNombreDeVacheCapturer() + 1);
+                }
             }
         }
 
@@ -51,10 +61,17 @@ public class ControleurJeu {
         objetsAffichageMap.clear();
 
 
-        // Update vaches
+        // Update vaches et ajouter au map
         for (Vache vache : vaches) {
             vache.update(deltaTime);
             objetsAffichageMap.add(vache);
+        }
+
+        // Ajouter vaisseau au map
+        objetsAffichageMap.add(alien);
+
+        for (Humain humain : humains) {
+            humain.update(deltaTime);
         }
 
         // Update humains et projectiles
@@ -69,7 +86,6 @@ public class ControleurJeu {
             projectile.update(deltaTime);
         }
 
-        objetsAffichageMap.add(alien);
     }
 
     private void lancerProjectile(double posX, double posY) {

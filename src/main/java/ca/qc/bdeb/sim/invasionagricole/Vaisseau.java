@@ -71,7 +71,7 @@ public class Vaisseau extends ObjetPhysique {
         limiterVitesse();
 
         // Verifier que ca ne depasse pas les limites du niveau
-        verifierQuePasHorsNiveau(largeurNiveau, hauteurNiveau, 60);
+        verifierQuePasHorsLimites(largeurNiveau, hauteurNiveau, 60);
 
         // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
         estLumierAllumer = estCeQueButtonMouvementAppuyer();

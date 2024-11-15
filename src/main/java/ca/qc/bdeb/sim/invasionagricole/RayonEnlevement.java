@@ -63,6 +63,7 @@ public class RayonEnlevement {
             return false;
         }
 
+
         // Verifier si objet est entre les x du rayon
         boolean estCeQuePlusGaucheQuePartieDroiteRayon = vaisseau.getGauche()
                 + largeurRayon > objetPhysique.getGauche();
@@ -70,16 +71,15 @@ public class RayonEnlevement {
 
         // Verifier si objet est entre les y du rayon
         // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut du rayon
-//        boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < objetPhysique.getPosY()
-//                + objetPhysique.getHauteur();
+        boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < objetPhysique.getPosY()
+                + objetPhysique.getHauteur();
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas du rayon
-        boolean estCeQuePlusHautQuePartieBasRayon = objetPhysique.getPosY() < vaisseau.getPosY() + hauteurRayon;
+        boolean estCeQuePlusHautQuePartieBasRayon = objetPhysique.getPosY() < vaisseau.getPosY() +vaisseau.getHauteur()+  hauteurRayon;
 
+        boolean objetPlusBasQueBasDuVaisseau = vaisseau.getPosY() + vaisseau.getHauteur() < objetPhysique.getPosY();
 
-
-
-        return  estCeQuePlusHautQuePartieBasRayon
-                && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon;
+        return  estCeQuePlusHautQuePartieBasRayon && estCeQuePlusBasQuePartieHautRayon
+                && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon && objetPlusBasQueBasDuVaisseau;
 
     }
 

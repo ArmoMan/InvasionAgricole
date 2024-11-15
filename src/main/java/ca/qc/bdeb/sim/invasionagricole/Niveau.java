@@ -19,7 +19,6 @@ public class Niveau {
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
     private  double positionYSol; // code se repete
-    private ArrayList<ObjetPhysique> objetPhysiquesNiveau = new ArrayList<>();
 
     private ArrayList<Vache> vaches = new ArrayList<>();
     private ArrayList<Humain> humains = new ArrayList<>();
@@ -38,10 +37,13 @@ public class Niveau {
         genererGrangesEtTracteurs();
         genererVaches();
         genererHumains();
-        creerTableauObjetsPhysiquesNiveau();
+//        creerTableauObjetsPhysiquesNiveau();
     }
 
-    public ArrayList<ObjetPhysique> getObjetPhysiquesNiveau() {
+    public ArrayList<ObjetPhysique> getObjetPhysiques() {
+        ArrayList<ObjetPhysique> objetPhysiquesNiveau = new ArrayList<>();
+        objetPhysiquesNiveau.addAll(vaches);
+        objetPhysiquesNiveau.addAll(humains);
         return objetPhysiquesNiveau;
     }
 
@@ -65,10 +67,10 @@ public class Niveau {
         return numeroDuNiveau;
     }
 
-    public void creerTableauObjetsPhysiquesNiveau(){
-        objetPhysiquesNiveau.addAll(vaches);
-        objetPhysiquesNiveau.addAll(humains);
-    }
+//    public void creerTableauObjetsPhysiquesNiveau(){
+//        objetPhysiquesNiveau.addAll(vaches);
+//        objetPhysiquesNiveau.addAll(humains);
+//    }
 
     public void dessinerNiveau(GraphicsContext context){
         afficherArrierePlan(context);
@@ -173,5 +175,9 @@ public class Niveau {
 
     private int calculerNombreDeHumains(){
         return 3 + 3*(numeroDuNiveau - 1);
+    }
+
+    public double getPositionYSol() {
+        return positionYSol;
     }
 }

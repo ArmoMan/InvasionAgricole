@@ -16,6 +16,9 @@ public class Humain extends ObjetPhysique {
 
     @Override
     public void update(double deltaTime) {
+        updateMonterPhysique();
+        updatePhysique(deltaTime);
+        verifierQuePasHorsLimites(this.largeurNiveau, this.hauteurNiveau, 100);
 
     }
 
