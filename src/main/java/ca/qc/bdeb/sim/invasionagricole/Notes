@@ -10,4 +10,5 @@ Bugs à fix :
 
     - Pas très important :
         - les projectiles ne sont pas centrés (le coin est centré au centre de l'humain)
+        - changer nom fonction estVisible() dans Humain
 

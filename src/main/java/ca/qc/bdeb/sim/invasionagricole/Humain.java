@@ -52,6 +52,7 @@ public class Humain extends ObjetPhysique {
         context.drawImage(this.image, xEcran, yEcran);
     }
 
+
     public boolean estVisible(Camera camera) {
         if (posX > camera.getXGauche() && posX < camera.getXDroite()) {
             return true;
