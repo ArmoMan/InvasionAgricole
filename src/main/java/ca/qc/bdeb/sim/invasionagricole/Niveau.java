@@ -20,10 +20,12 @@ public class Niveau {
     private Camera camera;
     private  double positionYSol; // code se repete
 
+    private Vaisseau vaisseau;
     private ArrayList<Vache> vaches = new ArrayList<>();
     private ArrayList<Humain> humains = new ArrayList<>();
+    private ArrayList<Projectile> projectiles = new ArrayList<>();
 
-    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau, Camera camera) {
+    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau, Camera camera, Vaisseau vaisseau) {
         this.numeroDuNiveau = numeroDuNiveau;
         this.graviteDuNiveau = graviteDuNiveau;
         this.hauteurNiveau = hauteurFenetre;
@@ -31,12 +33,15 @@ public class Niveau {
         this.largeurNiveau = largeurFenetre*4;
         this.largeurFenetre = largeurFenetre;
         this.camera = camera;
+        this.vaisseau = vaisseau;
         this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
         // Generer le contenu du niveau
         genererEtoiles(100);
         genererGrangesEtTracteurs();
         genererVaches();
         genererHumains();
+
+
 //        creerTableauObjetsPhysiquesNiveau();
     }
 
@@ -67,6 +72,10 @@ public class Niveau {
         return numeroDuNiveau;
     }
 
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
 //    public void creerTableauObjetsPhysiquesNiveau(){
 //        objetPhysiquesNiveau.addAll(vaches);
 //        objetPhysiquesNiveau.addAll(humains);
@@ -82,6 +91,9 @@ public class Niveau {
         for (Humain humain : humains) {
             humain.dessiner(context, camera);
             humain.dessinerDebug(context, camera);
+            for (Projectile projectile : projectiles) {
+                projectile.dessiner(context, camera);
+            }
         }
     }
 
@@ -156,7 +168,7 @@ public class Niveau {
     private void genererHumains() {
         humains.clear();
         for (int i = 0; i < calculerNombreDeHumains() ; i++) {
-            Humain humain = new Humain(positionYSol, largeurNiveau, positionYSol, determinerImageHumain());
+            Humain humain = new Humain(positionYSol, largeurNiveau, positionYSol, determinerImageHumain(), camera, projectiles, vaisseau);
             humains.add(humain);
         }
     }

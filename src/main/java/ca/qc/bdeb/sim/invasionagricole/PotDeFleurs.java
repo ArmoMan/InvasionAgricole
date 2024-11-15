@@ -4,8 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class PotDeFleurs extends Projectile {
 
-    public PotDeFleurs(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau) {
-        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau);
+    public PotDeFleurs(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau) {
+        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, vaisseau);
     }
 
     @Override

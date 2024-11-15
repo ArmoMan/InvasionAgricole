@@ -1,0 +1,13 @@
+Bugs à fix :
+    - quand tous les humains se sont fait aspirés, les projectiles disparaissent tous
+
+À faire :
+    - /!\ Important /!\ :
+        -
+
+    - Moyennement important :
+        - les projectiles doivent disparaitre quand ils sortent du niveau (pour l'instant ils s'arrêtent aux limites du niveau)
+
+    - Pas très important :
+        - les projectiles ne sont pas centrés (le coin est centré au centre de l'humain)
+
