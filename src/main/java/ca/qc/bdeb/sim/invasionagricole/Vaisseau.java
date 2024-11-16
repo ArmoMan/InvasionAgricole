@@ -14,6 +14,7 @@ public class Vaisseau extends ObjetPhysique {
     private double limiteVitesse = 600;
     private boolean estLumierAllumer = false;
     private int nombreDeVacheCapturer = 0;
+    private final double CHARGE_VAISSEAU = -900; // la charge en coulomb du vaisseau
 
     public Vaisseau(double posX, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
         super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau);
@@ -183,5 +184,9 @@ public class Vaisseau extends ObjetPhysique {
 
     public void setNombreDeVacheCapturer(int nombreDeVacheCapturer) {
         this.nombreDeVacheCapturer = nombreDeVacheCapturer;
+    }
+
+    public double getCHARGE_VAISSEAU() {
+        return CHARGE_VAISSEAU;
     }
 }
