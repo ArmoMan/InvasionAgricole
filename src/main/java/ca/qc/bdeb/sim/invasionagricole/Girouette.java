@@ -21,8 +21,7 @@ public class Girouette extends Projectile {
     @Override
     public void update(double deltaTime) {
         // Mise à jour de la position
-        this.posX += vX * deltaTime;
-        this.posY += vY * deltaTime;
+        updatePhysique(deltaTime);
 
         // Vérification des limites (facultatif)
         estHorsLimites(largeurNiveau, hauteurNiveau, false);

@@ -23,9 +23,9 @@ public class Vaisseau extends ObjetPhysique {
         this.vX = 0;
         this.vY = 0;
 
-        // L'alien commence avec 4 vies
+        // L'alien commence avec 4 vies et pas de gravite
         this.nombreDeVie = 4;
-        this.aY = 0;
+        this.gravite = 0;
 
         this.pourcentageHauteurANePasDepasser = 60;
 

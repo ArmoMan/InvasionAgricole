@@ -29,14 +29,13 @@ public abstract class ObjetPhysique {
         this.image = new Image(pathImage);
         this.largeurNiveau = largeurNiveau;
         this.hauteurNiveau = hauteurNiveau;
-        this.aY = gravite;
     }
 
     public abstract void update(double deltaTime);
 
     protected void updatePhysique(double deltaTemps) {
         vX += deltaTemps * aX;
-        vY += deltaTemps * aY;
+        vY += deltaTemps * (aY+gravite);
         posX += deltaTemps * vX;
         posY += deltaTemps * vY;
     }
