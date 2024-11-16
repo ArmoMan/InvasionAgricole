@@ -1,7 +1,5 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
-import javafx.scene.canvas.GraphicsContext;
-
 public class Girouette extends Projectile {
 
     public Girouette(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau) {
@@ -27,6 +25,6 @@ public class Girouette extends Projectile {
         this.posY += vY * deltaTime;
 
         // Vérification des limites (facultatif)
-        verifierQuePasHorsLimites(largeurNiveau, hauteurNiveau, 100);
+        estHorsLimites(largeurNiveau, hauteurNiveau, false);
     }
 }

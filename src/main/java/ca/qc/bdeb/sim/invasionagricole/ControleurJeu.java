@@ -3,6 +3,7 @@ package ca.qc.bdeb.sim.invasionagricole;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe qui génère et contrôle les niveaux, contrôle la mini-carte, et génère l'alien
@@ -38,7 +39,7 @@ public class ControleurJeu {
         // Verifier si rayon touche un objet physique (vache et humain) et update le compteur de vache capturer
         for (ObjetPhysique personnage : niveau.getObjetPhysiques()){
 
-            // Dessider si personnage doit "voler" vers le vasiseau ou pas
+            // Dessider si personnage doit "voler" vers le vaisseau ou pas
             personnage.setEstMonter(rayonEnlevement.estRayonEnColisionAvec(personnage));
 
             // Si en collision et en vie alors augmenter compteur, enlever vie au vache et enlever la vache
@@ -68,15 +69,32 @@ public class ControleurJeu {
         // Ajouter vaisseau au map
         objetsAffichageMap.add(alien);
 
+        // Update humains et projectiles
         for (Humain humain : humains) {
             humain.update(deltaTime);
+            // Liste de projectiles a effacer
+            ArrayList<Projectile> projectilesEffacer = new ArrayList<>();
+            // Faire le tour des projectiles, les updates et si hors limite, alors l'effacer.
             for (Projectile projectile : niveau.getProjectiles()) {
                 projectile.update(deltaTime);
-
+                if (projectile.estHorsLimites(niveau.getLargeurNiveau(), niveau.getPositionYSol(),false)){
+                    projectilesEffacer.add(projectile);
+                }
             }
+            niveau.getProjectiles().removeAll(projectilesEffacer);
+
+            // deuxieme options pour effacer
+//            Iterator<Projectile> iteratorProjectiles = niveau.getProjectiles().iterator();
+//            while (iteratorProjectiles.hasNext()){
+//                Projectile projectile = iteratorProjectiles.next();
+//                projectile.update(deltaTime);
+//                // Si projectile hors limites du niveau, alors l'effacer
+//                if (projectile.estHorsLimites(niveau.getLargeurNiveau(), niveau.getPositionYSol(),false)){
+//                    iteratorProjectiles.remove();
+//                }
+//            }
         }
 
-        // Update humains et projectiles
 
     }
 

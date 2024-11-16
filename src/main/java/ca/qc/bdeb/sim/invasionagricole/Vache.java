@@ -29,7 +29,7 @@ public class Vache extends ObjetPhysique {
     public void update(double deltaTime) {
 
         // Si objet en collision, alors changer de direction de vitesse et changer image
-        if (this.estEnCollisionHorizontal){
+        if (this.estEnCollisionLimiteHorizontal){
             // Quand l'objet est en collision, son vX devient 0, donc il faut reinitialiser la vitesse
             vX = -1 * vitessePrecedenteCollision;
             vitessePrecedenteCollision = vX;
@@ -41,7 +41,7 @@ public class Vache extends ObjetPhysique {
         updateMonterPhysique();
         updatePhysique(deltaTime);
 
-        verifierQuePasHorsLimites(this.largeurNiveau, this.hauteurNiveau, 100);
+        estHorsLimites(this.largeurNiveau, this.hauteurNiveau, true);
 
 
 

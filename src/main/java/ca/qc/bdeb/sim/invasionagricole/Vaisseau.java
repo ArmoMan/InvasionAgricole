@@ -27,6 +27,8 @@ public class Vaisseau extends ObjetPhysique {
         this.nombreDeVie = 4;
         this.aY = 0;
 
+        this.pourcentageHauteurANePasDepasser = 60;
+
     }
 
     @Override
@@ -71,7 +73,7 @@ public class Vaisseau extends ObjetPhysique {
         limiterVitesse();
 
         // Verifier que ca ne depasse pas les limites du niveau
-        verifierQuePasHorsLimites(largeurNiveau, hauteurNiveau, 60);
+        estHorsLimites(largeurNiveau, hauteurNiveau, true);
 
         // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
         estLumierAllumer = estCeQueButtonMouvementAppuyer();

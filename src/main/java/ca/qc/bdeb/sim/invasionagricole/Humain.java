@@ -30,8 +30,7 @@ public class Humain extends ObjetPhysique {
     public void update(double deltaTime) {
         updateMonterPhysique();
         updatePhysique(deltaTime);
-        verifierQuePasHorsLimites(this.largeurNiveau, this.hauteurNiveau, 100);
-
+        estHorsLimites(this.largeurNiveau, this.hauteurNiveau,true);
         if (estVisible(camera)) {
             //System.out.println("humain à la position : " + this.posX + ", " + this.posY + " est visible.");
 

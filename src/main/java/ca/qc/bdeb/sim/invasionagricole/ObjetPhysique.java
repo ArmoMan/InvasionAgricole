@@ -15,11 +15,13 @@ public abstract class ObjetPhysique {
     protected double largeurNiveau, hauteurNiveau;
     protected double gravite = 1000;
     // Boolean pour voir si l'objet est en collision entre les limites horizontales du niveau
-    protected boolean estEnCollisionHorizontal = false;
+    protected boolean estEnCollisionLimiteHorizontal = false;
     // Boolean pour voir si le physique du rayon doit s'appliquer
     protected boolean estMonter = false;
     // Variable pour garder en memoire une vitesse passé
     protected double ancienVitesse ;
+    // La pourcentage de la limite verticale maximale que peut atteindre cette objet. Par defaut: 100%
+    protected double pourcentageHauteurANePasDepasser = 100;
 
     public ObjetPhysique(double posX, double posY, String pathImage,double largeurNiveau, double hauteurNiveau) {
         this.posY = posY;
@@ -66,41 +68,88 @@ public abstract class ObjetPhysique {
         context.strokeRect(xEcran, yEcran, largeur, hauteur);
     }
 
+//    /**
+//     * Methode pour verifier que le vaisseau n'est pas hors ecran et qu'il respecte la limite de hauteur
+//     * @param largeurMax du niveau
+//     * @param hauteurMax du niveau
+//     */
+//    protected void verifierQuePasHorsLimites(double largeurMax, double hauteurMax, double pourcentageHauteurANePasDepasser){
+//
+//        // verifier la limite horizontale et replacer objet si nécessaire
+//        estEnCollisionLimiteHorizontal = estHorsLimite(largeurMax, hauteurMax, Limite.HORIZONTALE);
+//        if (estEnCollisionLimiteHorizontal){
+//            if (posX + largeur > largeurMax) {
+//                posX = largeurMax - largeur;
+//                vX = 0;
+//            }else if (posX < 0) {
+//                posX = 0;
+//                vX = 0;
+//            }
+//        }
+//
+//        /* verifier que l'objet ne depasse pas pourcentageHauteurANePasDepasser de l'hauteur
+//         du niveau et replacer si nécessaire
+//         */
+//        if ( estHorsLimite(largeurMax, hauteurMax, Limite.VERTICALE)){
+//            double limiteDeHauteur = hauteurMax * (pourcentageHauteurANePasDepasser/100);
+//            if (posY + hauteur > limiteDeHauteur) {
+//                posY = limiteDeHauteur - hauteur;
+//                vY = 0;
+//            }else if (posY < 0) {
+//                posY = 0;
+//                vY = 0;
+//            }
+//        }
+//    }
+
     /**
-     * Methode pour verifier que le vaisseau n'est pas hors ecran et qu'il respecte la limite de hauteur
-     * @param largeurMax du niveau
-     * @param hauteurMax du niveau
+     * Methode pour verifier si objet est dans les limites voulu ou non. Permet aussi de repositionner l'objet si voulu.
+     * @param posXMax posX maximale atteignable par objet
+     * @param posYMax posY maximale atteignable par objet
+     * @param repositionnerObjet si vrai, alors il repositionne l'objet en cas de dépassement des limites
+     * @return true si l'objet est hors limites et false si pas hors limites
      */
-    protected void verifierQuePasHorsLimites(double largeurMax, double hauteurMax, double pourcentageHauteurANePasDepasser){
-
-        estEnCollisionHorizontal = true;
-        // verifier la limite horizontale
-        if (posX + largeur > largeurMax) {
-            posX = largeurMax - largeur;
-            vX = 0;
+    public boolean estHorsLimites(double posXMax, double posYMax, boolean repositionnerObjet){
+        // Cas horizontal
+        this.estEnCollisionLimiteHorizontal = false;
+        if (posX + largeur > posXMax) {
+            this.estEnCollisionLimiteHorizontal = true;
+            if (repositionnerObjet){
+                posX = posXMax - largeur;
+                vX = 0;
+            }
         }else if (posX < 0) {
-            posX = 0;
-            vX = 0;
-        }else {
-            // si pas hors limites
-            estEnCollisionHorizontal = false;
+            this.estEnCollisionLimiteHorizontal = true;
+            if (repositionnerObjet){
+                posX = 0;
+                vX = 0;
+            }
         }
 
-        // verifier que le vaisseau ne depasse pas pourcentageHauteurANePasDepasser de l'hauteur du niveau
-        double limiteDeHauteur = hauteurMax * (pourcentageHauteurANePasDepasser/100);
+        // Cas vertical: verifier que l'objet ne depasse pas pourcentageHauteurANePasDepasser de l'hauteur donnée
+        boolean estEnCollisionLimiteVerticale = false;
+        double limiteDeHauteur = posYMax*(this.pourcentageHauteurANePasDepasser/100);
         if (posY + hauteur > limiteDeHauteur) {
-            posY = limiteDeHauteur - hauteur;
-            vY = 0;
+            estEnCollisionLimiteVerticale = true;
+            if (repositionnerObjet){
+                posY = limiteDeHauteur - hauteur;
+                vY = 0;
+            }
         }else if (posY < 0) {
-            posY = 0;
-            vY = 0;
+            estEnCollisionLimiteVerticale = true;
+            if (repositionnerObjet){
+                posY = 0;
+                vY = 0;
+            }
         }
+
+        return estEnCollisionLimiteVerticale && this.estEnCollisionLimiteHorizontal;
 
     }
 
     /**
      * Methode pour generer une position x entre 0 et largeurNiveau - largeur (image)
-     * @return
+     * @return position x entre 0 et largeurNiveau - largeur (image)
      */
     protected double genererPositionX(){
         return (Math.random() * (largeurNiveau-largeur));
