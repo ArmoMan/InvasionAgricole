@@ -16,7 +16,7 @@ public abstract class Projectile extends ObjetPhysique {
     public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau) {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau);
         this.vaisseauTarget = vaisseau;
-        calculerDirectionVersVaisseau(vaisseau);
+        calculerDirectionVersVaisseau();
         System.out.println("un projectile a ete creer");
     }
 
