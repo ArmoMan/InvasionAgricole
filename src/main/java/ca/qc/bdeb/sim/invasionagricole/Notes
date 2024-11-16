@@ -12,3 +12,10 @@ Bugs à fix :
         - les projectiles ne sont pas centrés (le coin est centré au centre de l'humain)
         - changer nom fonction estVisible() dans Humain
 
+
+
+    - Hayk:
+           - Separer fonction verifierPasHorsLimites en 2.
+                    - verifierHorsLimites => replacer a la bonne position
+                    - estHorsLimite(hauteur, largeur, Enum.horizontale ou Enum.verticale)
+
