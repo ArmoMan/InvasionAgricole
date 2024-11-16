@@ -3,7 +3,6 @@ package ca.qc.bdeb.sim.invasionagricole;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Classe qui génère et contrôle les niveaux, contrôle la mini-carte, et génère l'alien
