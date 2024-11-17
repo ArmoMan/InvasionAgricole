@@ -71,6 +71,7 @@ public class Vaisseau extends ObjetPhysique {
 
         updatePhysique(deltaTime);
 
+        // limiter vitesse à 600
         limiterVitesse();
 
         // Verifier que ca ne depasse pas les limites du niveau

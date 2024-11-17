@@ -71,18 +71,21 @@ public class ControleurJeu {
         // Update humains et projectiles
         for (Humain humain : humains) {
             humain.update(deltaTime);
-            // Liste de projectiles a effacer
-            ArrayList<Projectile> projectilesEffacer = new ArrayList<>();
-            // Faire le tour des projectiles, les updates et si hors limite, alors l'effacer.
-            for (Projectile projectile : niveau.getProjectiles()) {
-                projectile.update(deltaTime);
-                if (projectile.estHorsLimites(niveau.getLargeurNiveau(), niveau.getPositionYSol(),false)){
-                    projectilesEffacer.add(projectile);
-                }
-            }
-            niveau.getProjectiles().removeAll(projectilesEffacer);
+        }
 
-            // deuxieme options pour effacer
+        // Liste de projectiles a effacer
+        ArrayList<Projectile> projectilesEffacer = new ArrayList<>();
+        // Faire le tour des projectiles, les updates et si hors limite, alors l'effacer.
+        for (Projectile projectile : niveau.getProjectiles()) {
+            projectile.update(deltaTime);
+            if (projectile.estHorsLimites(niveau.getLargeurNiveau(), niveau.getPositionYSol(),false)){
+                System.out.println("Hors ecran");
+                projectilesEffacer.add(projectile);
+            }
+        }
+        niveau.getProjectiles().removeAll(projectilesEffacer);
+
+        // deuxieme options pour effacer
 //            Iterator<Projectile> iteratorProjectiles = niveau.getProjectiles().iterator();
 //            while (iteratorProjectiles.hasNext()){
 //                Projectile projectile = iteratorProjectiles.next();
@@ -92,8 +95,6 @@ public class ControleurJeu {
 //                    iteratorProjectiles.remove();
 //                }
 //            }
-        }
-
 
     }
 
