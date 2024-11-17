@@ -219,6 +219,9 @@ public abstract class ObjetPhysique {
 
     public void setNombreDeVie(int nombreDeVie) {
         this.nombreDeVie = nombreDeVie;
+        if (this.nombreDeVie > 4) {
+            this.nombreDeVie = 4;
+        }
     }
 
     public double getHauteurImage() {

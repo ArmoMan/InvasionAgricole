@@ -79,6 +79,7 @@ public class ControleurJeu {
                 // Enlever la vache ou l'humain et augmenter compteur de capture
                 if (personnage.getClass() == Humain.class){
                     humains.remove(personnage);
+                    vaisseau.setNombreDeVie(vaisseau.getNombreDeVie() + 1);
                 }else  if (personnage.getClass() == Vache.class){
                     vaches.remove(personnage);
                     vaisseau.setNbVachesCapturees(vaisseau.getNbVachesCapturees() + 1);
