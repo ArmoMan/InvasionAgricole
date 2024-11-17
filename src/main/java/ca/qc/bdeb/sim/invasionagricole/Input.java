@@ -21,7 +21,7 @@ public class Input {
     }
 
     public static void gererToggleModeDebogage() {
-        if (Input.isKeyPressed(KeyCode.D)) {
+        if (isKeyPressed(KeyCode.D)) {
             if (toucheDebogageRelachee) {
                 modeDebogageActif = !modeDebogageActif;
                 toucheDebogageRelachee = false;
@@ -30,6 +30,4 @@ public class Input {
             toucheDebogageRelachee = true;
         }
     }
-
-
 }

@@ -9,8 +9,8 @@ Bugs à fix :
         - les projectiles doivent disparaitre quand ils sortent du niveau (pour l'instant ils s'arrêtent aux limites du niveau)
 
     - Pas très important :
-        - les projectiles ne sont pas centrés (le coin est centré au centre de l'humain)
-        - changer nom fonction estVisible() dans Humain
+        - les projectiles ne sont pas centrés (le coin est centré au centre de l'humain) (fixed)
+        - changer fonction estVisible() dans Humain (fixed)
 
 
 
