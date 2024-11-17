@@ -175,8 +175,15 @@ public abstract class ObjetPhysique {
 
     }
 
-
-
+    /**
+     * Methode pour calculer le centre de par exemple un objet
+     * @param position posX ou posY d'un objet (position de l'angle gauche)
+     * @param taille largeur si on cherche posX, hauteur si on cherche posY
+     * @return la position du centre
+     */
+    protected double calculerPositionCentre(double position, double taille){
+        return position+(taille/2);
+    }
 
 
     public double getPosX() {

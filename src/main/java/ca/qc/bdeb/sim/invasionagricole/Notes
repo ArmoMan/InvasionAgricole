@@ -19,3 +19,8 @@ Bugs à fix :
                     - verifierHorsLimites => replacer a la bonne position
                     - estHorsLimite(hauteur, largeur, Enum.horizontale ou Enum.verticale)
 
+Important !!!
+Dans AimantFerCheval verifier ca avec prof:
+        est ce qu'il faut tout le temps appeler: calculerDirectionVersVaisseau dans update de l'aimant ou pas ?
+        +
+        pourquoi nos projectiles sont aussi rapides, nos vitesses ne marchent pas

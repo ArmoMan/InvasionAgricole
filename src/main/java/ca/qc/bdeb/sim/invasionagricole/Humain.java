@@ -48,7 +48,7 @@ public class Humain extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        context.drawImage(this.image, xEcran, yEcran);
+        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
     }
 
 
@@ -66,7 +66,7 @@ public class Humain extends ObjetPhysique {
 
     private Projectile creerProjectile(double posX, double posY) {
         int choix = (1 + (int) (Math.random() * 3)); // genere un chiffre au hasard entre 1 et 3
-        choix = 1; // test avec seulement des girouettes
+//        choix = 1; // test avec seulement des girouettes
         switch (choix) {
             case 1 -> {
                 return new Girouette(posX,posY,"girouette.png", largeurNiveau, hauteurNiveau, vaisseau);
