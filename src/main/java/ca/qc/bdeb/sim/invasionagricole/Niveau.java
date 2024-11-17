@@ -116,7 +116,7 @@ public class Niveau {
 
         // le sol
         context.setFill(Color.web("#225500"));
-        context.fillRect(0,hauteurNiveau-HAUTEUR_SOL_VERT,largeurNiveau,HAUTEUR_SOL_VERT);
+        context.fillRect(0,positionYSol,largeurNiveau,HAUTEUR_SOL_VERT);
     }
 
     private void genererEtoiles(int nombreDeEtoileVoulu){

@@ -142,7 +142,7 @@ public abstract class ObjetPhysique {
             }
         }
 
-        return estEnCollisionLimiteVerticale && this.estEnCollisionLimiteHorizontal;
+        return estEnCollisionLimiteVerticale || this.estEnCollisionLimiteHorizontal;
 
     }
 
