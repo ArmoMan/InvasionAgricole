@@ -185,18 +185,13 @@ public abstract class ObjetPhysique {
         return position+(taille/2);
     }
 
-
     /**
      * Verifier si objet est hors camera
      * @param camera camera de l'objet
      * @return true si est hors au complet
      */
-    public boolean estObjetHorsEcran(Camera camera){
-        double xEcran = camera.calculerEcranX(posX);
-        double yEcran = camera.calculerEcranY(posY);
-
-        return (xEcran > camera.getLargeurCamera()) || (xEcran+largeur < 0) || (yEcran > camera.getHauteurCamera()) || (camera.calculerEcranY(posY+hauteur) < 0);
-    }
+    public boolean estObjetHorsCamera(Camera camera){
+        return (this.getGauche() > camera.getXDroite()) || (this.getDroite() < camera.getXGauche()) || (this.getHaut() > camera.getYBas()) || (this.getBas() < camera.getYHaut());    }
 
     public double getPosX() {
         return posX;

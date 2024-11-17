@@ -58,7 +58,7 @@ public class ControleurJeu {
         // A faire !!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Si vaisseau hors limites au complet du camera et que plus de vie, alors partie perdue
         if (alien.getNombreDeVie() <= 0){
-            if (alien.estObjetHorsEcran(camera)){
+            if (alien.estObjetHorsCamera(camera)){
                 // Ici retourner ecran d'acceuil
             }
             return;
