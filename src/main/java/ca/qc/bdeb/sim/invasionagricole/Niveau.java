@@ -93,6 +93,7 @@ public class Niveau {
             humain.dessinerDebug(context, camera);
             for (Projectile projectile : projectiles) {
                 projectile.dessiner(context, camera);
+                projectile.dessinerDebug(context, camera);
             }
         }
     }
