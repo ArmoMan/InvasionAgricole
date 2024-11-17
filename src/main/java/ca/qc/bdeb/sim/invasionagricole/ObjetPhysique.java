@@ -2,15 +2,18 @@ package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+
+import static ca.qc.bdeb.sim.invasionagricole.Input.gererToggleModeDebogage;
 
 public abstract class ObjetPhysique {
 
-    protected double posX=0, posY=0;
+    protected double posX, posY;
     protected double vX = 0, vY =0;
     protected double aX = 0, aY = 0;
     protected Image image;
-    protected double largeur, hauteur;
+    protected double largeurImage, hauteurImage;
     protected int nombreDeVie;
     protected double largeurNiveau, hauteurNiveau;
     protected double gravite = 1000;
@@ -23,12 +26,15 @@ public abstract class ObjetPhysique {
     // La pourcentage de la limite verticale maximale que peut atteindre cette objet. Par defaut: 100%
     protected double pourcentageHauteurANePasDepasser = 100;
 
-    public ObjetPhysique(double posX, double posY, String pathImage,double largeurNiveau, double hauteurNiveau) {
+
+    public ObjetPhysique(double posX, double posY, String pathImage,double largeurNiveau, double hauteurNiveau, double largeurImage, double hauteurImage) {
         this.posY = posY;
         this.posX = posX;
         this.image = new Image(pathImage);
         this.largeurNiveau = largeurNiveau;
         this.hauteurNiveau = hauteurNiveau;
+        this.largeurImage = largeurImage;
+        this.hauteurImage = hauteurImage;
     }
 
     public abstract void update(double deltaTime);
@@ -59,12 +65,16 @@ public abstract class ObjetPhysique {
      * @param camera
      */
     protected void dessinerDebug(GraphicsContext context, Camera camera) {
-        double xEcran = camera.calculerEcranX(posX);
-        double yEcran = camera.calculerEcranY(posY);
 
-        context.setStroke(Color.YELLOW);
-        context.setLineWidth(2);
-        context.strokeRect(xEcran, yEcran, largeur, hauteur);
+        // Si la touche de débogage a été appuyée, activer/désactiver le mode débogage
+        if (Input.modeDebogageActif) {
+            double xEcran = camera.calculerEcranX(posX);
+            double yEcran = camera.calculerEcranY(posY);
+
+            context.setStroke(Color.YELLOW);
+            context.setLineWidth(2);
+            context.strokeRect(xEcran, yEcran, largeurImage, hauteurImage);
+        }
     }
 
 //    /**
@@ -102,7 +112,7 @@ public abstract class ObjetPhysique {
 //    }
 
     /**
-     * Methode pour verifier si objet est dans les limites voulu ou non. Permet aussi de repositionner l'objet si voulu.
+     * Methode pour verifier si objet est dans les limites voulues ou non. Permet aussi de repositionner l'objet si voulu.
      * @param posXMax posX maximale atteignable par objet
      * @param posYMax posY maximale atteignable par objet
      * @param repositionnerObjet si vrai, alors il repositionne l'objet en cas de dépassement des limites
@@ -114,7 +124,7 @@ public abstract class ObjetPhysique {
         if (this.getDroite() > posXMax) {
             this.estEnCollisionLimiteHorizontal = true;
             if (repositionnerObjet){
-                posX = posXMax - largeur;
+                posX = posXMax - largeurImage;
                 vX = 0;
             }
         }else if (this.getGauche() < 0) {
@@ -131,7 +141,7 @@ public abstract class ObjetPhysique {
         if (this.getBas() > limiteDeHauteur) {
             estEnCollisionLimiteVerticale = true;
             if (repositionnerObjet){
-                posY = limiteDeHauteur - hauteur;
+                posY = limiteDeHauteur - hauteurImage;
                 vY = 0;
             }
         }else if (this.getHaut() < 0) {
@@ -151,23 +161,23 @@ public abstract class ObjetPhysique {
      * @return position x entre 0 et largeurNiveau - largeur (image)
      */
     protected double genererPositionX(){
-        return (Math.random() * (largeurNiveau-largeur));
+        return (Math.random() * (largeurNiveau- largeurImage));
     }
 
     public boolean estEnCollisionAvec(ObjetPhysique objetPhysique) {
 
         // Verifier si objet est entre les x de l'objet actuel
         boolean estCeQuePlusGaucheQuePartieDroiteActuel = this.getGauche()
-                + this.largeur > objetPhysique.getGauche();
+                + this.largeurImage > objetPhysique.getGauche();
         boolean estCeQuePlusDroiteQuePartieGaucheActuel = this.getGauche() < objetPhysique.getDroite();
 
         // Verifier si objet est entre les y de l'objet actuel
         // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut de l'objet actuel
         boolean estCeQuePlusBasQuePartieHautActuel = this.getPosY() < objetPhysique.getPosY()
-                + objetPhysique.getHauteur();
+                + objetPhysique.getHauteurImage();
 
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas de l'objet actuel
-        boolean estCeQuePlusHautQuePartieBasActuel = objetPhysique.getPosY() < this.getPosY() + this.hauteur;
+        boolean estCeQuePlusHautQuePartieBasActuel = objetPhysique.getPosY() < this.getPosY() + this.hauteurImage;
 
 
         return estCeQuePlusBasQuePartieHautActuel && estCeQuePlusHautQuePartieBasActuel
@@ -190,8 +200,10 @@ public abstract class ObjetPhysique {
      * @param camera camera de l'objet
      * @return true si est hors au complet
      */
-    public boolean estObjetHorsCamera(Camera camera){
-        return (this.getGauche() > camera.getXDroite()) || (this.getDroite() < camera.getXGauche()) || (this.getHaut() > camera.getYBas()) || (this.getBas() < camera.getYHaut());    }
+    public boolean estHorsCamera(Camera camera){
+        return (this.getGauche() > camera.getDroite()) || (this.getDroite() < camera.getGauche()) ||
+                (this.getHaut() > camera.getBas()) || (this.getBas() < camera.getHaut());
+    }
 
     public double getPosX() {
         return posX;
@@ -209,12 +221,12 @@ public abstract class ObjetPhysique {
         this.nombreDeVie = nombreDeVie;
     }
 
-    public double getHauteur() {
-        return hauteur;
+    public double getHauteurImage() {
+        return hauteurImage;
     }
 
-    public double getLargeur() {
-        return largeur;
+    public double getLargeurImage() {
+        return largeurImage;
     }
 
     public double getGauche(){
@@ -222,11 +234,11 @@ public abstract class ObjetPhysique {
     }
 
     public double getDroite(){
-        return this.getPosX() + this.largeur;
+        return this.getPosX() + this.largeurImage;
     }
 
     public double getBas(){
-        return this.getPosY() + this.hauteur;
+        return this.getPosY() + this.hauteurImage;
     }
 
     public double getHaut(){

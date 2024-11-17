@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -9,30 +10,30 @@ import java.util.ArrayList;
  */
 public class ControleurJeu {
 
-    private Vaisseau alien = new Vaisseau(0,0,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
-    private RayonEnlevement rayonEnlevement = new RayonEnlevement(alien);
+    private Vaisseau vaisseau = new Vaisseau(0,0,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
+    private RayonEnlevement rayonEnlevement = new RayonEnlevement(vaisseau);
     private Camera camera = new Camera(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
     private double tempsEcouleEcranNoir = 0;
-    Niveau niveau = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera, alien);
-    ArrayList<ObjetPhysique> objetsAffichageMap = new ArrayList<>();
-    MiniCarte miniCarte = new MiniCarte(10,50,100, objetsAffichageMap);
-    ArrayList<Vache> vaches = niveau.getVaches();
-    ArrayList<Humain> humains = niveau.getHumains();
+    private Niveau niveau = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1, camera, vaisseau);
+    private ArrayList<ObjetPhysique> objetsAffichageMap = new ArrayList<>();
+    private MiniCarte miniCarte = new MiniCarte(10,50,100, objetsAffichageMap);
+    private ArrayList<Vache> vaches = niveau.getVaches();
+    private ArrayList<Humain> humains = niveau.getHumains();
 
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
         niveau.dessinerNiveau(context);
 
 
-        camera.suivre(alien, niveau.getLargeurNiveau());
-        alien.dessiner(context,camera);
+        camera.suivre(vaisseau, niveau.getLargeurNiveau());
+        vaisseau.dessiner(context,camera);
         rayonEnlevement.dessinerRayon(context, camera);
         rayonEnlevement.dessinerBatterie(context,100,30,10,10,"batterie.png");
         miniCarte.dessiner(context, niveau.getLargeurNiveau());
-        alien.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
+        vaisseau.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
 
         // Si niveau gagner, dessiner en noire l'ecran et afficher le texte
-        if (niveau.isNiveauGagne()){
+        if (niveau.estNiveauGagne()){
             niveau.dessinerEcranGagner(context, tempsEcouleEcranNoir/ 2.5);
         }
     }
@@ -40,25 +41,25 @@ public class ControleurJeu {
     public void update(double deltaTime){
 
         // Si plus de vache et niveau non gagner, alors changer ca
-        if (niveau.getVaches().isEmpty() && !niveau.isNiveauGagne()){
+        if (niveau.getVaches().isEmpty() && !niveau.estNiveauGagne()){
             niveau.setNiveauGagne(true);
             // remettre le temps de l'ecran noir a 0
             tempsEcouleEcranNoir = 0;
         }
 
-        if (niveau.isNiveauGagne()){
+        if (niveau.estNiveauGagne()){
             tempsEcouleEcranNoir += deltaTime;
             return;
         }
 
         // Update l'alien et rayon
-        alien.update(deltaTime);
+        vaisseau.update(deltaTime);
         rayonEnlevement.update(deltaTime);
 
         // A faire !!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Si vaisseau hors limites au complet du camera et que plus de vie, alors partie perdue
-        if (alien.getNombreDeVie() <= 0){
-            if (alien.estObjetHorsCamera(camera)){
+        if (vaisseau.getNombreDeVie() <= 0){
+            if (vaisseau.estHorsCamera(camera)){
                 // Ici retourner ecran d'acceuil
             }
             return;
@@ -72,7 +73,7 @@ public class ControleurJeu {
             personnage.setEstMonter(rayonEnlevement.estRayonEnColisionAvec(personnage));
 
             // Si en collision et en vie alors augmenter compteur, enlever vie au vache et enlever la vache
-            if (alien.estEnCollisionAvec(personnage) && personnage.getNombreDeVie() > 0){
+            if (vaisseau.estEnCollisionAvec(personnage) && personnage.getNombreDeVie() > 0){
                 personnage.setNombreDeVie(0);
 
                 // Enlever la vache ou l'humain et augmenter compteur de capture
@@ -80,7 +81,7 @@ public class ControleurJeu {
                     humains.remove(personnage);
                 }else  if (personnage.getClass() == Vache.class){
                     vaches.remove(personnage);
-                    alien.setNombreDeVacheCapturer(alien.getNombreDeVacheCapturer() + 1);
+                    vaisseau.setNbVachesCapturees(vaisseau.getNbVachesCapturees() + 1);
 
                 }
             }
@@ -97,7 +98,7 @@ public class ControleurJeu {
         }
 
         // Ajouter vaisseau au map
-        objetsAffichageMap.add(alien);
+        objetsAffichageMap.add(vaisseau);
 
         // Update humains et projectiles
         for (Humain humain : humains) {
@@ -117,11 +118,11 @@ public class ControleurJeu {
             }
 
             // Si projectile en collsion avec vaisseau, alors dminuer la vie du vaisseau et effacer projectile
-            if (projectile.estEnCollisionAvec(alien)){
+            if (projectile.estEnCollisionAvec(vaisseau)){
                 projectilesEffacer.add(projectile);
                 // Enlever des vie au vaisseau seulement si il a des vies
-                if (alien.getNombreDeVie() > 0){
-                    alien.setNombreDeVie(alien.getNombreDeVie() - 1);
+                if (vaisseau.getNombreDeVie() > 0){
+                    vaisseau.setNombreDeVie(vaisseau.getNombreDeVie() - 1);
                 }
             }
 
@@ -140,8 +141,4 @@ public class ControleurJeu {
 //            }
 
     }
-
-
-
-
 }

@@ -12,14 +12,12 @@ public class Vaisseau extends ObjetPhysique {
     private Image vaisseauLumiereOn = new Image("base-vaisseau-on.png");
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
     private double limiteVitesse = 600;
-    private boolean estLumierAllumer = false;
-    private int nombreDeVacheCapturer = 0;
+    private boolean estLumiereAllumee = false;
+    private int nbVachesCapturees = 0;
     private final double CHARGE_VAISSEAU = -900; // la charge en coulomb du vaisseau
 
     public Vaisseau(double posX, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
-        super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau);
-        this.largeur = 100;
-        this.hauteur = 140;
+        super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau, 100, 140);
 
         this.vX = 0;
         this.vY = 0;
@@ -79,7 +77,7 @@ public class Vaisseau extends ObjetPhysique {
             estToucherLimites(largeurNiveau, hauteurNiveau, true);
 
             // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
-            estLumierAllumer = estCeQueButtonMouvementAppuyer();
+            estLumiereAllumee = isBoutonMouvementActif();
         }else {
             vX = 100;
             vY = 100;
@@ -91,7 +89,7 @@ public class Vaisseau extends ObjetPhysique {
 
 
 
-    private boolean estCeQueButtonMouvementAppuyer(){
+    private boolean isBoutonMouvementActif(){
         boolean left = Input.isKeyPressed(KeyCode.LEFT);
         boolean right = Input.isKeyPressed(KeyCode.RIGHT);
         boolean up = Input.isKeyPressed(KeyCode.UP);
@@ -125,19 +123,16 @@ public class Vaisseau extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);
 
+        context.setFill(couleurVitre);
+        context.fillOval(xEcran, yEcran,  this.largeurImage,  this.hauteurImage);
 
-        if (estLumierAllumer){
-            context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeur)/2), yEcran + (this.hauteur-vaisseauLumiereOn.getHeight()));
+        if (estLumiereAllumee){
+            context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeurImage)/2), yEcran + (this.hauteurImage -vaisseauLumiereOn.getHeight()));
         }else {
-            context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeur)/2), yEcran + (this.hauteur-vaisseauLumiereOff.getHeight()));
+            context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeurImage)/2), yEcran + (this.hauteurImage -vaisseauLumiereOff.getHeight()));
         }
 
-        context.drawImage(this.image, (xEcran+( this.largeur - this.image.getWidth())/2),yEcran + this.hauteur-vaisseauLumiereOff.getHeight()-this.image.getHeight() );
-
-        context.setFill(couleurVitre);
-        context.fillOval(xEcran, yEcran,  this.largeur,  this.hauteur);
-
-
+        context.drawImage(this.image, (xEcran+( this.largeurImage - this.image.getWidth())/2),yEcran + this.hauteurImage -vaisseauLumiereOff.getHeight()-this.image.getHeight() );
 
         dessinerDebug(context, camera);
     }
@@ -164,7 +159,7 @@ public class Vaisseau extends ObjetPhysique {
         double  posYTextes = posYdessin+hauteurImages-valeurASoustraire;
         // Texte de vache
         double posXCompteurVache = posXdessin + largeurImageVache + espacementDesElements;
-        context.fillText(String.valueOf(this.nombreDeVacheCapturer), posXCompteurVache, posYTextes);
+        context.fillText(String.valueOf(this.nbVachesCapturees), posXCompteurVache, posYTextes);
 
         // Image d'Alien
         double posXAlien = posXCompteurVache + espacementDesElements + context.getFont().getSize();
@@ -188,12 +183,12 @@ public class Vaisseau extends ObjetPhysique {
     }
 
 
-    public int getNombreDeVacheCapturer() {
-        return nombreDeVacheCapturer;
+    public int getNbVachesCapturees() {
+        return nbVachesCapturees;
     }
 
-    public void setNombreDeVacheCapturer(int nombreDeVacheCapturer) {
-        this.nombreDeVacheCapturer = nombreDeVacheCapturer;
+    public void setNbVachesCapturees(int nbVachesCapturees) {
+        this.nbVachesCapturees = nbVachesCapturees;
     }
 
     public double getCHARGE_VAISSEAU() {

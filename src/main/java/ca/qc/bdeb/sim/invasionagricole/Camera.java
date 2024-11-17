@@ -41,16 +41,16 @@ public class Camera {
 
     }
 
-    public double getXGauche() {
+    public double getGauche() {
         return xCamera;
     }
-    public double getXDroite() {
+    public double getDroite() {
         return xCamera+ largeurCamera;
     }
-    public double getYHaut() {
+    public double getHaut() {
         return yCamera;
     }
-    public double getYBas() {
+    public double getBas() {
         return yCamera+hauteurCamera;
     }
     public double getLargeurCamera() {

@@ -14,27 +14,28 @@ import java.util.Random;
 public class Niveau {
     private double largeurNiveau, hauteurNiveau;
     private int numeroDuNiveau;
-    private double graviteDuNiveau;
     private final int HAUTEUR_SOL_VERT = 20;
     // Largeur de l'ecran / fenetre
     private double largeurFenetre;
+    private double hauteurFenetre;
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
     private  double positionYSol; // code se repete
     private boolean niveauGagne = false;
+
 
     private Vaisseau vaisseau;
     private ArrayList<Vache> vaches = new ArrayList<>();
     private ArrayList<Humain> humains = new ArrayList<>();
     private ArrayList<Projectile> projectiles = new ArrayList<>();
 
-    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, double graviteDuNiveau, Camera camera, Vaisseau vaisseau) {
+    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, Camera camera, Vaisseau vaisseau) {
         this.numeroDuNiveau = numeroDuNiveau;
-        this.graviteDuNiveau = graviteDuNiveau;
         this.hauteurNiveau = hauteurFenetre;
         // taille du niveau 4 fois la taille de la fenetre
         this.largeurNiveau = largeurFenetre*4;
         this.largeurFenetre = largeurFenetre;
+        this.hauteurFenetre = hauteurFenetre;
         this.camera = camera;
         this.vaisseau = vaisseau;
         this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
@@ -98,6 +99,18 @@ public class Niveau {
                 projectile.dessiner(context, camera);
                 projectile.dessinerDebug(context, camera);
             }
+        }
+
+        dessinerDebug(context);
+    }
+
+    protected void dessinerDebug(GraphicsContext context) {
+        if (Input.modeDebogageActif) {
+            context.setStroke(Color.GRAY);
+            context.setLineWidth(1);
+            context.strokeLine(0, hauteurFenetre * 0.6, largeurFenetre, hauteurFenetre * 0.6);
+            context.strokeLine(largeurFenetre * 0.3, 0, largeurFenetre * 0.3, hauteurFenetre);
+            context.strokeLine(largeurFenetre * 0.7, 0, largeurFenetre * 0.7, hauteurFenetre);
         }
     }
 
@@ -216,7 +229,7 @@ public class Niveau {
         this.niveauGagne = niveauGagne;
     }
 
-    public boolean isNiveauGagne() {
+    public boolean estNiveauGagne() {
         return niveauGagne;
     }
 }

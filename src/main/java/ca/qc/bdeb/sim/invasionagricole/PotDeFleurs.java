@@ -1,20 +1,15 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
-import javafx.scene.canvas.GraphicsContext;
-
 public class PotDeFleurs extends Projectile {
 
     public PotDeFleurs(double posX, double posY, String pathImageProjectile, double largeurNiveau,
                        double hauteurNiveau, Vaisseau vaisseau) {
 
-        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, vaisseau);
-
-        this.largeur = 31;
-        this.hauteur = 61;
+        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, vaisseau, 31, 61);
 
         // Les humains visent a 400 px plus haut que le vaisseau, donc modifier la direction de deplacement
-        double cibleX = calculerPositionCentre(vaisseauTarget.getPosX(), vaisseauTarget.getLargeur());
-        double cibleY = calculerPositionCentre(vaisseauTarget.getPosY(), vaisseauTarget.getHauteur())-400;
+        double cibleX = calculerPositionCentre(vaisseauTarget.getPosX(), vaisseauTarget.getLargeurImage());
+        double cibleY = calculerPositionCentre(vaisseauTarget.getPosY(), vaisseauTarget.getHauteurImage())-400;
 
         calculerDirectionVersVaisseau(cibleX, cibleY,posX, posY);
 

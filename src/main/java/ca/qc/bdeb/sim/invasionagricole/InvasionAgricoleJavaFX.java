@@ -129,6 +129,7 @@ public class InvasionAgricoleJavaFX extends Application {
             public void handle(long now) {
 
                 double deltaTemps = (now - lastTime) * 1e-9;
+                Input.gererToggleModeDebogage();
                 controleurJeu.dessiner(context);
                 controleurJeu.update(deltaTemps);
                 lastTime = now;

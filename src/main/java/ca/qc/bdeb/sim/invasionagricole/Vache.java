@@ -8,15 +8,11 @@ public class Vache extends ObjetPhysique {
 
     public Vache( double posY,double largeurNiveau, double hauteurNiveau) {
 
-        super( 0, posY, "vache.png", largeurNiveau, hauteurNiveau);
+        super( 0, posY, "vache.png", largeurNiveau, hauteurNiveau, 136, 134);
         this.nombreDeVie = 1;
         this.vY = 0;
 
-        // Commencer sur terre
-        this.largeur = 136;
-        this.hauteur = 134;
-
-        this.posY = posY - this.hauteur; // Ce code ne marche pas, elle ne change pas le posY
+        this.posY = posY - this.hauteurImage; // Ce code ne marche pas, elle ne change pas le posY
 
         this.posX = genererPositionX();
         this.vX = determinerVitesse();
@@ -79,6 +75,6 @@ public class Vache extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
+        context.drawImage(this.image, xEcran, yEcran, this.largeurImage, this.hauteurImage);
     }
 }

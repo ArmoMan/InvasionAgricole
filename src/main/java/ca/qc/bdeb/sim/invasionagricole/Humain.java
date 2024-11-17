@@ -13,12 +13,10 @@ public class Humain extends ObjetPhysique {
     private Vaisseau vaisseau;
 
     public Humain(double posY, double largeurNiveau, double hauteurNiveau, String pathImageHumain, Camera camera, ArrayList<Projectile> projectiles, Vaisseau vaisseau) {
-        super(0 ,posY, pathImageHumain,largeurNiveau,hauteurNiveau);
+        super(0 ,posY, pathImageHumain,largeurNiveau,hauteurNiveau, 83, 185);
         this.nombreDeVie = 1;
-        this.largeur = 83;
-        this.hauteur = 185;
         this.posX = genererPositionX();
-        this.posY = posY - this.hauteur;
+        this.posY = posY - this.hauteurImage;
         this.camera = camera;
         this.tempsDepuisDernierProjectile = Math.random() * 2; // Entre 0 et 2 secondes
         this.delaiProjectile = 2.0;
@@ -31,12 +29,11 @@ public class Humain extends ObjetPhysique {
         updateMonterPhysique();
         updatePhysique(deltaTime);
         estToucherLimites(this.largeurNiveau, this.hauteurNiveau,true);
-        if (estVisible(camera)) {
-            //System.out.println("humain à la position : " + this.posX + ", " + this.posY + " est visible.");
+        if (!estHorsCamera(camera)) {
 
             tempsDepuisDernierProjectile += deltaTime;
             if (tempsDepuisDernierProjectile >= delaiProjectile) {
-                lancerProjectile(getPosCentreX(), getPosCentreY(), projectiles);
+                lancerProjectile(calculerPositionCentre(posX, largeurImage), calculerPositionCentre(posY, hauteurImage), projectiles);
                 tempsDepuisDernierProjectile = 0;
             }
         }
@@ -48,12 +45,12 @@ public class Humain extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
+        context.drawImage(this.image, xEcran, yEcran, this.largeurImage, this.hauteurImage);
     }
 
 
     public boolean estVisible(Camera camera) {
-        if (posX > camera.getXGauche() && posX < camera.getXDroite()) {
+        if (posX > camera.getGauche() && posX < camera.getDroite()) {
             return true;
         } else {
             return false;
@@ -66,7 +63,6 @@ public class Humain extends ObjetPhysique {
 
     private Projectile creerProjectile(double posX, double posY) {
         int choix = (1 + (int) (Math.random() * 3)); // genere un chiffre au hasard entre 1 et 3
-//        choix = 1; // test avec seulement des girouettes
         switch (choix) {
             case 1 -> {
                 return new Girouette(posX,posY,"girouette.png", largeurNiveau, hauteurNiveau, vaisseau);
@@ -83,10 +79,10 @@ public class Humain extends ObjetPhysique {
 
 
     public double getPosCentreX() {
-        return posX + this.largeur / 2;
+        return posX + this.largeurImage / 2;
     }
 
     public double getPosCentreY() {
-        return posY + this.hauteur / 2;
+        return posY + this.hauteurImage / 2;
     }
 }

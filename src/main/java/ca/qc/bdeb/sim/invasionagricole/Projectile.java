@@ -13,8 +13,10 @@ public abstract class Projectile extends ObjetPhysique {
     protected  double proportionY;
     protected Vaisseau vaisseauTarget;
 
-    public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau) {
-        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau);
+    public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau, double largeurImage, double hauteurImage) {
+        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, largeurImage, hauteurImage);
+        this.posX = this.posX - largeurImage /2;
+        this.posY = this.posY - hauteurImage /2;
         this.vaisseauTarget = vaisseau;
     }
 
@@ -24,7 +26,7 @@ public abstract class Projectile extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
+        context.drawImage(this.image, xEcran, yEcran, this.largeurImage, this.hauteurImage);
     }
 
 
