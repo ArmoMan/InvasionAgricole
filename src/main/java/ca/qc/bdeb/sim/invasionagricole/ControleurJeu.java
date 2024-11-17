@@ -11,7 +11,8 @@ public class ControleurJeu {
 
     private Vaisseau alien = new Vaisseau(0,0,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
     private RayonEnlevement rayonEnlevement = new RayonEnlevement(alien);
-    private Camera camera = new Camera(InvasionAgricoleJavaFX.LARGEUR_FENETRE);
+    private Camera camera = new Camera(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
+    private double tempsEcouleEcranNoir = 0;
     Niveau niveau = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, 1,1000, camera, alien);
     ArrayList<ObjetPhysique> objetsAffichageMap = new ArrayList<>();
     MiniCarte miniCarte = new MiniCarte(10,50,100, objetsAffichageMap);
@@ -21,19 +22,48 @@ public class ControleurJeu {
     // Ca cest un test !! À effacer plus tard !!!!!!!
     public void dessiner(GraphicsContext context){
         niveau.dessinerNiveau(context);
+
+
         camera.suivre(alien, niveau.getLargeurNiveau());
         alien.dessiner(context,camera);
         rayonEnlevement.dessinerRayon(context, camera);
         rayonEnlevement.dessinerBatterie(context,100,30,10,10,"batterie.png");
         miniCarte.dessiner(context, niveau.getLargeurNiveau());
         alien.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",30, 5);
+
+        // Si niveau gagner, dessiner en noire l'ecran et afficher le texte
+        if (niveau.isNiveauGagne()){
+            niveau.dessinerEcranGagner(context, tempsEcouleEcranNoir/ 2.5);
+        }
     }
 
     public void update(double deltaTime){
 
+        // Si plus de vache et niveau non gagner, alors changer ca
+        if (niveau.getVaches().isEmpty() && !niveau.isNiveauGagne()){
+            niveau.setNiveauGagne(true);
+            // remettre le temps de l'ecran noir a 0
+            tempsEcouleEcranNoir = 0;
+        }
+
+        if (niveau.isNiveauGagne()){
+            tempsEcouleEcranNoir += deltaTime;
+            return;
+        }
+
         // Update l'alien et rayon
         alien.update(deltaTime);
         rayonEnlevement.update(deltaTime);
+
+        // A faire !!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // Si vaisseau hors limites au complet du camera et que plus de vie, alors partie perdue
+        if (alien.getNombreDeVie() <= 0){
+            if (alien.estObjetHorsEcran(camera)){
+                // Ici retourner ecran d'acceuil
+            }
+            return;
+        };
+
 
         // Verifier si rayon touche un objet physique (vache et humain) et update le compteur de vache capturer
         for (ObjetPhysique personnage : niveau.getObjetPhysiques()){
@@ -51,6 +81,7 @@ public class ControleurJeu {
                 }else  if (personnage.getClass() == Vache.class){
                     vaches.remove(personnage);
                     alien.setNombreDeVacheCapturer(alien.getNombreDeVacheCapturer() + 1);
+
                 }
             }
         }
@@ -75,13 +106,25 @@ public class ControleurJeu {
 
         // Liste de projectiles a effacer
         ArrayList<Projectile> projectilesEffacer = new ArrayList<>();
-        // Faire le tour des projectiles, les updates et si hors limite, alors l'effacer.
+        // Faire le tour des projectiles et faire les verifications avec les projectiles
         for (Projectile projectile : niveau.getProjectiles()) {
+
             projectile.update(deltaTime);
-            if (projectile.estHorsLimites(niveau.getLargeurNiveau(), niveau.getPositionYSol(),false)){
-                System.out.println("Hors ecran");
+
+            //Si hors limite, alors l'effacer
+            if (projectile.estToucherLimites(niveau.getLargeurNiveau(), niveau.getPositionYSol(),false)){
                 projectilesEffacer.add(projectile);
             }
+
+            // Si projectile en collsion avec vaisseau, alors dminuer la vie du vaisseau et effacer projectile
+            if (projectile.estEnCollisionAvec(alien)){
+                projectilesEffacer.add(projectile);
+                // Enlever des vie au vaisseau seulement si il a des vies
+                if (alien.getNombreDeVie() > 0){
+                    alien.setNombreDeVie(alien.getNombreDeVie() - 1);
+                }
+            }
+
         }
         niveau.getProjectiles().removeAll(projectilesEffacer);
 

@@ -41,7 +41,7 @@ public class Vache extends ObjetPhysique {
         updateMonterPhysique();
         updatePhysique(deltaTime);
 
-        estHorsLimites(this.largeurNiveau, this.hauteurNiveau, true);
+        estToucherLimites(this.largeurNiveau, this.hauteurNiveau, true);
 
 
 

@@ -16,8 +16,6 @@ public abstract class Projectile extends ObjetPhysique {
     public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau) {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau);
         this.vaisseauTarget = vaisseau;
-
-        System.out.println("un projectile a ete creer");
     }
 
 
@@ -27,7 +25,6 @@ public abstract class Projectile extends ObjetPhysique {
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
         context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
-        System.out.println("Un projectile a ete dessine");
     }
 
 

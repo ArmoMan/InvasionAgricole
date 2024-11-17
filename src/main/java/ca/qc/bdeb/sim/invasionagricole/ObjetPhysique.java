@@ -108,16 +108,16 @@ public abstract class ObjetPhysique {
      * @param repositionnerObjet si vrai, alors il repositionne l'objet en cas de dépassement des limites
      * @return true si l'objet est hors limites et false si pas hors limites
      */
-    public boolean estHorsLimites(double posXMax, double posYMax, boolean repositionnerObjet){
+    public boolean estToucherLimites(double posXMax, double posYMax, boolean repositionnerObjet){
         // Cas horizontal
         this.estEnCollisionLimiteHorizontal = false;
-        if (posX + largeur > posXMax) {
+        if (this.getDroite() > posXMax) {
             this.estEnCollisionLimiteHorizontal = true;
             if (repositionnerObjet){
                 posX = posXMax - largeur;
                 vX = 0;
             }
-        }else if (posX < 0) {
+        }else if (this.getGauche() < 0) {
             this.estEnCollisionLimiteHorizontal = true;
             if (repositionnerObjet){
                 posX = 0;
@@ -128,13 +128,13 @@ public abstract class ObjetPhysique {
         // Cas vertical: verifier que l'objet ne depasse pas pourcentageHauteurANePasDepasser de l'hauteur donnée
         boolean estEnCollisionLimiteVerticale = false;
         double limiteDeHauteur = posYMax*(this.pourcentageHauteurANePasDepasser/100);
-        if (posY + hauteur > limiteDeHauteur) {
+        if (this.getBas() > limiteDeHauteur) {
             estEnCollisionLimiteVerticale = true;
             if (repositionnerObjet){
                 posY = limiteDeHauteur - hauteur;
                 vY = 0;
             }
-        }else if (posY < 0) {
+        }else if (this.getHaut() < 0) {
             estEnCollisionLimiteVerticale = true;
             if (repositionnerObjet){
                 posY = 0;
@@ -186,6 +186,18 @@ public abstract class ObjetPhysique {
     }
 
 
+    /**
+     * Verifier si objet est hors camera
+     * @param camera camera de l'objet
+     * @return true si est hors au complet
+     */
+    public boolean estObjetHorsEcran(Camera camera){
+        double xEcran = camera.calculerEcranX(posX);
+        double yEcran = camera.calculerEcranY(posY);
+
+        return (xEcran > camera.getLargeurCamera()) || (xEcran+largeur < 0) || (yEcran > camera.getHauteurCamera()) || (camera.calculerEcranY(posY+hauteur) < 0);
+    }
+
     public double getPosX() {
         return posX;
     }
@@ -216,6 +228,14 @@ public abstract class ObjetPhysique {
 
     public double getDroite(){
         return this.getPosX() + this.largeur;
+    }
+
+    public double getBas(){
+        return this.getPosY() + this.hauteur;
+    }
+
+    public double getHaut(){
+        return posY;
     }
 
     public double getGravite() {

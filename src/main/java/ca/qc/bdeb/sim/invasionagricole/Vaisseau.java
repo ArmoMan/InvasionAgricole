@@ -34,51 +34,59 @@ public class Vaisseau extends ObjetPhysique {
 
     @Override
     public void update(double deltaTime) {
-        boolean left = Input.isKeyPressed(KeyCode.LEFT);
-        boolean right = Input.isKeyPressed(KeyCode.RIGHT);
-        boolean up = Input.isKeyPressed(KeyCode.UP);
-        boolean down = Input.isKeyPressed(KeyCode.DOWN);
+        if (nombreDeVie > 0){
+            boolean left = Input.isKeyPressed(KeyCode.LEFT);
+            boolean right = Input.isKeyPressed(KeyCode.RIGHT);
+            boolean up = Input.isKeyPressed(KeyCode.UP);
+            boolean down = Input.isKeyPressed(KeyCode.DOWN);
 
-        // Acceleration horizontale
-        if (left) {
-            aX = -2000;
-        } else if (right) {
-            aX = 2000;
-        } else{
-            if (vX > 0) {
-                aX = -500;
-            } else if (vX < 0) {
-                aX = 500;
-            } else {
-                aX = 0;
+            // Acceleration horizontale
+            if (left) {
+                aX = -2000;
+            } else if (right) {
+                aX = 2000;
+            } else{
+                if (vX > 0) {
+                    aX = -500;
+                } else if (vX < 0) {
+                    aX = 500;
+                } else {
+                    aX = 0;
+                }
             }
+
+            // Acceleration verticale
+            if (up) {
+                aY = -2000;
+            } else if (down) {
+                aY = 2000;
+            } else{
+                if (vY > 0) {
+                    aY = -500;
+                } else if (vY < 0) {
+                    aY = 500;
+                } else {
+                    aY = 0;
+                }
+            }
+
+            updatePhysique(deltaTime);
+
+            // limiter vitesse à 600
+            limiterVitesse();
+
+            // Verifier que ca ne depasse pas les limites du niveau
+            estToucherLimites(largeurNiveau, hauteurNiveau, true);
+
+            // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
+            estLumierAllumer = estCeQueButtonMouvementAppuyer();
+        }else {
+            vX = 100;
+            vY = 100;
+            updatePhysique(deltaTime);
         }
 
-        // Acceleration verticale
-        if (up) {
-            aY = -2000;
-        } else if (down) {
-            aY = 2000;
-        } else{
-            if (vY > 0) {
-                aY = -500;
-            } else if (vY < 0) {
-                aY = 500;
-            } else {
-                aY = 0;
-            }
-        }
 
-        updatePhysique(deltaTime);
-
-        // limiter vitesse à 600
-        limiterVitesse();
-
-        // Verifier que ca ne depasse pas les limites du niveau
-        estHorsLimites(largeurNiveau, hauteurNiveau, true);
-
-        // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
-        estLumierAllumer = estCeQueButtonMouvementAppuyer();
     }
 
 
@@ -179,6 +187,7 @@ public class Vaisseau extends ObjetPhysique {
         return image.getWidth() * nouveauHauteur / image.getHeight();
     }
 
+
     public int getNombreDeVacheCapturer() {
         return nombreDeVacheCapturer;
     }
@@ -190,4 +199,5 @@ public class Vaisseau extends ObjetPhysique {
     public double getCHARGE_VAISSEAU() {
         return CHARGE_VAISSEAU;
     }
+
 }

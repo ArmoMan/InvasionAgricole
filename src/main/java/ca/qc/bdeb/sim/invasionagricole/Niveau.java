@@ -2,6 +2,8 @@ package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,6 +21,7 @@ public class Niveau {
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
     private Camera camera;
     private  double positionYSol; // code se repete
+    private boolean niveauGagne = false;
 
     private Vaisseau vaisseau;
     private ArrayList<Vache> vaches = new ArrayList<>();
@@ -119,6 +122,21 @@ public class Niveau {
         context.fillRect(0,positionYSol,largeurNiveau,HAUTEUR_SOL_VERT);
     }
 
+    public void dessinerEcranGagner(GraphicsContext context, double progressionOpacite){
+
+        String messageFin = "Niveau " + this.getNumeroDuNiveau() + " complété";
+        progressionOpacite = Math.min(1.0, Math.max(0.0, progressionOpacite));
+
+        context.setFill(Color.WHITE);
+        context.setFont(Font.font("Arial", 36));
+        context.setTextAlign(TextAlignment.CENTER);
+        context.fillText(messageFin, largeurFenetre / 2, hauteurNiveau / 2);
+
+        context.setFill(Color.color(0, 0, 0, progressionOpacite));
+        context.fillRect(0, 0, largeurFenetre, hauteurNiveau);
+
+    }
+
     private void genererEtoiles(int nombreDeEtoileVoulu){
         for (int i = 0; i <nombreDeEtoileVoulu; i++) {
             int positionX = (int) (Math.random() * largeurNiveau);
@@ -192,5 +210,13 @@ public class Niveau {
 
     public double getPositionYSol() {
         return positionYSol;
+    }
+
+    public void setNiveauGagne(boolean niveauGagne) {
+        this.niveauGagne = niveauGagne;
+    }
+
+    public boolean isNiveauGagne() {
+        return niveauGagne;
     }
 }
