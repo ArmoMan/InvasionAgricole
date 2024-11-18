@@ -8,17 +8,23 @@ import javafx.scene.text.Font;
 
 public class Vaisseau extends ObjetPhysique {
 
+    // Image et couleurs | description physique
     private Color couleurVitre =  Color.rgb(255, 255, 0, 0.6);
     private Image vaisseauLumiereOn = new Image("base-vaisseau-on.png");
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
-    private final double LIMITE_VITESSE = 600;
+
+    // Fonctionnement du vaisseau et autres elements
     private boolean estLumiereAllumee = false;
     private int nbVachesCapturees = 0;
-    private final double CHARGE_VAISSEAU = -900; // la charge en coulomb du vaisseau
     private RayonEnlevement rayonEnlevement;
+
+    // Constants
     private final double NOMBRE_DE_VIE_MAX;
     private final double POSITION_Y_INITIALE;
     private final double POSITION_X_INITIALE;
+    private final double CHARGE_VAISSEAU = -900; // la charge en coulomb du vaisseau
+    private final double LIMITE_VITESSE = 600;
+
 
 
     /**
