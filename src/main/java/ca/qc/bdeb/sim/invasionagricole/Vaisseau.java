@@ -16,6 +16,7 @@ public class Vaisseau extends ObjetPhysique {
     private int nbVachesCapturees = 0;
     private final double CHARGE_VAISSEAU = -900; // la charge en coulomb du vaisseau
     private RayonEnlevement rayonEnlevement;
+    private final double NOMBRE_DE_VIE_MAX;
 
     public Vaisseau(double posX, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
         super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau, 100, 140);
@@ -26,6 +27,7 @@ public class Vaisseau extends ObjetPhysique {
         // L'alien commence avec 4 vies et pas de gravite
         this.nombreDeVie = 4;
         this.gravite = 0;
+        this.NOMBRE_DE_VIE_MAX = this.nombreDeVie;
 
         this.pourcentageHauteurANePasDepasser = 60;
 
@@ -190,6 +192,15 @@ public class Vaisseau extends ObjetPhysique {
         }
         context.fillText(texteNombreDeVie, posXCompteurVie, posYTextes);
 
+    }
+
+    /**
+     * Methode pour ajouter une vie. Limite a NOMBRE_DE_VIE_MAX
+     */
+    public void ajouterUneVie(){
+        if (this.nombreDeVie < NOMBRE_DE_VIE_MAX){
+            this.nombreDeVie += 1;
+        }
     }
 
     /**

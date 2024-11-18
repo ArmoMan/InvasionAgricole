@@ -215,9 +215,11 @@ public class Niveau {
             return false;
         });
 
-        // Verifier collision entre vaisseau et humain, si il y a collision =>  effacer humain
+        //Verifier collision entre vaisseau et humain, si il y a collision =>  effacer humain et ajouter vie au vaisseau
         humains.removeIf(humain ->{
             if (vaisseau.estEnCollisionAvec(humain)){
+                // Ca ajoute une vie seulement si la vie est plus bas que sa vie maximale
+                vaisseau.ajouterUneVie();
                 return true;
             }
             return false;

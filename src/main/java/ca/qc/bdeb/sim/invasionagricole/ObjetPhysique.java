@@ -24,7 +24,6 @@ public abstract class ObjetPhysique {
     // La pourcentage de la limite verticale maximale que peut atteindre cette objet. Par defaut: 100%
     protected double pourcentageHauteurANePasDepasser = 100;
 
-
     public ObjetPhysique(double posX, double posY, String pathImage,double largeurNiveau, double hauteurNiveau, double largeurImage, double hauteurImage) {
         this.posY = posY;
         this.posX = posX;
@@ -212,12 +211,6 @@ public abstract class ObjetPhysique {
         }
     }
 
-    /**
-     * Methode pour ajouter une vie
-     */
-    public void ajouterUneVie(){
-        this.nombreDeVie += 1;
-    }
 
     public double getPosX() {
         return posX;
