@@ -171,7 +171,7 @@ public class Niveau {
      * Gerer les touches de debogages pour le update
      */
     private void gererTouchesDebogages(){
-        // Si W appuye et le temps ecoule plus de 0.5 seconde, alors augmenter la vie de 1
+        // Si W appuye, alors augmenter la vie de 1
         if (Input.ajouterVie ){
             vaisseau.ajouterUneVie();
         }
