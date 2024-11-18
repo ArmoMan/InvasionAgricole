@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles;
 
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.Position;
 import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
 
 public class Girouette extends Projectile {
@@ -8,8 +9,8 @@ public class Girouette extends Projectile {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, vaisseau, 53, 55);
         this.gravite = 0;
 
-        // Calcul du direction vers centre du vaisseau
-        calculerDirectionVersVaisseau(calculerPositionCentre(vaisseauTarget.getPosX(), vaisseauTarget.getLargeurImage()), calculerPositionCentre( vaisseauTarget.getPosY(), vaisseauTarget.getHauteurImage()), posX, posY);
+        // Calcul du direction du centre de girouette vers centre du vaisseau
+        calculerDirectionVersVaisseau(vaisseauTarget.calculerPositionCentre(Position.HORIZONTAL), vaisseauTarget.calculerPositionCentre(Position.VERTICAL), this.calculerPositionCentre(Position.HORIZONTAL), this.calculerPositionCentre(Position.VERTICAL));
 
         // Normalisation et calcul des vitesses
         vX = this.proportionX * 500;

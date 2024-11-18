@@ -184,13 +184,16 @@ public abstract class ObjetPhysique {
     }
 
     /**
-     * Methode pour calculer le centre de par exemple un objet
-     * @param position posX ou posY d'un objet (position de l'angle gauche)
-     * @param taille largeur si on cherche posX, hauteur si on cherche posY
-     * @return la position du centre
+     * Methode pour calculer le centre Vertical ou horizontal de l'objet
+     * @param position est le centre horizontal ou vertical de l'ojbet qu'on veut calculer
+     * @return la position du centre horizontal ou vertical
      */
-    public double calculerPositionCentre(double position, double taille){
-        return position+(taille/2);
+    public double calculerPositionCentre(Position position){
+        if (position == Position.HORIZONTAL){
+            return posX + (this.largeurImage/2);
+        }else {
+            return posY + (this.hauteurImage/2);
+        }
     }
 
     /**

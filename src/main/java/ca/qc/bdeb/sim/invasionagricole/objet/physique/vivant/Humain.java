@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant;
 
 import ca.qc.bdeb.sim.invasionagricole.*;
 import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.Position;
 import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.AimantFerCheval;
 import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.Girouette;
 import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.PotDeFleurs;
@@ -39,7 +40,7 @@ public class Humain extends ObjetPhysique {
 
             tempsDepuisDernierProjectile += deltaTime;
             if (tempsDepuisDernierProjectile >= delaiProjectile) {
-                lancerProjectile(calculerPositionCentre(posX, largeurImage), calculerPositionCentre(posY, hauteurImage), projectiles);
+                lancerProjectile(this.calculerPositionCentre(Position.HORIZONTAL), this.calculerPositionCentre(Position.VERTICAL), projectiles);
                 tempsDepuisDernierProjectile = 0;
             }
         }

@@ -62,6 +62,8 @@ public class Vaisseau extends ObjetPhysique {
         // Creer le rayon
         this.rayonEnlevement = new RayonEnlevement(this);
 
+        this.nbVachesCapturees = 208;
+
     }
 
     @Override

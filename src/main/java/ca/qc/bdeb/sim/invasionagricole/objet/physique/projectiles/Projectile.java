@@ -61,16 +61,25 @@ public abstract class Projectile extends ObjetPhysique {
      * Methode pour limiter la magnitude de la vitesse
      * @param vitesseMax est la vitesse maximale que peut atteindre le projectile
      */
-    protected void limiterVitesse(double vitesseMax){
-        double magnitudeVitesse = Math.sqrt(vX * vX + vY * vY);
+    protected void limiterMagnitudeVitesse(double vitesseMax){
+        double magnitudeVitesse =  Math.sqrt(vX * vX + vY * vY);
 
         // Si depasse vitesse maximale, alors diminuer la vY et vX proportionnelemnt pour arriver a la bonne magnitude
         if (vitesseMax < magnitudeVitesse){
-            double proportionVitesseDiminuer = vitesseMax / magnitudeVitesse;
-            vX *= proportionVitesseDiminuer;
-            vY *= proportionVitesseDiminuer;
+            double proportionVitesseX = vX / magnitudeVitesse;
+            double proportionVitesseY = vY / magnitudeVitesse;
+
+            vX = proportionVitesseX * vitesseMax;
+            vY = proportionVitesseY * vitesseMax;
+
+            System.out.println(vX + " " + vY);
+            magnitudeVitesse =  Math.sqrt(vX * vX + vY * vY);
+            System.out.println(magnitudeVitesse);
         }
+
     }
+
+
 
 
 }

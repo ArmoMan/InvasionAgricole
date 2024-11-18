@@ -1,6 +1,7 @@
 
 package ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles;
 
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.Position;
 import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
 
 public class AimantFerCheval extends Projectile {
@@ -15,24 +16,33 @@ public class AimantFerCheval extends Projectile {
     @Override
     public void update(double deltaTime) {
         // Calculer les différences de position
-        double deltaX = this.calculerPositionCentre(posX, largeurImage) -
-                (vaisseauTarget.calculerPositionCentre(vaisseauTarget.getPosX(), vaisseauTarget.getLargeurImage()));
-        double deltaY = this.calculerPositionCentre(posY, hauteurImage) -
-                (vaisseauTarget.calculerPositionCentre(vaisseauTarget.getPosY(), vaisseauTarget.getHauteurImage()));
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        this.deltaX = this.calculerPositionCentre(Position.HORIZONTAL) -
+                (vaisseauTarget.calculerPositionCentre(Position.HORIZONTAL));
+        this.deltaY = this.calculerPositionCentre(Position.VERTICAL) -
+                (vaisseauTarget.calculerPositionCentre(Position.VERTICAL));
+
+        this.distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
         // Normaliser la direction
-        double proportionX = deltaX / distance;
-        double proportionY = deltaY / distance;
+        this.proportionX = deltaX / distance;
+        this.proportionY = deltaY / distance;
 
+        // Loi de coulomb
+        appliquerLoiCoulomb();
+
+        updatePhysique(deltaTime);
+
+        limiterMagnitudeVitesse(300);
+
+    }
+
+
+    private void appliquerLoiCoulomb(){
         // Loi de Coulomb
         double forceElectrique = (CONSTANTE_COULOMB * CHARGE_AIMANT * this.vaisseauTarget.getCHARGE_VAISSEAU()) / (distance * distance);
 
         this.aX = forceElectrique * proportionX;
         this.aY = forceElectrique * proportionY;
-
-        updatePhysique(deltaTime);
-        limiterVitesse(300);
     }
 
 }

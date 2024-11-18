@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles;
 
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.Position;
 import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
 
 public class PotDeFleurs extends Projectile {
@@ -10,8 +11,8 @@ public class PotDeFleurs extends Projectile {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, vaisseau, 31, 61);
 
         // Les humains visent a 400 px plus haut que le vaisseau, donc modifier la direction de deplacement
-        double cibleX = calculerPositionCentre(vaisseauTarget.getPosX(), vaisseauTarget.getLargeurImage());
-        double cibleY = calculerPositionCentre(vaisseauTarget.getPosY(), vaisseauTarget.getHauteurImage())-400;
+        double cibleX = vaisseauTarget.calculerPositionCentre(Position.HORIZONTAL);
+        double cibleY = vaisseauTarget.calculerPositionCentre(Position.VERTICAL)-400;
 
         calculerDirectionVersVaisseau(cibleX, cibleY,posX, posY);
 
