@@ -1,5 +1,6 @@
-package ca.qc.bdeb.sim.invasionagricole;
+package ca.qc.bdeb.sim.invasionagricole.objet.background;
 
+import ca.qc.bdeb.sim.invasionagricole.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -15,7 +16,7 @@ public class ObjetImage extends ObjetArrierePlan{
     }
 
     @Override
-    protected void dessiner(GraphicsContext context,Camera camera) {
+    public void dessiner(GraphicsContext context, Camera camera) {
         super.dessiner(context, camera);
         context.drawImage(image, this.xEcran, this.yEcran, largeur, longeur);
     }

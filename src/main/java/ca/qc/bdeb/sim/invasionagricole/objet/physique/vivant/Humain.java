@@ -1,5 +1,11 @@
-package ca.qc.bdeb.sim.invasionagricole;
+package ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant;
 
+import ca.qc.bdeb.sim.invasionagricole.*;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.AimantFerCheval;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.Girouette;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.PotDeFleurs;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.Projectile;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;

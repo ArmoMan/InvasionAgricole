@@ -1,7 +1,9 @@
-package ca.qc.bdeb.sim.invasionagricole;
+package ca.qc.bdeb.sim.invasionagricole.objet.background;
 
+import ca.qc.bdeb.sim.invasionagricole.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.Random;
 
@@ -21,9 +23,10 @@ public class Etoile extends ObjetArrierePlan {
     }
 
     @Override
-    protected void dessiner(GraphicsContext context,Camera camera) {
+    public void dessiner(GraphicsContext context, Camera camera) {
         super.dessiner(context, camera);
         context.setFill(Color.WHITE);
+        context.setFont(new Font(taillePolice));
         context.fillText(symboleAffichage, xEcran, yEcran);
     }
 }

@@ -1,5 +1,6 @@
-package ca.qc.bdeb.sim.invasionagricole;
+package ca.qc.bdeb.sim.invasionagricole.objet.background;
 
+import ca.qc.bdeb.sim.invasionagricole.Camera;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class ObjetArrierePlan {
@@ -11,7 +12,7 @@ public abstract class ObjetArrierePlan {
         this.posY = posY;
     }
 
-    protected void dessiner(GraphicsContext context,Camera camera){
+    public void dessiner(GraphicsContext context, Camera camera){
         this.xEcran = camera.calculerEcranX(posX);
         this.yEcran = camera.calculerEcranY(posY);
     }

@@ -1,5 +1,8 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vache;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

@@ -1,5 +1,13 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
+import ca.qc.bdeb.sim.invasionagricole.objet.background.Etoile;
+import ca.qc.bdeb.sim.invasionagricole.objet.background.ObjetArrierePlan;
+import ca.qc.bdeb.sim.invasionagricole.objet.background.ObjetImage;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.Projectile;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Humain;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vache;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;

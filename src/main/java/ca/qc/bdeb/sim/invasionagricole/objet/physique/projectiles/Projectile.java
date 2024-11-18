@@ -1,5 +1,8 @@
-package ca.qc.bdeb.sim.invasionagricole;
+package ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles;
 
+import ca.qc.bdeb.sim.invasionagricole.Camera;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Projectile extends ObjetPhysique {

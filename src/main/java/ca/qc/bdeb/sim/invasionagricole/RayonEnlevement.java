@@ -1,5 +1,7 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;

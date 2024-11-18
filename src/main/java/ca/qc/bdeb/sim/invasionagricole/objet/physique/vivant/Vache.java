@@ -1,5 +1,7 @@
-package ca.qc.bdeb.sim.invasionagricole;
+package ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant;
 
+import ca.qc.bdeb.sim.invasionagricole.Camera;
+import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

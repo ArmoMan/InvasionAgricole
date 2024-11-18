@@ -1,8 +1,9 @@
-package ca.qc.bdeb.sim.invasionagricole;
+package ca.qc.bdeb.sim.invasionagricole.objet.physique;
 
+import ca.qc.bdeb.sim.invasionagricole.Camera;
+import ca.qc.bdeb.sim.invasionagricole.Input;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 public abstract class ObjetPhysique {
@@ -61,7 +62,7 @@ public abstract class ObjetPhysique {
      * @param context
      * @param camera
      */
-    protected void dessinerDebug(GraphicsContext context, Camera camera) {
+    public void dessinerDebug(GraphicsContext context, Camera camera) {
 
         // Si la touche de débogage a été appuyée, activer/désactiver le mode débogage
         if (Input.modeDebogageActif) {
@@ -188,7 +189,7 @@ public abstract class ObjetPhysique {
      * @param taille largeur si on cherche posX, hauteur si on cherche posY
      * @return la position du centre
      */
-    protected double calculerPositionCentre(double position, double taille){
+    public double calculerPositionCentre(double position, double taille){
         return position+(taille/2);
     }
 
