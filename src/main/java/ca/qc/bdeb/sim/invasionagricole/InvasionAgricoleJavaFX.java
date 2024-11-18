@@ -146,9 +146,10 @@ public class InvasionAgricoleJavaFX extends Application {
         Canvas canvas = new Canvas(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        // Ca cest un test !! À effacer plus tard !!!!!!!
+        // Creation du controlleur de jeu
         ControleurJeu controleurJeu = new ControleurJeu();
 
+        // Commencer a jouer
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
 
@@ -174,10 +175,8 @@ public class InvasionAgricoleJavaFX extends Application {
             }
         };
         timer.start();
-        ///////////////////
 
         root.getChildren().add(canvas);
-
 
         // Ajouter les touches a input et sur escape retourner acceuil
         ajouterDetectionTouche(scene, stage, ToucheEscape.RETOURNER_ACCEUIL);
