@@ -15,17 +15,8 @@ public class AimantFerCheval extends Projectile {
 
     @Override
     public void update(double deltaTime) {
-        // Calculer les différences de position
-        this.deltaX = this.calculerPositionCentre(Position.HORIZONTAL) -
-                (vaisseauTarget.calculerPositionCentre(Position.HORIZONTAL));
-        this.deltaY = this.calculerPositionCentre(Position.VERTICAL) -
-                (vaisseauTarget.calculerPositionCentre(Position.VERTICAL));
-
-        this.distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-        // Normaliser la direction
-        this.proportionX = deltaX / distance;
-        this.proportionY = deltaY / distance;
+        // Calculer la direction
+        calculerDirectionVersVaisseau(this.calculerPositionCentre(Position.HORIZONTAL), this.calculerPositionCentre(Position.VERTICAL),vaisseauTarget.calculerPositionCentre(Position.HORIZONTAL), vaisseauTarget.calculerPositionCentre(Position.VERTICAL));
 
         // Loi de coulomb
         appliquerLoiCoulomb();

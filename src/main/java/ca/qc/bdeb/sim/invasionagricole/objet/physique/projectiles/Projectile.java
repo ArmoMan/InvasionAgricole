@@ -41,7 +41,7 @@ public abstract class Projectile extends ObjetPhysique {
      * @param posYObjetDeux
      */
     protected void calculerDirectionVersVaisseau(double posXObjetUn, double posYObjetUn, double posXObjetDeux, double posYObjetDeux){
-        // Calcul des composantes de vitesse
+        // Calcul des composantes de vecteur direction
         deltaX = posXObjetUn - posXObjetDeux;
         deltaY = posYObjetUn - posYObjetDeux;
 
@@ -53,6 +53,7 @@ public abstract class Projectile extends ObjetPhysique {
             distance = 1;
         }
 
+        // Normaliser la direction
         proportionX = deltaX / distance;
         proportionY = deltaY / distance;
     }
