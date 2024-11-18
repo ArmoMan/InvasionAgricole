@@ -127,7 +127,9 @@ public class InvasionAgricoleJavaFX extends Application {
 
             @Override
             public void handle(long now) {
-
+                if (controleurJeu.estJeuFini()){
+                    return;
+                }
                 double deltaTemps = (now - lastTime) * 1e-9;
                 Input.gererToggleModeDebogage();
                 controleurJeu.dessiner(context);

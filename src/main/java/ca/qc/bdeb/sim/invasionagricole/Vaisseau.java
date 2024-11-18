@@ -15,6 +15,7 @@ public class Vaisseau extends ObjetPhysique {
     private boolean estLumiereAllumee = false;
     private int nbVachesCapturees = 0;
     private final double CHARGE_VAISSEAU = -900; // la charge en coulomb du vaisseau
+    private RayonEnlevement rayonEnlevement;
 
     public Vaisseau(double posX, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
         super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau, 100, 140);
@@ -27,6 +28,9 @@ public class Vaisseau extends ObjetPhysique {
         this.gravite = 0;
 
         this.pourcentageHauteurANePasDepasser = 60;
+
+        // Creer le rayon
+        this.rayonEnlevement = new RayonEnlevement(this);
 
     }
 
@@ -78,11 +82,17 @@ public class Vaisseau extends ObjetPhysique {
 
             // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
             estLumiereAllumee = isBoutonMouvementActif();
+
+            // Update le rayon d'enlevement
+            this.rayonEnlevement.update(deltaTime);
         }else {
             vX = 100;
             vY = 100;
             updatePhysique(deltaTime);
         }
+
+        // Update le rayon
+        rayonEnlevement.update(deltaTime);
 
 
     }
@@ -123,27 +133,30 @@ public class Vaisseau extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);
 
+        // Dessiner le vitre
         context.setFill(couleurVitre);
         context.fillOval(xEcran, yEcran,  this.largeurImage,  this.hauteurImage);
 
+        // Dessiner et dessider quelle base de vaisseau utiliser
         if (estLumiereAllumee){
             context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeurImage)/2), yEcran + (this.hauteurImage -vaisseauLumiereOn.getHeight()));
         }else {
             context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeurImage)/2), yEcran + (this.hauteurImage -vaisseauLumiereOff.getHeight()));
         }
 
+        // Dessiner l'alien
         context.drawImage(this.image, (xEcran+( this.largeurImage - this.image.getWidth())/2),yEcran + this.hauteurImage -vaisseauLumiereOff.getHeight()-this.image.getHeight() );
 
-        dessinerDebug(context, camera);
     }
 
 
-    public void dessinerCompteurVieEtVacheCapturer(GraphicsContext context,double posXdessin, double posYdessin, String pathImageVache, double hauteurImages, double espacementDesElements) {
+    public void dessinerCompteurVieEtVacheCapturer(GraphicsContext context,double posXdessin, double posYdessin, String pathImageVache,String pathImageAlienIcon, double hauteurImages, double espacementDesElements) {
         Image imageVache = new Image(pathImageVache);
+        Image imageAlienIcone = new Image(pathImageAlienIcon);
 
         // Hauteur des images selon le largeur voulu
         double largeurImageVache = calculerNouveauLargeurImage(imageVache, hauteurImages);
-        double largeurImageAlien = calculerNouveauLargeurImage(this.image, hauteurImages);
+        double largeurImageAlien = calculerNouveauLargeurImage(imageAlienIcone, hauteurImages);
 
         // Image de vache
         context.drawImage(imageVache, posXdessin, posYdessin,largeurImageVache , hauteurImages);
@@ -154,7 +167,7 @@ public class Vaisseau extends ObjetPhysique {
         // Mettre la couleur des textes
         context.setFill(Color.WHITE);
 
-        // A chauque fois le texte est plus bas que voulu, donc le baisser moin
+        // A chaque fois le texte est plus bas que voulu, donc le baisser moin
         double valeurASoustraire = hauteurImages*0.15;
         double  posYTextes = posYdessin+hauteurImages-valeurASoustraire;
         // Texte de vache
@@ -163,11 +176,19 @@ public class Vaisseau extends ObjetPhysique {
 
         // Image d'Alien
         double posXAlien = posXCompteurVache + espacementDesElements + context.getFont().getSize();
-        context.drawImage(this.image, posXAlien, posYdessin,largeurImageAlien ,hauteurImages );
+        context.drawImage(imageAlienIcone, posXAlien, posYdessin,largeurImageAlien ,hauteurImages );
 
         // Texte de nombre de vie Alien
         double posXCompteurVie = posXAlien + largeurImageAlien + espacementDesElements;
-        context.fillText(String.valueOf(this.nombreDeVie), posXCompteurVie, posYTextes);
+        String texteNombreDeVie;
+
+        // Si vaisseau invincible, alors afficher :)
+        if (Input.modeInvincible){
+            texteNombreDeVie = ":)";
+        }else {
+            texteNombreDeVie = String.valueOf(this.nombreDeVie);
+        }
+        context.fillText(texteNombreDeVie, posXCompteurVie, posYTextes);
 
     }
 
@@ -182,7 +203,9 @@ public class Vaisseau extends ObjetPhysique {
         return image.getWidth() * nouveauHauteur / image.getHeight();
     }
 
-
+    public void augmenterCompteurVache(int nombreAjoute){
+        this.nbVachesCapturees += nombreAjoute;
+    }
     public int getNbVachesCapturees() {
         return nbVachesCapturees;
     }
@@ -193,6 +216,14 @@ public class Vaisseau extends ObjetPhysique {
 
     public double getCHARGE_VAISSEAU() {
         return CHARGE_VAISSEAU;
+    }
+
+    public RayonEnlevement getRayonEnlevement() {
+        return rayonEnlevement;
+    }
+
+    public void setRayonEnlevement(RayonEnlevement rayonEnlevement) {
+        this.rayonEnlevement = rayonEnlevement;
     }
 
 }

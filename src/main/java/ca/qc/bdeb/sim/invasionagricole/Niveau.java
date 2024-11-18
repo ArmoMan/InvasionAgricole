@@ -1,9 +1,8 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,113 +11,100 @@ import java.util.Random;
  * La classe niveau permet de genrere les decors, les vaches, les humains et contient une methode qui peut les dessiner
  */
 public class Niveau {
-    private double largeurNiveau, hauteurNiveau;
+
+    // Information sur le niveau
     private int numeroDuNiveau;
+    private boolean estTermine = false;
+    private boolean estPerdue = false;
+
+    // Les dimensions
+    private double largeurNiveau, hauteurNiveau;
     private final int HAUTEUR_SOL_VERT = 20;
     // Largeur de l'ecran / fenetre
-    private double largeurFenetre;
-    private double hauteurFenetre;
+    private double largeurFenetre,hauteurFenetre;
+    private  double positionYSol;
+
+    // Pour l'arriere plan
     private ArrayList<ObjetArrierePlan> objetsArrierePlan = new ArrayList<ObjetArrierePlan>();
-    private Camera camera;
-    private  double positionYSol; // code se repete
-    private boolean niveauGagne = false;
 
-
+    // Les objets physiques du niveau
     private Vaisseau vaisseau;
     private ArrayList<Vache> vaches = new ArrayList<>();
     private ArrayList<Humain> humains = new ArrayList<>();
     private ArrayList<Projectile> projectiles = new ArrayList<>();
 
+    // Camera
+    private Camera camera;
+
+
+
     public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, Camera camera, Vaisseau vaisseau) {
+        // Initialiser informations importants
         this.numeroDuNiveau = numeroDuNiveau;
+
+        // Initialiser les dimensions: largeur du niveau est 4 fois celle de la fenetre
         this.hauteurNiveau = hauteurFenetre;
-        // taille du niveau 4 fois la taille de la fenetre
         this.largeurNiveau = largeurFenetre*4;
         this.largeurFenetre = largeurFenetre;
         this.hauteurFenetre = hauteurFenetre;
+        this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
+
         this.camera = camera;
         this.vaisseau = vaisseau;
-        this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
+
         // Generer le contenu du niveau
         genererEtoiles(100);
         genererGrangesEtTracteurs();
-        genererVaches();
-        genererHumains();
+        genererObjetsPhysique();
 
-
-//        creerTableauObjetsPhysiquesNiveau();
     }
 
-    public ArrayList<ObjetPhysique> getObjetPhysiques() {
-        ArrayList<ObjetPhysique> objetPhysiquesNiveau = new ArrayList<>();
-        objetPhysiquesNiveau.addAll(vaches);
-        objetPhysiquesNiveau.addAll(humains);
-        return objetPhysiquesNiveau;
-    }
 
-    public ArrayList<Vache> getVaches() {
-        return vaches;
-    }
-
-    public ArrayList<Humain> getHumains() {
-        return humains;
-    }
-
-    public double getLargeurNiveau() {
-        return largeurNiveau;
-    }
-
-    public double getHauteurNiveau() {
-        return hauteurNiveau;
-    }
-
-    public int getNumeroDuNiveau() {
-        return numeroDuNiveau;
-    }
-
-    public ArrayList<Projectile> getProjectiles() {
-        return projectiles;
-    }
-
-//    public void creerTableauObjetsPhysiquesNiveau(){
-//        objetPhysiquesNiveau.addAll(vaches);
-//        objetPhysiquesNiveau.addAll(humains);
-//    }
+    /*  *****************************************************************************
+     ***************   Partie pour dessiner les objets etc            ***************
+     ********************************************************************************
+     */
 
     public void dessinerNiveau(GraphicsContext context){
         afficherArrierePlan(context);
+
+        // Dessiner objets
         for (Vache vache : vaches) {
             vache.dessiner(context, camera);
-            vache.dessinerDebug(context, camera);
+            if (Input.modeDebogageActif) vache.dessinerDebug(context, camera);
         }
 
         for (Humain humain : humains) {
             humain.dessiner(context, camera);
-            humain.dessinerDebug(context, camera);
-            for (Projectile projectile : projectiles) {
-                projectile.dessiner(context, camera);
-                projectile.dessinerDebug(context, camera);
-            }
+            if (Input.modeDebogageActif) humain.dessinerDebug(context, camera);
         }
 
-        dessinerDebug(context);
-    }
+        for (Projectile projectile : projectiles) {
+            projectile.dessiner(context, camera);
+            if (Input.modeDebogageActif) projectile.dessinerDebug(context, camera);
+        }
 
-    protected void dessinerDebug(GraphicsContext context) {
-        if (Input.modeDebogageActif) {
-            context.setStroke(Color.GRAY);
-            context.setLineWidth(1);
-            context.strokeLine(0, hauteurFenetre * 0.6, largeurFenetre, hauteurFenetre * 0.6);
-            context.strokeLine(largeurFenetre * 0.3, 0, largeurFenetre * 0.3, hauteurFenetre);
-            context.strokeLine(largeurFenetre * 0.7, 0, largeurFenetre * 0.7, hauteurFenetre);
+        // Dessiner le vaisseau et ses elements
+        vaisseau.dessiner(context, camera);
+        vaisseau.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png","icone.png",30, 5);
+        vaisseau.getRayonEnlevement().dessinerBatterie(context,100,30,10,10,"batterie.png");
+        vaisseau.getRayonEnlevement().dessinerRayon(context, camera);
+        if (Input.modeDebogageActif){
+            vaisseau.dessinerDebug(context, camera);
+        }
+
+        // Dessiner les lignes verticales sur l'ecran
+        if (Input.modeDebogageActif){
+            camera.dessinerDebug(context);
         }
     }
+
 
     private void afficherArrierePlan(GraphicsContext context){
         // dessiner le sol vert et le ciel en noir
         dessinerEnvironnementPourBackground(context);
 
-        // Dessiner les objets
+        // Dessiner les objets de l'arriere plan
         for (ObjetArrierePlan obj : objetsArrierePlan){
             obj.dessiner(context,this.camera);
         }
@@ -135,20 +121,115 @@ public class Niveau {
         context.fillRect(0,positionYSol,largeurNiveau,HAUTEUR_SOL_VERT);
     }
 
-    public void dessinerEcranGagner(GraphicsContext context, double progressionOpacite){
 
-        String messageFin = "Niveau " + this.getNumeroDuNiveau() + " complété";
-        progressionOpacite = Math.min(1.0, Math.max(0.0, progressionOpacite));
+    /*  *****************************************************************************
+     ***************   Partie pour updates/interagir avec les objets  ***************
+     ********************************************************************************
+     */
 
-        context.setFill(Color.WHITE);
-        context.setFont(Font.font("Arial", 36));
-        context.setTextAlign(TextAlignment.CENTER);
-        context.fillText(messageFin, largeurFenetre / 2, hauteurNiveau / 2);
+    public void update(double deltaTime){
 
-        context.setFill(Color.color(0, 0, 0, progressionOpacite));
-        context.fillRect(0, 0, largeurFenetre, hauteurNiveau);
+        // Mettre en application les touches du debogage
+        gererTouchesDebogages();
+        // Update le vaisseau et son rayon
+        vaisseau.update(deltaTime);
+
+        // Faire suivre la camera
+        camera.suivre(vaisseau, largeurNiveau);
+
+        // Verfifier si le niveau est perdu
+        verifierNiveauPerdue();
+
+        // Update les objets physiques du niveau (position, vitesse etc)
+        for (ObjetPhysique objetPhysique : this.getObjetPhysiques()) {
+            objetPhysique.update(deltaTime);
+
+            // Dessider si objet doit "voler" vers le vaisseau ou pas
+            objetPhysique.setEstMonter(vaisseau.getRayonEnlevement().estRayonEnColisionAvec(objetPhysique));
+        }
+
+        for (Projectile projectile : projectiles) {
+            projectile.update(deltaTime);
+        }
+
+        // Verifier si apres les updates il y a eu des collision entre les objets et le gerer
+        verifierCollisions();
+
+        // Verifier si le niveau est fini
+        if (vaches.size() <= 0) estTermine = true;
+    }
+
+    /**
+     * Gerer les touches de debogages pour le update
+     */
+    private void gererTouchesDebogages(){
+        // Si W appuye et le temps ecoule plus de 0.5 seconde, alors augmenter la vie de 1
+        if (Input.ajouterVie ){
+            vaisseau.ajouterUneVie();
+        }
+
+        // Si E appuye, recharger la batterie au complet
+        if (Input.isKeyPressed(KeyCode.E)){
+            vaisseau.getRayonEnlevement().rechargerBatterie();
+        }
+
+        // Si touche I, alors niveau perdu et vaisseau 0 vie (comme ca elle tombe)
+        if (Input.isKeyPressed(KeyCode.I)){
+            this.estPerdue = true;
+            vaisseau.setNombreDeVie(0);
+        }
+    }
+
+    private void verifierNiveauPerdue(){
+        // Si vaisseau hors limites au complet du camera et que plus de vie, alors partie perdue
+        if ((vaisseau.getNombreDeVie() <= 0) && vaisseau.estHorsCamera(camera)){
+            this.estPerdue = true;
+        };
+    }
+
+    private void verifierCollisions(){
+
+        // Verifier les collsions entre vaisseau et projectiles: enlever vie et projectile
+        projectiles.removeIf(projectile -> {
+            if (projectile.estEnCollisionAvec(vaisseau)){
+                // Verifier que pas en mode invincible
+                if (!Input.modeInvincible){
+                    vaisseau.enleverUneVie();
+                }
+                return true;
+            }
+            return false;
+        });
+
+        // Si le vaisseau est mort, alors il ne doit pas  affecter les vaches ou humains (en tombant sur eux)
+        if (vaisseau.getNombreDeVie() <= 0) return;
+
+        // Verifier collision entre vaisseau et vache, si il y a collision => augmenter vaches capturer et effacer vache
+        vaches.removeIf(vache ->{
+
+            if (vaisseau.estEnCollisionAvec(vache)){
+                // Augmenter compteur de vache du vaisseau et effacer vache (true)
+                vaisseau.augmenterCompteurVache(1);
+                return true;
+            }
+            return false;
+        });
+
+        // Verifier collision entre vaisseau et humain, si il y a collision =>  effacer humain
+        humains.removeIf(humain ->{
+            if (vaisseau.estEnCollisionAvec(humain)){
+                return true;
+            }
+            return false;
+        });
 
     }
+
+
+    /*  *****************************************************************
+        ***************   Partie pour generer les objets  ***************
+        *****************************************************************
+     */
 
     private void genererEtoiles(int nombreDeEtoileVoulu){
         for (int i = 0; i <nombreDeEtoileVoulu; i++) {
@@ -189,21 +270,24 @@ public class Niveau {
         }
     }
 
-    private void genererVaches() {
-        vaches.clear();
+    private void genererObjetsPhysique(){
+        // Les vaches
         for (int i = 0; i < calculerNombreDeVache(); i++) {
             Vache vache = new Vache(positionYSol, largeurNiveau, positionYSol);
             vaches.add(vache);
         }
-    }
 
-    private void genererHumains() {
-        humains.clear();
+        // Les humains
         for (int i = 0; i < calculerNombreDeHumains() ; i++) {
             Humain humain = new Humain(positionYSol, largeurNiveau, positionYSol, determinerImageHumain(), camera, projectiles, vaisseau);
             humains.add(humain);
         }
     }
+
+    /*  *****************************************************************************
+     ***************   Partie pour calculs et autre                   ***************
+     ********************************************************************************
+     */
 
     private String determinerImageHumain() {
         if (Math.random() < 0.5) {
@@ -225,11 +309,50 @@ public class Niveau {
         return positionYSol;
     }
 
-    public void setNiveauGagne(boolean niveauGagne) {
-        this.niveauGagne = niveauGagne;
+    public void setEstTermine(boolean niveauGagne) {
+        this.estTermine = niveauGagne;
     }
 
-    public boolean estNiveauGagne() {
-        return niveauGagne;
+    public boolean estTermine() {
+        return estTermine;
+    }
+
+    /**
+     * Methode pour former un arraylist des vaches et humains
+     * @return un arraylist des humains et vaches du niveay
+     */
+    public ArrayList<ObjetPhysique> getObjetPhysiques() {
+        ArrayList<ObjetPhysique> objetPhysiquesNiveau = new ArrayList<>();
+        objetPhysiquesNiveau.addAll(vaches);
+        objetPhysiquesNiveau.addAll(humains);
+        return objetPhysiquesNiveau;
+    }
+
+    public ArrayList<Vache> getVaches() {
+        return vaches;
+    }
+
+    public ArrayList<Humain> getHumains() {
+        return humains;
+    }
+
+    public double getLargeurNiveau() {
+        return largeurNiveau;
+    }
+
+    public double getHauteurNiveau() {
+        return hauteurNiveau;
+    }
+
+    public int getNumeroDuNiveau() {
+        return numeroDuNiveau;
+    }
+
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public boolean estPerdue() {
+        return estPerdue;
     }
 }

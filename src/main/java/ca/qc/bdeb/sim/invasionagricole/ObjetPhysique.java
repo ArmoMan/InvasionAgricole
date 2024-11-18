@@ -5,8 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-import static ca.qc.bdeb.sim.invasionagricole.Input.gererToggleModeDebogage;
-
 public abstract class ObjetPhysique {
 
     protected double posX, posY;
@@ -203,6 +201,22 @@ public abstract class ObjetPhysique {
     public boolean estHorsCamera(Camera camera){
         return (this.getGauche() > camera.getDroite()) || (this.getDroite() < camera.getGauche()) ||
                 (this.getHaut() > camera.getBas()) || (this.getBas() < camera.getHaut());
+    }
+
+    /**
+     * Methode pour enlever une vie si il y a au moins 1 vie
+     */
+    public void enleverUneVie(){
+        if (this.nombreDeVie > 0){
+            this.nombreDeVie -= 1;
+        }
+    }
+
+    /**
+     * Methode pour ajouter une vie
+     */
+    public void ajouterUneVie(){
+        this.nombreDeVie += 1;
     }
 
     public double getPosX() {

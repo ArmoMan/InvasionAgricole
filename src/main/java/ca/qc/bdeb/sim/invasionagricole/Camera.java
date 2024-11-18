@@ -1,5 +1,8 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 public class Camera {
     private double xCamera, yCamera, largeurCamera,hauteurCamera;
     private boolean arreterDeSuivre  = false;
@@ -39,6 +42,17 @@ public class Camera {
             this.xCamera = Math.min( vaisseau.getDroite()- largeurCamera *0.7, xCameraMax);
         }
 
+    }
+
+    /**
+     * Methode pour dessiner les lignes verticales sur le camera
+     */
+    public void dessinerDebug(GraphicsContext context){
+        context.setStroke(Color.GRAY);
+        context.setLineWidth(1);
+        context.strokeLine(0, hauteurCamera * 0.6, largeurCamera, hauteurCamera * 0.6);
+        context.strokeLine(largeurCamera * 0.3, 0, largeurCamera * 0.3, hauteurCamera);
+        context.strokeLine(largeurCamera * 0.7, 0, largeurCamera * 0.7, hauteurCamera);
     }
 
     public double getGauche() {

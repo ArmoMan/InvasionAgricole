@@ -123,5 +123,13 @@ public class RayonEnlevement {
 
     }
 
+    /**
+     * Methode pour charger au complet la batterie
+     */
+    public void rechargerBatterie(){
+        this.chargePresentBatterie = 1;
+        estCeQueBatteriePeutEtreUtiliser = true;
+    }
+
 
 }
