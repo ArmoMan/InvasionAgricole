@@ -35,15 +35,20 @@ public class ControleurJeu {
         this.hauteurNiveau = InvasionAgricoleJavaFX.HAUTEUR_FENETRE;
 
         this.miniCarte = new MiniCarte(10,50,100, objetsAffichageMap);
-        this.vaisseau = new Vaisseau(0,0,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
+        // Commencer vaissau positionné à 100px du haut de l’écran et centré au milieu de l’écran horizontalement.
+        this.vaisseau = new Vaisseau(InvasionAgricoleJavaFX.LARGEUR_FENETRE,100,"extraterrestre.png",InvasionAgricoleJavaFX.LARGEUR_FENETRE*4,InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
         this.camera = new Camera(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE);
 
         chargerNouveauNiveau();
     }
 
     private void chargerNouveauNiveau(){
+        // Creer niveau
         numeroNiveauActuel++;
         niveauActuel = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, numeroNiveauActuel, camera, vaisseau);
+
+        // Repositionner le vaisseau au centre
+        vaisseau.repositionnerAuPosInitiale();
     }
 
     public void update(double deltaTime){

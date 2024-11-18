@@ -11,15 +11,33 @@ public class Vaisseau extends ObjetPhysique {
     private Color couleurVitre =  Color.rgb(255, 255, 0, 0.6);
     private Image vaisseauLumiereOn = new Image("base-vaisseau-on.png");
     private Image vaisseauLumiereOff = new Image("base-vaisseau-off.png");
-    private double limiteVitesse = 600;
+    private final double LIMITE_VITESSE = 600;
     private boolean estLumiereAllumee = false;
     private int nbVachesCapturees = 0;
     private final double CHARGE_VAISSEAU = -900; // la charge en coulomb du vaisseau
     private RayonEnlevement rayonEnlevement;
     private final double NOMBRE_DE_VIE_MAX;
+    private final double POSITION_Y_INITIALE;
+    private final double POSITION_X_INITIALE;
 
-    public Vaisseau(double posX, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
-        super(posX, posY, pathImageAlien, largeurNiveau, hauteurNiveau, 100, 140);
+
+    /**
+     * Methode pour representer un vaisseau.
+     * @param largeurEcran largeur d'ecran. Ensuite ca va le faire commencer le vaisseau au centre de cette position
+     * @param posY position y initiale
+     * @param pathImageAlien image du conducteur de vaisseau
+     * @param largeurNiveau est la largeur du niveau dans laquelle va "jouer" le vaisseau
+     * @param hauteurNiveau est la largeur du niveau dans laquelle va "jouer" le vaisseau
+     */
+    public Vaisseau(double largeurEcran, double posY, String pathImageAlien,double largeurNiveau, double hauteurNiveau) {
+        super(0, posY, pathImageAlien, largeurNiveau, hauteurNiveau, 100, 140);
+
+        // Mettre en memoire les position pour commencer toujours de la meme position
+        this.POSITION_Y_INITIALE = posY;
+        this.POSITION_X_INITIALE = (largeurEcran/2) - this.largeurImage/2;
+
+        // Positionner le vaissau au centre du position donne
+        repositionnerAuPosInitiale();
 
         this.vX = 0;
         this.vY = 0;
@@ -77,7 +95,8 @@ public class Vaisseau extends ObjetPhysique {
             updatePhysique(deltaTime);
 
             // limiter vitesse à 600
-            limiterVitesse();
+            this.vX = limiterVitesse(vX);
+            this.vY = limiterVitesse(vY);
 
             // Verifier que ca ne depasse pas les limites du niveau
             estToucherLimites(largeurNiveau, hauteurNiveau, true);
@@ -110,24 +129,24 @@ public class Vaisseau extends ObjetPhysique {
     }
 
     /**
-     * Methode pour limiter la vitesse a 600px/s
+     * Methode pour limiter la vitesse a LIMITE_VITESSE
+     * @param vitesse la vitesse qu'on veut verifier et limiter
+     * @return  vitessee la vitesse recalculée
      */
-    private void limiterVitesse(){
+    private double limiterVitesse(double vitesse){
         // Marge de vitesse pour arreter les oscillations
         double margeDeVitesse = 1.0;
 
-        // Si plus que 600 ou moins que -600, alors remettre la vitesse a 600 avec la bonne signe
-        if (Math.abs(this.vX) > limiteVitesse) vX = 600*Math.signum(this.vX);
+        /* Si plus que LIMITE_VITESSE ou moins que -LIMITE_VITESSE, alors remettre la vitesse a LIMITES_VITESSE
+         avec la bonne signe*/
+        if (Math.abs(vitesse) > LIMITE_VITESSE) return  LIMITE_VITESSE * Math.signum(vitesse);
 
         // Arreter les petits oscillations quand le vaisseau essaye d'arriver a un arret
-        if (Math.abs(this.vX) < margeDeVitesse){
-            vX = 0;
-            aX = 0;
+        if (Math.abs(vitesse) < margeDeVitesse){
+            return 0;
         }
-        if (Math.abs(this.vY) < margeDeVitesse){
-            vY = 0;
-            aY = 0;
-        }
+
+        return vitesse;
     }
 
     @Override
@@ -235,6 +254,11 @@ public class Vaisseau extends ObjetPhysique {
 
     public void setRayonEnlevement(RayonEnlevement rayonEnlevement) {
         this.rayonEnlevement = rayonEnlevement;
+    }
+
+    public void repositionnerAuPosInitiale() {
+        this.posX = POSITION_X_INITIALE;
+        this.posY = POSITION_Y_INITIALE;
     }
 
 }
