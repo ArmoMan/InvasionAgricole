@@ -35,10 +35,10 @@ public abstract class Projectile extends ObjetPhysique {
 
     /**
      * Methode pour calculer detaX, detaY, distance et n vecteur unitaire d'un objet 1 vers un objet 2
-     * @param posXObjetUn
-     * @param posYObjetUn
-     * @param posXObjetDeux
-     * @param posYObjetDeux
+     * @param posXObjetUn position x de l'objet 1
+     * @param posYObjetUn position y de l'objet 1
+     * @param posXObjetDeux position x de l'objet 2
+     * @param posYObjetDeux position t de l'objet 2
      */
     protected void calculerDirectionVersVaisseau(double posXObjetUn, double posYObjetUn, double posXObjetDeux, double posYObjetDeux){
         // Calcul des composantes de vecteur direction
