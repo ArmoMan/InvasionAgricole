@@ -1,8 +1,8 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vache;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vache;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -108,7 +108,7 @@ public class ControleurJeu {
     }
 
     private void dessinerMessageGagner(GraphicsContext context){
-        String messageFin = "Niveau " + niveauActuel.getNumeroDuNiveau() + " complété";
+        String messageFin = "Niveau " + niveauActuel.getNumeroNiveau() + " complété";
         // Pour empecher d'avoir une erreur, verifier que l'opacite macimale est de 1
         opaciteCouleurTransition = Math.min(1,opaciteCouleurTransition);
 

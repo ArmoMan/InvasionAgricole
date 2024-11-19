@@ -1,4 +1,4 @@
-package ca.qc.bdeb.sim.invasionagricole.objet.background;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.background;
 
 import ca.qc.bdeb.sim.invasionagricole.Camera;
 import javafx.scene.canvas.GraphicsContext;

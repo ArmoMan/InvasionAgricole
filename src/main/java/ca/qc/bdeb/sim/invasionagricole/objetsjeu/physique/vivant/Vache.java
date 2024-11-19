@@ -1,20 +1,20 @@
-package ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant;
 
 import ca.qc.bdeb.sim.invasionagricole.Camera;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Vache extends ObjetPhysique {
     private double vitessePrecedenteCollision = 0;
 
-    public Vache( double posY,double largeurNiveau, double hauteurNiveau) {
+    public Vache(double largeurNiveau, double hauteurNiveau) {
 
-        super( 0, posY, "vache.png", largeurNiveau, hauteurNiveau, 136, 134);
+        super(0, hauteurNiveau, "vache.png", largeurNiveau, hauteurNiveau, 136, 134);
         this.nombreDeVie = 1;
         this.vY = 0;
 
-        this.posY = posY - this.hauteurImage; // Ce code ne marche pas, elle ne change pas le posY
+        this.posY = posY - this.hauteur; // Ce code ne marche pas, elle ne change pas le posY
 
         this.posX = genererPositionX();
         this.vX = determinerVitesse();
@@ -77,6 +77,6 @@ public class Vache extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        context.drawImage(this.image, xEcran, yEcran, this.largeurImage, this.hauteurImage);
+        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
     }
 }

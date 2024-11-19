@@ -6,7 +6,7 @@ Bugs à fix :
         -
 
     - Moyennement important :
-        - les projectiles doivent disparaitre quand ils sortent du niveau (pour l'instant ils s'arrêtent aux limites du niveau)
+        - les projectiles doivent disparaitre quand ils sortent du niveau (pour l'instant ils s'arrêtent aux limites du niveau) (fixed)
 
     - Pas très important :
         - les projectiles ne sont pas centrés (le coin est centré au centre de l'humain) (fixed)

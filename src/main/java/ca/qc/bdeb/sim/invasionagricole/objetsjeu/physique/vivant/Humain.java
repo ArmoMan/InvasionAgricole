@@ -1,12 +1,12 @@
-package ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant;
 
 import ca.qc.bdeb.sim.invasionagricole.*;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.Position;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.AimantFerCheval;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.Girouette;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.PotDeFleurs;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.Projectile;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.Position;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles.AimantFerCheval;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles.Girouette;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles.PotDeFleurs;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles.Projectile;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ public class Humain extends ObjetPhysique {
     private ArrayList<Projectile> projectiles;
     private Vaisseau vaisseau;
 
-    public Humain(double posY, double largeurNiveau, double hauteurNiveau, String pathImageHumain, Camera camera, ArrayList<Projectile> projectiles, Vaisseau vaisseau) {
-        super(0 ,posY, pathImageHumain,largeurNiveau,hauteurNiveau, 83, 185);
+    public Humain(double largeurNiveau, double hauteurNiveau, String pathImageHumain, Camera camera, ArrayList<Projectile> projectiles, Vaisseau vaisseau) {
+        super(0 , hauteurNiveau, pathImageHumain,largeurNiveau,hauteurNiveau, 83, 185);
         this.nombreDeVie = 1;
         this.posX = genererPositionX();
-        this.posY = posY - this.hauteurImage;
+        this.posY = posY - this.hauteur;
         this.camera = camera;
         this.tempsDepuisDernierProjectile = Math.random() * 2; // Entre 0 et 2 secondes
         this.delaiProjectile = 2.0;
@@ -52,7 +52,7 @@ public class Humain extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        context.drawImage(this.image, xEcran, yEcran, this.largeurImage, this.hauteurImage);
+        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
     }
 
 
@@ -86,10 +86,10 @@ public class Humain extends ObjetPhysique {
 
 
     public double getPosCentreX() {
-        return posX + this.largeurImage / 2;
+        return posX + this.largeur / 2;
     }
 
     public double getPosCentreY() {
-        return posY + this.hauteurImage / 2;
+        return posY + this.hauteur / 2;
     }
 }

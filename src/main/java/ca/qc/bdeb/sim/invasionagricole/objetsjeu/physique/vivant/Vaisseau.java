@@ -1,9 +1,9 @@
-package ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant;
 
 import ca.qc.bdeb.sim.invasionagricole.Camera;
 import ca.qc.bdeb.sim.invasionagricole.Input;
 import ca.qc.bdeb.sim.invasionagricole.RayonEnlevement;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -44,7 +44,7 @@ public class Vaisseau extends ObjetPhysique {
 
         // Mettre en memoire les position pour commencer toujours de la meme position
         this.POSITION_Y_INITIALE = posY;
-        this.POSITION_X_INITIALE = (largeurEcran/2) - this.largeurImage/2;
+        this.POSITION_X_INITIALE = (largeurEcran/2) - this.largeur /2;
 
         // Positionner le vaissau au centre du position donne
         repositionnerAuPosInitiale();
@@ -168,17 +168,17 @@ public class Vaisseau extends ObjetPhysique {
 
         // Dessiner le vitre
         context.setFill(couleurVitre);
-        context.fillOval(xEcran, yEcran,  this.largeurImage,  this.hauteurImage);
+        context.fillOval(xEcran, yEcran,  this.largeur,  this.hauteur);
 
         // Dessiner et dessider quelle base de vaisseau utiliser
         if (estLumiereAllumee){
-            context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeurImage)/2), yEcran + (this.hauteurImage -vaisseauLumiereOn.getHeight()));
+            context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeur)/2), yEcran + (this.hauteur -vaisseauLumiereOn.getHeight()));
         }else {
-            context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeurImage)/2), yEcran + (this.hauteurImage -vaisseauLumiereOff.getHeight()));
+            context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeur)/2), yEcran + (this.hauteur -vaisseauLumiereOff.getHeight()));
         }
 
         // Dessiner l'alien
-        context.drawImage(this.image, (xEcran+( this.largeurImage - this.image.getWidth())/2),yEcran + this.hauteurImage -vaisseauLumiereOff.getHeight()-this.image.getHeight() );
+        context.drawImage(this.image, (xEcran+( this.largeur - this.image.getWidth())/2),yEcran + this.hauteur -vaisseauLumiereOff.getHeight()-this.image.getHeight() );
 
     }
 

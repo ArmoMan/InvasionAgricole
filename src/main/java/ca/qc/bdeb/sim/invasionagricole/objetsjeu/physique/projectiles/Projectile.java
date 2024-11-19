@@ -1,8 +1,8 @@
-package ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles;
 
 import ca.qc.bdeb.sim.invasionagricole.Camera;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Projectile extends ObjetPhysique {
@@ -16,10 +16,10 @@ public abstract class Projectile extends ObjetPhysique {
     protected  double proportionY;
     protected Vaisseau vaisseauTarget;
 
-    public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau, double largeurImage, double hauteurImage) {
-        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, largeurImage, hauteurImage);
-        this.posX = this.posX - largeurImage /2;
-        this.posY = this.posY - hauteurImage /2;
+    public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau, double largeur, double hauteur) {
+        super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, largeur, hauteur);
+        this.posX = this.posX - largeur /2;
+        this.posY = this.posY - hauteur /2;
         this.vaisseauTarget = vaisseau;
     }
 
@@ -29,7 +29,7 @@ public abstract class Projectile extends ObjetPhysique {
         double xEcran = camera.calculerEcranX(posX);
         double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
 
-        context.drawImage(this.image, xEcran, yEcran, this.largeurImage, this.hauteurImage);
+        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
     }
 
 

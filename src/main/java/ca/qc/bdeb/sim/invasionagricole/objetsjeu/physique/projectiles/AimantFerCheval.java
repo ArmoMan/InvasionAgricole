@@ -1,8 +1,8 @@
 
-package ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles;
 
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.Position;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.Position;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
 
 public class AimantFerCheval extends Projectile {
     private static final double CONSTANTE_COULOMB = 1500;

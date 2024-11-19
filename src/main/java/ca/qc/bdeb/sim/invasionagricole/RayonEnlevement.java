@@ -1,7 +1,7 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -21,7 +21,7 @@ public class RayonEnlevement {
     private boolean estCeQueBatteriePeutEtreUtiliser = true;
 
     public RayonEnlevement(Vaisseau vaisseau) {
-        this.largeurRayon = vaisseau.getLargeurImage();
+        this.largeurRayon = vaisseau.getLargeur();
         this.chargePresentBatterie = 1;
         this.hauteurRayon = 0;
         this.vaisseau = vaisseau;
@@ -74,11 +74,11 @@ public class RayonEnlevement {
         // Verifier si objet est entre les y du rayon
         // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut du rayon
         boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < objetPhysique.getPosY()
-                + objetPhysique.getHauteurImage();
+                + objetPhysique.getHauteur();
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas du rayon
-        boolean estCeQuePlusHautQuePartieBasRayon = objetPhysique.getPosY() < vaisseau.getPosY() +vaisseau.getHauteurImage()+  hauteurRayon;
+        boolean estCeQuePlusHautQuePartieBasRayon = objetPhysique.getPosY() < vaisseau.getPosY() +vaisseau.getHauteur()+  hauteurRayon;
 
-        boolean objetPlusBasQueBasDuVaisseau = vaisseau.getPosY() + vaisseau.getHauteurImage() < objetPhysique.getPosY();
+        boolean objetPlusBasQueBasDuVaisseau = vaisseau.getPosY() + vaisseau.getHauteur() < objetPhysique.getPosY();
 
         return  estCeQuePlusHautQuePartieBasRayon && estCeQuePlusBasQuePartieHautRayon
                 && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon && objetPlusBasQueBasDuVaisseau;
@@ -88,7 +88,7 @@ public class RayonEnlevement {
     public void dessinerRayon(GraphicsContext context, Camera camera) {
         if (estRayonActiver && chargePresentBatterie > 0) {
             double xEcran = camera.calculerEcranX(vaisseau.getPosX());
-            double yEcran = camera.calculerEcranY(vaisseau.getPosY() + vaisseau.getHauteurImage());
+            double yEcran = camera.calculerEcranY(vaisseau.getPosY() + vaisseau.getHauteur());
             context.setFill(couleurRayon);
             context.fillRect(xEcran, yEcran, largeurRayon, hauteurRayon);
         }

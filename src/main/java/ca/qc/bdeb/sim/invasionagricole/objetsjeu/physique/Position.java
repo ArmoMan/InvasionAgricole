@@ -1,4 +1,4 @@
-package ca.qc.bdeb.sim.invasionagricole.objet.physique;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique;
 
 /**
  * Class utiliser notamment dans ObjetPhysique pour savoir si on veut calculer le centre verticale ou centre horizontale

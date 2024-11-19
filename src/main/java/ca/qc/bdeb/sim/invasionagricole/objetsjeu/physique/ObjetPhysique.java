@@ -1,4 +1,4 @@
-package ca.qc.bdeb.sim.invasionagricole.objet.physique;
+package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique;
 
 import ca.qc.bdeb.sim.invasionagricole.Camera;
 import ca.qc.bdeb.sim.invasionagricole.Input;
@@ -12,7 +12,7 @@ public abstract class ObjetPhysique {
     protected double vX = 0, vY =0;
     protected double aX = 0, aY = 0;
     protected Image image;
-    protected double largeurImage, hauteurImage;
+    protected double largeur, hauteur;
     protected int nombreDeVie;
     protected double largeurNiveau, hauteurNiveau;
     protected double gravite = 1000;
@@ -31,8 +31,8 @@ public abstract class ObjetPhysique {
         this.image = new Image(pathImage);
         this.largeurNiveau = largeurNiveau;
         this.hauteurNiveau = hauteurNiveau;
-        this.largeurImage = largeurImage;
-        this.hauteurImage = hauteurImage;
+        this.largeur = largeurImage;
+        this.hauteur = hauteurImage;
     }
 
     public abstract void update(double deltaTime);
@@ -71,7 +71,7 @@ public abstract class ObjetPhysique {
 
             context.setStroke(Color.YELLOW);
             context.setLineWidth(2);
-            context.strokeRect(xEcran, yEcran, largeurImage, hauteurImage);
+            context.strokeRect(xEcran, yEcran, largeur, hauteur);
         }
     }
 
@@ -122,7 +122,7 @@ public abstract class ObjetPhysique {
         if (this.getDroite() > posXMax) {
             this.estEnCollisionLimiteHorizontal = true;
             if (repositionnerObjet){
-                posX = posXMax - largeurImage;
+                posX = posXMax - largeur;
                 vX = 0;
             }
         }else if (this.getGauche() < 0) {
@@ -139,7 +139,7 @@ public abstract class ObjetPhysique {
         if (this.getBas() > limiteDeHauteur) {
             estEnCollisionLimiteVerticale = true;
             if (repositionnerObjet){
-                posY = limiteDeHauteur - hauteurImage;
+                posY = limiteDeHauteur - hauteur;
                 vY = 0;
             }
         }else if (this.getHaut() < 0) {
@@ -159,23 +159,23 @@ public abstract class ObjetPhysique {
      * @return position x entre 0 et largeurNiveau - largeur (image)
      */
     protected double genererPositionX(){
-        return (Math.random() * (largeurNiveau- largeurImage));
+        return (Math.random() * (largeurNiveau- largeur));
     }
 
     public boolean estEnCollisionAvec(ObjetPhysique objetPhysique) {
 
         // Verifier si objet est entre les x de l'objet actuel
         boolean estCeQuePlusGaucheQuePartieDroiteActuel = this.getGauche()
-                + this.largeurImage > objetPhysique.getGauche();
+                + this.largeur > objetPhysique.getGauche();
         boolean estCeQuePlusDroiteQuePartieGaucheActuel = this.getGauche() < objetPhysique.getDroite();
 
         // Verifier si objet est entre les y de l'objet actuel
         // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut de l'objet actuel
         boolean estCeQuePlusBasQuePartieHautActuel = this.getPosY() < objetPhysique.getPosY()
-                + objetPhysique.getHauteurImage();
+                + objetPhysique.getHauteur();
 
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas de l'objet actuel
-        boolean estCeQuePlusHautQuePartieBasActuel = objetPhysique.getPosY() < this.getPosY() + this.hauteurImage;
+        boolean estCeQuePlusHautQuePartieBasActuel = objetPhysique.getPosY() < this.getPosY() + this.hauteur;
 
 
         return estCeQuePlusBasQuePartieHautActuel && estCeQuePlusHautQuePartieBasActuel
@@ -190,9 +190,9 @@ public abstract class ObjetPhysique {
      */
     public double calculerPositionCentre(Position position){
         if (position == Position.HORIZONTAL){
-            return posX + (this.largeurImage/2);
+            return posX + (this.largeur /2);
         }else {
-            return posY + (this.hauteurImage/2);
+            return posY + (this.hauteur /2);
         }
     }
 
@@ -235,12 +235,12 @@ public abstract class ObjetPhysique {
         }
     }
 
-    public double getHauteurImage() {
-        return hauteurImage;
+    public double getHauteur() {
+        return hauteur;
     }
 
-    public double getLargeurImage() {
-        return largeurImage;
+    public double getLargeur() {
+        return largeur;
     }
 
     public double getGauche(){
@@ -248,11 +248,11 @@ public abstract class ObjetPhysique {
     }
 
     public double getDroite(){
-        return this.getPosX() + this.largeurImage;
+        return this.getPosX() + this.largeur;
     }
 
     public double getBas(){
-        return this.getPosY() + this.hauteurImage;
+        return this.getPosY() + this.hauteur;
     }
 
     public double getHaut(){

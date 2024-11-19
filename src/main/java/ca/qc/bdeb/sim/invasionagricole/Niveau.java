@@ -1,13 +1,13 @@
 package ca.qc.bdeb.sim.invasionagricole;
 
-import ca.qc.bdeb.sim.invasionagricole.objet.background.Etoile;
-import ca.qc.bdeb.sim.invasionagricole.objet.background.ObjetArrierePlan;
-import ca.qc.bdeb.sim.invasionagricole.objet.background.ObjetImage;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.ObjetPhysique;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.projectiles.Projectile;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Humain;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vache;
-import ca.qc.bdeb.sim.invasionagricole.objet.physique.vivant.Vaisseau;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.background.Etoile;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.background.ObjetArrierePlan;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.background.ObjetImage;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles.Projectile;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Humain;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vache;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -21,13 +21,13 @@ import java.util.Random;
 public class Niveau {
 
     // Information sur le niveau
-    private int numeroDuNiveau;
+    private int numeroNiveau;
     private boolean estTermine = false;
     private boolean estPerdue = false;
 
     // Les dimensions
     private double largeurNiveau, hauteurNiveau;
-    private final int HAUTEUR_SOL_VERT = 20;
+    private final int HAUTEUR_SOL_VERT = 60;
     // Largeur de l'ecran / fenetre
     private double largeurFenetre,hauteurFenetre;
     private  double positionYSol;
@@ -46,16 +46,17 @@ public class Niveau {
 
 
 
-    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroDuNiveau, Camera camera, Vaisseau vaisseau) {
+    public Niveau(double largeurFenetre,double hauteurFenetre, int numeroNiveau, Camera camera, Vaisseau vaisseau) {
         // Initialiser informations importants
-        this.numeroDuNiveau = numeroDuNiveau;
+        this.numeroNiveau = numeroNiveau;
 
         // Initialiser les dimensions: largeur du niveau est 4 fois celle de la fenetre
         this.hauteurNiveau = hauteurFenetre;
         this.largeurNiveau = largeurFenetre*4;
         this.largeurFenetre = largeurFenetre;
         this.hauteurFenetre = hauteurFenetre;
-        this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
+        //this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
+        this.positionYSol = hauteurNiveau;
 
         this.camera = camera;
         this.vaisseau = vaisseau;
@@ -126,7 +127,7 @@ public class Niveau {
 
         // le sol
         context.setFill(Color.web("#225500"));
-        context.fillRect(0,positionYSol,largeurNiveau,HAUTEUR_SOL_VERT);
+        context.fillRect(0, hauteurNiveau - HAUTEUR_SOL_VERT, largeurNiveau, HAUTEUR_SOL_VERT);
     }
 
 
@@ -246,8 +247,8 @@ public class Niveau {
         *****************************************************************
      */
 
-    private void genererEtoiles(int nombreDeEtoileVoulu){
-        for (int i = 0; i <nombreDeEtoileVoulu; i++) {
+    private void genererEtoiles(int nbEtoilesVoulues){
+        for (int i = 0; i < nbEtoilesVoulues; i++) {
             int positionX = (int) (Math.random() * largeurNiveau);
 
             //Position y est choisie au hasard de façon à ne pas dépasser 50% de la hauteur de la fenêtre.
@@ -263,38 +264,37 @@ public class Niveau {
      hasard, jusqu’à ce qu’on couvre toute la largeur du niveau.*/
     private void genererGrangesEtTracteurs() {
         boolean estCeTourTracteur = false;
-        int positionX = 0;
+        int posX = 0;
         Random rand = new Random();
 
-        while (positionX < largeurNiveau) {
+        while (posX < largeurNiveau) {
             int prochaineDistanceAjouter = rand.nextInt(500,800);
             if (estCeTourTracteur){
-                int hauteurObjet = 55;
-                int positionY = (int) (hauteurNiveau-hauteurObjet-HAUTEUR_SOL_VERT);
-                ObjetImage tracteur = new ObjetImage(positionX, positionY,"tracteur.png", 89,hauteurObjet);
-                objetsArrierePlan.add(tracteur);
+                objetsArrierePlan.add(genererObjetImage(posX, "tracteur.png", 89, 55));
                 estCeTourTracteur = false;
             }else{
-                int hauteurObjet = 147;
-                int positionY = (int) (hauteurNiveau-hauteurObjet-HAUTEUR_SOL_VERT);
-                ObjetImage grange = new ObjetImage(positionX,positionY,"grange.png", 113,hauteurObjet);
-                objetsArrierePlan.add(grange);
+                objetsArrierePlan.add(genererObjetImage(posX, "grange.png", 113, 147));
                 estCeTourTracteur = true;
             }
-            positionX += prochaineDistanceAjouter;
+            posX += prochaineDistanceAjouter;
         }
+    }
+
+    private ObjetImage genererObjetImage(int posX, String imagePath, int largeur, int hauteur){
+        int posY = (int) (hauteurNiveau-hauteur-HAUTEUR_SOL_VERT);
+        return new ObjetImage(posX, posY,imagePath, largeur, hauteur);
     }
 
     private void genererObjetsPhysique(){
         // Les vaches
         for (int i = 0; i < calculerNombreDeVache(); i++) {
-            Vache vache = new Vache(positionYSol, largeurNiveau, positionYSol);
+            Vache vache = new Vache(largeurNiveau, hauteurNiveau);
             vaches.add(vache);
         }
 
         // Les humains
         for (int i = 0; i < calculerNombreDeHumains() ; i++) {
-            Humain humain = new Humain(positionYSol, largeurNiveau, positionYSol, determinerImageHumain(), camera, projectiles, vaisseau);
+            Humain humain = new Humain(largeurNiveau, hauteurNiveau, determinerImageHumain(), camera, projectiles, vaisseau);
             humains.add(humain);
         }
     }
@@ -313,15 +313,11 @@ public class Niveau {
     }
 
     private int calculerNombreDeVache(){
-        return 5+2*numeroDuNiveau;
+        return 5+2* numeroNiveau;
     }
 
     private int calculerNombreDeHumains(){
-        return 3 + 3*(numeroDuNiveau - 1);
-    }
-
-    public double getPositionYSol() {
-        return positionYSol;
+        return 3 + 3*(numeroNiveau - 1);
     }
 
     public void setEstTermine(boolean niveauGagne) {
@@ -359,8 +355,8 @@ public class Niveau {
         return hauteurNiveau;
     }
 
-    public int getNumeroDuNiveau() {
-        return numeroDuNiveau;
+    public int getNumeroNiveau() {
+        return numeroNiveau;
     }
 
     public ArrayList<Projectile> getProjectiles() {
