@@ -50,8 +50,10 @@ public class ControleurJeu {
         numeroNiveauActuel++;
         niveauActuel = new Niveau(InvasionAgricoleJavaFX.LARGEUR_FENETRE, InvasionAgricoleJavaFX.HAUTEUR_FENETRE, numeroNiveauActuel, camera, vaisseau);
 
-        // Repositionner le vaisseau au centre
+        // Repositionner le vaisseau au centre et met vY et vX a 0
         vaisseau.repositionnerAuPosInitiale();
+        // Repositionner le camera au debut
+        camera.repositionnerPositionZero();
     }
 
     public void update(double deltaTime){

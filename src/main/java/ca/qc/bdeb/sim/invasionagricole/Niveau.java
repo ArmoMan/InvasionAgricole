@@ -181,8 +181,13 @@ public class Niveau {
             vaisseau.getRayonEnlevement().rechargerBatterie();
         }
 
-        // Si touche I, alors niveau perdu et vaisseau 0 vie (comme ca elle tombe)
+        // Si touche I alors niveau gagne
         if (Input.isKeyPressed(KeyCode.I)){
+            this.estTermine = true;
+        }
+
+        // Si touche F, alors niveau perdu et vaisseau 0 vie (comme ca elle tombe)
+        if (Input.isKeyPressed(KeyCode.F)){
             this.estPerdue = true;
             vaisseau.setNombreDeVie(0);
         }

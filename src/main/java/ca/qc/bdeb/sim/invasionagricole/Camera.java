@@ -56,6 +56,14 @@ public class Camera {
         context.strokeLine(largeurCamera * 0.7, 0, largeurCamera * 0.7, hauteurCamera);
     }
 
+    /**
+     * Methode qui replace le camera a 0,0
+     */
+    public void repositionnerPositionZero(){
+        this.xCamera = 0;
+        this.yCamera = 0;
+    }
+
     public double getGauche() {
         return xCamera;
     }

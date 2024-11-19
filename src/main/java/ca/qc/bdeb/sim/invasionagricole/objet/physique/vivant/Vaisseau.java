@@ -268,9 +268,14 @@ public class Vaisseau extends ObjetPhysique {
         this.rayonEnlevement = rayonEnlevement;
     }
 
+    /**
+     * Methode qui repositionne l'objet aux posX et posY initiales et qui met la vitesse x et y a 0
+     */
     public void repositionnerAuPosInitiale() {
         this.posX = POSITION_X_INITIALE;
         this.posY = POSITION_Y_INITIALE;
+        this.vX = 0;
+        this.vY = 0;
     }
 
 }
