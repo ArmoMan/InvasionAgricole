@@ -56,7 +56,6 @@ public class Niveau {
         this.largeurFenetre = largeurFenetre;
         this.hauteurFenetre = hauteurFenetre;
         //this.positionYSol = hauteurNiveau - HAUTEUR_SOL_VERT;
-        this.positionYSol = hauteurNiveau;
 
         this.camera = camera;
         this.vaisseau = vaisseau;
