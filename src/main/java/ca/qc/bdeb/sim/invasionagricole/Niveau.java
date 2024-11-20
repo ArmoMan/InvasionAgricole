@@ -202,7 +202,7 @@ public class Niveau {
 
     private void verifierCollisions(){
 
-        // Verifier les collsions entre vaisseau et projectiles: enlever vie et projectile
+        // Verifier les collsions entre vaisseau et projectiles: enlever vie et projectile + si hors ecran alors enlever
         projectiles.removeIf(projectile -> {
             if (projectile.estEnCollisionAvec(vaisseau)){
                 // Verifier que pas en mode invincible
@@ -211,6 +211,12 @@ public class Niveau {
                 }
                 return true;
             }
+
+            // Si hors camera alors effacer
+            if (projectile.estHorsCamera(camera)){
+                return true;
+            }
+
             return false;
         });
 
