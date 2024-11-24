@@ -114,7 +114,7 @@ public class Vaisseau extends ObjetPhysique {
             estToucherLimites(largeurNiveau, hauteurNiveau, true);
 
             // Si il y a une des 4 touches appuyer alors mettre estLumierAllumer True sinon False
-            estLumiereAllumee = isBoutonMouvementActif();
+            estLumiereAllumee = estBoutonMouvementActif();
 
             // Update le rayon d'enlevement
             this.rayonEnlevement.update(deltaTime);
@@ -132,7 +132,7 @@ public class Vaisseau extends ObjetPhysique {
 
 
 
-    private boolean isBoutonMouvementActif(){
+    private boolean estBoutonMouvementActif(){
         boolean left = Input.isKeyPressed(KeyCode.LEFT);
         boolean right = Input.isKeyPressed(KeyCode.RIGHT);
         boolean up = Input.isKeyPressed(KeyCode.UP);
