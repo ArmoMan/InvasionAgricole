@@ -5,7 +5,7 @@ import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.Position;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
 
 public class AimantFerCheval extends Projectile {
-    private static final double CONSTANTE_COULOMB = 1500;
+    private static final double CONSTANTE_COULOMB = 700;
     private static final double CHARGE_AIMANT = 100;
 
     public AimantFerCheval(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau) {

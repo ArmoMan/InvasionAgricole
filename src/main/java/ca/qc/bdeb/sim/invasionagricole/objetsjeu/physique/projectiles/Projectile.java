@@ -73,9 +73,6 @@ public abstract class Projectile extends ObjetPhysique {
             vX = proportionVitesseX * vitesseMax;
             vY = proportionVitesseY * vitesseMax;
 
-            System.out.println(vX + " " + vY);
-            magnitudeVitesse =  Math.sqrt(vX * vX + vY * vY);
-            System.out.println(magnitudeVitesse);
         }
 
     }
