@@ -8,9 +8,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 public class RayonEnlevement {
-    private double vitessseExtensionRayon = 150;
-    private double vitesseDeRechargeBatterie = 0.2;
-    private double vitesseDeDechargeBatterie = 0.25;
+    // Les constants
+    private final double VITESSE_EXTENSION_RAYON = 150;
+    private final double VITESSSE_RECHARGE_BATTERIE = 0.2;
+    private final double VITESSE_DECHARGE_BATTERIE = 0.25;
+
     private double largeurRayon;
     private double hauteurRayon;
     private boolean estRayonActiver = false;
@@ -18,7 +20,7 @@ public class RayonEnlevement {
     private double chargePresentBatterie;
     private Color couleurRayon = Color.rgb(255, 255, 0, 0.5);
     private Vaisseau vaisseau;
-    private boolean estCeQueBatteriePeutEtreUtiliser = true;
+    private boolean estCeQueBatteriePeutEtreUtilisee = true;
 
     public RayonEnlevement(Vaisseau vaisseau) {
         this.largeurRayon = vaisseau.getLargeur();
@@ -32,9 +34,9 @@ public class RayonEnlevement {
 
         // Si appuyer espace et que il y a de la charge et que utilisateur peut utiliser,
         // alors augmenter la hauteur du rayon et baisser le niveau de la batterie
-        if (espaceAppuyer && chargePresentBatterie > 0 && estCeQueBatteriePeutEtreUtiliser) {
-            hauteurRayon += vitessseExtensionRayon * deltaTime;
-            chargePresentBatterie -= vitesseDeDechargeBatterie * deltaTime;
+        if (espaceAppuyer && chargePresentBatterie > 0 && estCeQueBatteriePeutEtreUtilisee) {
+            hauteurRayon += VITESSE_EXTENSION_RAYON * deltaTime;
+            chargePresentBatterie -= VITESSE_DECHARGE_BATTERIE * deltaTime;
             estRayonActiver = true;
         } else {
             // Si pas de charge ou pas de button appuyer, alors charger la batterie
@@ -42,14 +44,14 @@ public class RayonEnlevement {
 
             // Si completement decharger, alors empecher utilisateur de l'utiliser
             if (chargePresentBatterie <= 0) {
-                estCeQueBatteriePeutEtreUtiliser = false;
+                estCeQueBatteriePeutEtreUtilisee = false;
             } else if (chargePresentBatterie >= 1) {
-                estCeQueBatteriePeutEtreUtiliser = true;
+                estCeQueBatteriePeutEtreUtilisee = true;
             }
 
             // Charger la batterie si necessaire
             if (chargePresentBatterie < 1) {
-                chargePresentBatterie += vitesseDeRechargeBatterie * deltaTime;
+                chargePresentBatterie += VITESSSE_RECHARGE_BATTERIE * deltaTime;
                 // Verifier que la charge ne depasse jamais 1
                 if (chargePresentBatterie > 1) {
                     chargePresentBatterie = 1;
@@ -59,6 +61,11 @@ public class RayonEnlevement {
         }
     }
 
+    /**
+     * Methode pour verifier si la rayon est en collision avec un objet
+     * @param objetPhysique
+     * @return true si en collision et false si pas en collision
+     */
     public boolean estRayonEnColisionAvec(ObjetPhysique objetPhysique) {
         // Si rayon est inactif, alors ignorer
         if (!estRayonActiver) {
@@ -94,11 +101,20 @@ public class RayonEnlevement {
         }
     }
 
+    /**
+     * Methode pour dessiner la batterie du Rayon
+     * @param context est le GraphicsContext
+     * @param largeurBatterie est la largeur de la batterie à dessiner
+     * @param hauteurBatterie est la hauteur de la batterie à dessiner
+     * @param posX position x de la batterie
+     * @param posY position y de la batterie
+     * @param pathImageBatterie image de la batterie qui doit être affiché dans la barre de recharge
+     */
     public void dessinerBatterie(GraphicsContext context, double largeurBatterie,
                                  double hauteurBatterie, double posX, double posY, String pathImageBatterie) {
         Color couleurBatterie;
 
-        if (estCeQueBatteriePeutEtreUtiliser) {
+        if (estCeQueBatteriePeutEtreUtilisee) {
             if (chargePresentBatterie <= 0.2) {
                 couleurBatterie = Color.ORANGE;
             } else {
@@ -130,7 +146,7 @@ public class RayonEnlevement {
      */
     public void rechargerBatterie(){
         this.chargePresentBatterie = 1;
-        estCeQueBatteriePeutEtreUtiliser = true;
+        estCeQueBatteriePeutEtreUtilisee = true;
     }
 
 

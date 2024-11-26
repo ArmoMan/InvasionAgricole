@@ -76,12 +76,7 @@ public class Camera {
     public double getBas() {
         return yCamera+hauteurCamera;
     }
-    public double getLargeurCamera() {
-        return largeurCamera;
-    }
-    public double getHauteurCamera() {
-        return hauteurCamera;
-    }
+
 
 
 }

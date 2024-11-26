@@ -10,6 +10,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * Classe du vaisseau
+ */
 public class Vaisseau extends ObjetPhysique {
 
     // Image et couleurs | description physique
@@ -61,8 +64,6 @@ public class Vaisseau extends ObjetPhysique {
 
         // Creer le rayon
         this.rayonEnlevement = new RayonEnlevement(this);
-
-        this.nbVachesCapturees = 208;
 
     }
 
@@ -208,7 +209,12 @@ public class Vaisseau extends ObjetPhysique {
         context.fillText(String.valueOf(this.nbVachesCapturees), posXCompteurVache, posYTextes);
 
         // Image d'Alien
-        double posXAlien = posXCompteurVache + espacementDesElements + context.getFont().getSize();
+
+        // calcule la taille de l'espacement selon le nombre de charactere du compteur de vache
+        double espacementSelonTailleTexte =
+                espacementDesElements*(Integer.toString(this.nbVachesCapturees).length());
+
+        double posXAlien = posXCompteurVache + espacementSelonTailleTexte + context.getFont().getSize();
         context.drawImage(imageAlienIcone, posXAlien, posYdessin,largeurImageAlien ,hauteurImages );
 
         // Texte de nombre de vie Alien

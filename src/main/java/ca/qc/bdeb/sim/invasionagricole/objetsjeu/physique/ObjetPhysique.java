@@ -75,39 +75,6 @@ public abstract class ObjetPhysique {
         }
     }
 
-//    /**
-//     * Methode pour verifier que le vaisseau n'est pas hors ecran et qu'il respecte la limite de hauteur
-//     * @param largeurMax du niveau
-//     * @param hauteurMax du niveau
-//     */
-//    protected void verifierQuePasHorsLimites(double largeurMax, double hauteurMax, double pourcentageHauteurANePasDepasser){
-//
-//        // verifier la limite horizontale et replacer objet si nécessaire
-//        estEnCollisionLimiteHorizontal = estHorsLimite(largeurMax, hauteurMax, Limite.HORIZONTALE);
-//        if (estEnCollisionLimiteHorizontal){
-//            if (posX + largeur > largeurMax) {
-//                posX = largeurMax - largeur;
-//                vX = 0;
-//            }else if (posX < 0) {
-//                posX = 0;
-//                vX = 0;
-//            }
-//        }
-//
-//        /* verifier que l'objet ne depasse pas pourcentageHauteurANePasDepasser de l'hauteur
-//         du niveau et replacer si nécessaire
-//         */
-//        if ( estHorsLimite(largeurMax, hauteurMax, Limite.VERTICALE)){
-//            double limiteDeHauteur = hauteurMax * (pourcentageHauteurANePasDepasser/100);
-//            if (posY + hauteur > limiteDeHauteur) {
-//                posY = limiteDeHauteur - hauteur;
-//                vY = 0;
-//            }else if (posY < 0) {
-//                posY = 0;
-//                vY = 0;
-//            }
-//        }
-//    }
 
     /**
      * Methode pour verifier si objet est dans les limites voulues ou non. Permet aussi de repositionner l'objet si voulu.
@@ -257,26 +224,6 @@ public abstract class ObjetPhysique {
 
     public double getHaut(){
         return posY;
-    }
-
-    public double getGravite() {
-        return gravite;
-    }
-
-    public void setvX(double vX) {
-        this.vX = vX;
-    }
-
-    public void setvY(double vY) {
-        this.vY = vY;
-    }
-
-    public void setaX(double aX) {
-        this.aX = aX;
-    }
-
-    public void setaY(double aY) {
-        this.aY = aY;
     }
 
     public void setEstMonter(boolean estMonter) {

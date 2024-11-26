@@ -84,12 +84,4 @@ public class Humain extends ObjetPhysique {
         return null;
     }
 
-
-    public double getPosCentreX() {
-        return posX + this.largeur / 2;
-    }
-
-    public double getPosCentreY() {
-        return posY + this.hauteur / 2;
-    }
 }

@@ -4,6 +4,9 @@ import ca.qc.bdeb.sim.invasionagricole.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * Classe pour les objets qui sont des images à afficher. Exemple: grange, tracteur etc.
+ */
 public class ObjetImage extends ObjetArrierePlan{
     private double largeur, longeur;
     private Image image;

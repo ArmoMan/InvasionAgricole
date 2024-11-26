@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * La classe niveau permet de genrere les decors, les vaches, les humains et contient une methode qui peut les dessiner
+ * La classe niveau permet de genrere les decors, les vaches, les humains, contient une methode qui peut les dessiner et
+ * une qui peut les updates.
  */
 public class Niveau {
 
@@ -325,10 +326,6 @@ public class Niveau {
         return 3 + 3*(numeroNiveau - 1);
     }
 
-    public void setEstTermine(boolean niveauGagne) {
-        this.estTermine = niveauGagne;
-    }
-
     public boolean estTermine() {
         return estTermine;
     }
@@ -348,24 +345,12 @@ public class Niveau {
         return vaches;
     }
 
-    public ArrayList<Humain> getHumains() {
-        return humains;
-    }
-
     public double getLargeurNiveau() {
         return largeurNiveau;
     }
 
-    public double getHauteurNiveau() {
-        return hauteurNiveau;
-    }
-
     public int getNumeroNiveau() {
         return numeroNiveau;
-    }
-
-    public ArrayList<Projectile> getProjectiles() {
-        return projectiles;
     }
 
     public boolean estPerdue() {

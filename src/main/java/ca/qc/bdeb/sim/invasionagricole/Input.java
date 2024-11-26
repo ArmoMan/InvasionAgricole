@@ -23,10 +23,6 @@ public class Input {
         return touches.getOrDefault(code, false);
     }
 
-    public static boolean estToucheEncoreAppuyer(KeyCode code) {
-        return touches.containsKey(code);
-    }
-
     public static void setKeyPressed(KeyCode code, boolean isPressed) {
         touches.put(code, isPressed);
     }
