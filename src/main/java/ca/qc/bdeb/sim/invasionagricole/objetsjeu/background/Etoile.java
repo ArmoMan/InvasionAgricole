@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 import java.util.Random;
 
 /**
- * Classe pour une etoile. Genere aléatoirement sa taille.
+ * Classe pour une etoile. Taille générée aléatoirement.
  */
 public class Etoile extends ObjetArrierePlan {
     // Le symbole de base est *

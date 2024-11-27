@@ -46,30 +46,12 @@ public class Humain extends ObjetPhysique {
         }
     }
 
-
-    @Override
-    public void dessiner(GraphicsContext context, Camera camera) {
-        double xEcran = camera.calculerEcranX(posX);
-        double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
-
-        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
-    }
-
-
-    public boolean estVisible(Camera camera) {
-        if (posX > camera.getGauche() && posX < camera.getDroite()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private void lancerProjectile(double posX, double posY, ArrayList<Projectile> projectiles) {
         projectiles.add(creerProjectile(posX, posY));
     }
 
     private Projectile creerProjectile(double posX, double posY) {
-        int choix = (1 + (int) (Math.random() * 3)); // genere un chiffre au hasard entre 1 et 3
+        int choix = (1 + (int) (Math.random() * 3)); // génère un chiffre au hasard entre 1 et 3.
         switch (choix) {
             case 1 -> {
                 return new Girouette(posX,posY,"girouette.png", largeurNiveau, hauteurNiveau, vaisseau);
@@ -83,5 +65,4 @@ public class Humain extends ObjetPhysique {
         }
         return null;
     }
-
 }

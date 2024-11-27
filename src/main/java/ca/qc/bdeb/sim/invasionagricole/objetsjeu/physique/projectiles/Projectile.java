@@ -14,33 +14,23 @@ public abstract class Projectile extends ObjetPhysique {
     protected double distance;
     protected double proportionX;
     protected  double proportionY;
-    protected Vaisseau vaisseauTarget;
+    protected Vaisseau vaisseau;
 
     public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau, double largeur, double hauteur) {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, largeur, hauteur);
         this.posX = this.posX - largeur /2;
         this.posY = this.posY - hauteur /2;
-        this.vaisseauTarget = vaisseau;
+        this.vaisseau = vaisseau;
     }
-
-
-    @Override
-    public void dessiner(GraphicsContext context, Camera camera) {
-        double xEcran = camera.calculerEcranX(posX);
-        double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
-
-        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
-    }
-
 
     /**
-     * Methode pour calculer detaX, detaY, distance et n vecteur unitaire d'un objet 1 vers un objet 2
+     * Permet de calculer le deltaX, le deltaY, la distance et le vecteur unitaire d'un objet 1 vers un objet 2.
      * @param posXObjetUn position x de l'objet 1
      * @param posYObjetUn position y de l'objet 1
      * @param posXObjetDeux position x de l'objet 2
      * @param posYObjetDeux position t de l'objet 2
      */
-    protected void calculerDirectionVersVaisseau(double posXObjetUn, double posYObjetUn, double posXObjetDeux, double posYObjetDeux){
+    protected void calculerProprietesDirectionnelles(double posXObjetUn, double posYObjetUn, double posXObjetDeux, double posYObjetDeux) {
         // Calcul des composantes de vecteur direction
         deltaX = posXObjetUn - posXObjetDeux;
         deltaY = posYObjetUn - posYObjetDeux;

@@ -28,14 +28,11 @@ public class InvasionAgricoleJavaFX extends Application {
     public final static int LARGEUR_FENETRE = 900;
     public final static int HAUTEUR_FENETRE = 520;
 
-
     @Override
     public void start(Stage stage) throws IOException {
         stage.setScene(creerSceneAcceuil(stage));
-
         stage.show();
     }
-
 
     private Scene creerSceneAcceuil(Stage stage) throws IOException {
         var root = new VBox();
@@ -44,10 +41,11 @@ public class InvasionAgricoleJavaFX extends Application {
         Scene scene = new Scene(root, LARGEUR_FENETRE, HAUTEUR_FENETRE);
 
         // Arriere plan
-        Image arrierePlanImageAcceuil = new Image("intro.png");
-        root.setBackground(new Background(new BackgroundImage(arrierePlanImageAcceuil, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        Image arrierePlanImageAccueil = new Image("intro.png");
+        root.setBackground(new Background(new BackgroundImage(arrierePlanImageAccueil, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
-        // Buttons
+        // Boutons
         VBox containeurDeButtons = new VBox();
         containeurDeButtons.setAlignment(Pos.CENTER);
         containeurDeButtons.setSpacing(20);
@@ -55,7 +53,7 @@ public class InvasionAgricoleJavaFX extends Application {
         Button buttonJouer = creerButton("Jouer!");
         Button buttonInfos = creerButton("Infos");
 
-        // Interactions avec les buttons
+        // Interactions avec les boutons
         buttonInfos.setOnMouseClicked(event -> {
             try {
                 stage.setScene(creerSceneInfos(stage));
@@ -81,7 +79,6 @@ public class InvasionAgricoleJavaFX extends Application {
 
         // Ajouter les touches a input et sur escape retourner acceuil
         ajouterDetectionTouche(scene,stage, ToucheEscape.QUITTER_PROGRAMME);
-
 
         return scene;
     }
@@ -132,7 +129,7 @@ public class InvasionAgricoleJavaFX extends Application {
 
         root.getChildren().addAll(hBoxVisagesAnimaux, containerTextButton);
 
-        // Ajouter les touches a input et sur escape retourner acceuil
+        // Ajouter les touches à input et sur escape, retourner à l'accueil.
         ajouterDetectionTouche(scene, stage, ToucheEscape.RETOURNER_ACCEUIL );
 
 
@@ -146,10 +143,10 @@ public class InvasionAgricoleJavaFX extends Application {
         Canvas canvas = new Canvas(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        // Creation du controlleur de jeu
+        // Creation du contrôleur de jeu
         ControleurJeu controleurJeu = new ControleurJeu();
 
-        // Commencer a jouer
+        // Commencer à jouer
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
 
@@ -157,7 +154,7 @@ public class InvasionAgricoleJavaFX extends Application {
             public void handle(long now) {
                 // Verifier si jeu est fini (perdu)
                 if (controleurJeu.estJeuFini()){
-                    // Arreter et retourner vers acceuile
+                    // Arrêter et retourner à l'accueil
                     stop();
                     try {
                         stage.setScene(creerSceneAcceuil(stage));
@@ -178,7 +175,7 @@ public class InvasionAgricoleJavaFX extends Application {
 
         root.getChildren().add(canvas);
 
-        // Ajouter les touches a input et sur escape retourner acceuil
+        // Ajouter les touches à input et sur escape, retourner à l'accueil
         ajouterDetectionTouche(scene, stage, ToucheEscape.RETOURNER_ACCEUIL);
 
         return scene;

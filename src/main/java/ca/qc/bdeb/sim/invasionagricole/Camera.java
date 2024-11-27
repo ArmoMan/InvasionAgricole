@@ -5,9 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Camera {
-    private double xCamera, yCamera, largeurCamera,hauteurCamera;
-    private boolean arreterDeSuivre  = false;
-    // Modifier cette classe !!! Ca c'est juste un essai !!!!
+
+    private double xCamera, yCamera, largeurCamera, hauteurCamera;
+
     public Camera(double largeurCamera, double hauteurCamera) {
         // Camera commence a la position 0,0
         this.xCamera = 0;
@@ -16,37 +16,51 @@ public class Camera {
         this.hauteurCamera = hauteurCamera;
     }
 
+    /**
+     * Permet de calculer la position en x à afficher d'un objet donné.
+     * @param xObjet
+     * @return xObjetAffichage
+     */
     public double calculerEcranX(double xObjet) {
         return xObjet - xCamera;
     }
 
+    /**
+     * Permet de calculer la position en y à afficher d'un objet donné.
+     * @param yObjet
+     * @return yObjetAffichage
+     */
     public double calculerEcranY(double yObjet) {
         return yObjet - yCamera;
     }
 
+    /**
+     * Permet à la camera de suivre le vaisseau pour l'affichage.
+     * @param vaisseau
+     * @param largeurNiveau
+     */
     public void suivre(Vaisseau vaisseau, double largeurNiveau) {
 
-        //Verifier que vaisseau pas mort avant de suivre
+        //Verifier que vaisseau n'est pas mort avant de suivre.
         if (vaisseau.getNombreDeVie() <= 0) return;
 
         double limiteGauche = xCamera + this.largeurCamera * 0.3;
         double limiteDroite = xCamera + this.largeurCamera * 0.7;
         double xCameraMax =  largeurNiveau - this.largeurCamera;
 
-        // Si le vaisseau est moins 30% de l'ecran et que la camera n'est pas a son minimmum, alors deplacer la camera
+        // Si le vaisseau est à moins de 30% de l'écran et que la caméra n'est pas à son minimum, alors déplacer la caméra.
         if(vaisseau.getGauche() < limiteGauche && xCamera > 0) {
             this.xCamera = Math.max( vaisseau.getGauche() - largeurCamera *0.3,0);
         }
 
-        // Si le vaisseau depasse 70% de l'ecran et que la camera n'est pas a son maximum, alors deplacer la camera
+        // Si le vaisseau dépasse 70% de l'écran et que la caméra n'est pas à son maximum, alors déplacer la caméra.
         if(vaisseau.getDroite() > limiteDroite && xCamera < xCameraMax){
             this.xCamera = Math.min( vaisseau.getDroite()- largeurCamera *0.7, xCameraMax);
         }
-
     }
 
     /**
-     * Methode pour dessiner les lignes verticales sur le camera
+     * Methode pour dessiner les lignes verticales et horizontales de l'outil débogage.
      */
     public void dessinerDebug(GraphicsContext context){
         context.setStroke(Color.GRAY);
@@ -57,7 +71,7 @@ public class Camera {
     }
 
     /**
-     * Methode qui replace le camera a 0,0
+     * Methode qui replace la camera a 0,0.
      */
     public void repositionnerPositionZero(){
         this.xCamera = 0;
@@ -68,13 +82,13 @@ public class Camera {
         return xCamera;
     }
     public double getDroite() {
-        return xCamera+ largeurCamera;
+        return xCamera + largeurCamera;
     }
     public double getHaut() {
         return yCamera;
     }
     public double getBas() {
-        return yCamera+hauteurCamera;
+        return yCamera + hauteurCamera;
     }
 
 

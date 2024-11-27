@@ -16,16 +16,20 @@ public abstract class ObjetPhysique {
     protected int nombreDeVie;
     protected double largeurNiveau, hauteurNiveau;
     protected double gravite = 1000;
+
     // Boolean pour voir si l'objet est en collision entre les limites horizontales du niveau
     protected boolean estEnCollisionLimiteHorizontal = false;
+
     // Boolean pour voir si le physique du rayon doit s'appliquer
-    protected boolean estMonter = false;
-    // Variable pour garder en memoire une vitesse passé
-    protected double ancienVitesse ;
-    // La pourcentage de la limite verticale maximale que peut atteindre cette objet. Par defaut: 100%
+    protected boolean estEnAscension = false;
+
+    // Variable pour garder en memoire une vitesse passée
+    protected double ancienneVitesse;
+
+    // Le pourcentage de la limite verticale maximale que peut atteindre cet objet. Par defaut: 100%
     protected double pourcentageHauteurANePasDepasser = 100;
 
-    public ObjetPhysique(double posX, double posY, String pathImage,double largeurNiveau, double hauteurNiveau, double largeurImage, double hauteurImage) {
+    public ObjetPhysique(double posX, double posY, String pathImage, double largeurNiveau, double hauteurNiveau, double largeurImage, double hauteurImage) {
         this.posY = posY;
         this.posX = posX;
         this.image = new Image(pathImage);
@@ -45,17 +49,22 @@ public abstract class ObjetPhysique {
     }
 
     protected void updateMonterPhysique() {
-        if (estMonter){
+        if (estEnAscension){
             vY = -100;
             vX = 0;
             aY = 0;
-        }else{
+        } else {
             aY = this.gravite;
-            vX = this.ancienVitesse;
+            vX = this.ancienneVitesse;
         }
     }
 
-    public abstract void dessiner(GraphicsContext context, Camera camera);
+    public void dessiner(GraphicsContext context, Camera camera) {
+        double xEcran = camera.calculerEcranX(posX);
+        double yEcran = camera.calculerEcranY(posY);
+
+        context.drawImage(image, xEcran, yEcran, largeur, hauteur);
+    }
 
     /**
      * Methode pour dessiner les lignes jaunes des ObjetPhysiques selon largeur et longeur
@@ -122,27 +131,27 @@ public abstract class ObjetPhysique {
     }
 
     /**
-     * Methode pour generer une position x entre 0 et largeurNiveau - largeur (image)
+     * Methode pour générer une position x entre 0 et largeurNiveau - largeur (image)
      * @return position x entre 0 et largeurNiveau - largeur (image)
      */
     protected double genererPositionX(){
         return (Math.random() * (largeurNiveau- largeur));
     }
 
-    public boolean estEnCollisionAvec(ObjetPhysique objetPhysique) {
+    public boolean estEnCollisionAvec(ObjetPhysique elementPhysique) {
 
         // Verifier si objet est entre les x de l'objet actuel
         boolean estCeQuePlusGaucheQuePartieDroiteActuel = this.getGauche()
-                + this.largeur > objetPhysique.getGauche();
-        boolean estCeQuePlusDroiteQuePartieGaucheActuel = this.getGauche() < objetPhysique.getDroite();
+                + this.largeur > elementPhysique.getGauche();
+        boolean estCeQuePlusDroiteQuePartieGaucheActuel = this.getGauche() < elementPhysique.getDroite();
 
         // Verifier si objet est entre les y de l'objet actuel
         // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut de l'objet actuel
-        boolean estCeQuePlusBasQuePartieHautActuel = this.getPosY() < objetPhysique.getPosY()
-                + objetPhysique.getHauteur();
+        boolean estCeQuePlusBasQuePartieHautActuel = this.getPosY() < elementPhysique.getPosY()
+                + elementPhysique.getHauteur();
 
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas de l'objet actuel
-        boolean estCeQuePlusHautQuePartieBasActuel = objetPhysique.getPosY() < this.getPosY() + this.hauteur;
+        boolean estCeQuePlusHautQuePartieBasActuel = elementPhysique.getPosY() < this.getPosY() + this.hauteur;
 
 
         return estCeQuePlusBasQuePartieHautActuel && estCeQuePlusHautQuePartieBasActuel
@@ -226,7 +235,7 @@ public abstract class ObjetPhysique {
         return posY;
     }
 
-    public void setEstMonter(boolean estMonter) {
-        this.estMonter = estMonter;
+    public void setEstEnAscension(boolean estEnAscension) {
+        this.estEnAscension = estEnAscension;
     }
 }

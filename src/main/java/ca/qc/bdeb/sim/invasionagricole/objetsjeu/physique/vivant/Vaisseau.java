@@ -50,7 +50,7 @@ public class Vaisseau extends ObjetPhysique {
         this.POSITION_X_INITIALE = (largeurEcran/2) - this.largeur /2;
 
         // Positionner le vaissau au centre du position donne
-        repositionnerAuPosInitiale();
+        repositionnerPosInitiale();
 
         this.vX = 0;
         this.vY = 0;
@@ -171,10 +171,10 @@ public class Vaisseau extends ObjetPhysique {
         context.setFill(couleurVitre);
         context.fillOval(xEcran, yEcran,  this.largeur,  this.hauteur);
 
-        // Dessiner et dessider quelle base de vaisseau utiliser
+        // Dessiner et décider quelle base de vaisseau utiliser
         if (estLumiereAllumee){
             context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeur)/2), yEcran + (this.hauteur -vaisseauLumiereOn.getHeight()));
-        }else {
+        } else {
             context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeur)/2), yEcran + (this.hauteur -vaisseauLumiereOff.getHeight()));
         }
 
@@ -277,7 +277,7 @@ public class Vaisseau extends ObjetPhysique {
     /**
      * Methode qui repositionne l'objet aux posX et posY initiales et qui met la vitesse x et y a 0
      */
-    public void repositionnerAuPosInitiale() {
+    public void repositionnerPosInitiale() {
         this.posX = POSITION_X_INITIALE;
         this.posY = POSITION_Y_INITIALE;
         this.vX = 0;

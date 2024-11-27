@@ -11,10 +11,10 @@ public class PotDeFleurs extends Projectile {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, vaisseau, 31, 61);
 
         // Les humains visent a 400 px plus haut que le vaisseau, donc modifier la direction de deplacement
-        double cibleX = vaisseauTarget.calculerPositionCentre(Position.HORIZONTAL);
-        double cibleY = vaisseauTarget.calculerPositionCentre(Position.VERTICAL)-400;
+        double cibleX = vaisseau.calculerPositionCentre(Position.HORIZONTAL);
+        double cibleY = vaisseau.calculerPositionCentre(Position.VERTICAL)-400;
 
-        calculerDirectionVersVaisseau(cibleX, cibleY,posX, posY);
+        calculerProprietesDirectionnelles(cibleX, cibleY, posX, posY);
 
         // Vitesse initiale de magnitude 1000
         vX = this.proportionX * 1000;
@@ -24,8 +24,6 @@ public class PotDeFleurs extends Projectile {
 
     @Override
     public void update(double deltaTime) {
-        // Mettre a jour la physique / position
         updatePhysique(deltaTime);
     }
-
 }

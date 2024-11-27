@@ -13,41 +13,39 @@ import java.util.ArrayList;
  */
 public class MiniCarte {
     private double posX, posY;
-    private ArrayList<Double> positionsObjetsAfficher = new ArrayList<>();
-    private double largeurMap;
-    private ArrayList<ObjetPhysique> objetPhysiques;
+    private double largeurMiniCarte;
+    private ArrayList<ObjetPhysique> objetsPhysiques;
     private double diametreDesObjetsDessiner = 6;
 
     /**
      * Constructeur du Minicarte
      * @param posX position x sur l'ecran
      * @param posY position y sur l'ecran
-     * @param largeurMap largeur de la carte voulu (taille)
-     * @param objetPhysiques les objets à afficher
+     * @param largeurMiniCarte largeur de la carte voulu (taille)
+     * @param objetsPhysiques les objets à afficher
      */
-    public MiniCarte(double posX, double posY, double largeurMap, ArrayList<ObjetPhysique> objetPhysiques) {
+    public MiniCarte(double posX, double posY, double largeurMiniCarte, ArrayList<ObjetPhysique> objetsPhysiques) {
         this.posX = posX;
         this.posY = posY;
-        this.largeurMap = largeurMap;
-        this.objetPhysiques = objetPhysiques;
+        this.largeurMiniCarte = largeurMiniCarte;
+        this.objetsPhysiques = objetsPhysiques;
     }
-
 
     public void dessiner(GraphicsContext context, double largeurNiveau ) {
         // Dessiner la ligne de la map
         context.setStroke(Color.WHITE);
         context.setLineWidth(2);
-        context.strokeLine(posX, posY, posX+this.largeurMap, posY);
+        context.strokeLine(posX, posY, posX+this.largeurMiniCarte, posY);
 
         // Ajouter les positions sur la ligne
-        for (ObjetPhysique obj : objetPhysiques) {
+        for (ObjetPhysique obj : objetsPhysiques) {
             if (obj.getClass() == Vaisseau.class){
                 context.setFill(Color.LIGHTGREEN);
             }else{
                 context.setFill(Color.WHITE);
             }
             // Adapter la position de l'objet pour la carte
-            double posXObj = obj.getPosX()/largeurNiveau * this.largeurMap;
+            double posXObj = obj.getPosX()/largeurNiveau * this.largeurMiniCarte;
             context.fillOval(posX + posXObj, posY-diametreDesObjetsDessiner/2, diametreDesObjetsDessiner, diametreDesObjetsDessiner);
         }
     }

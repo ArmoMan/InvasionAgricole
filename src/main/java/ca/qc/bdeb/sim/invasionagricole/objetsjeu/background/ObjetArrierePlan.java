@@ -4,8 +4,8 @@ import ca.qc.bdeb.sim.invasionagricole.Camera;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * Classe parent pour les objets statiques qui vont etre affichés en arriere plan. Contient seulement posX,posY,
- * xEcran, yEcran et une methode dessiner.
+ * Classe parente pour les objets statiques qui vont être affichés en arriere plan. Contient seulement posX, posY,
+ * xEcran, yEcran et une méthode déssiner.
  */
 public abstract class ObjetArrierePlan {
     protected int posX, posY;

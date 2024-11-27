@@ -2,7 +2,7 @@ package ca.qc.bdeb.sim.invasionagricole;
 
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.background.Etoile;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.background.ObjetArrierePlan;
-import ca.qc.bdeb.sim.invasionagricole.objetsjeu.background.ObjetImage;
+import ca.qc.bdeb.sim.invasionagricole.objetsjeu.background.ObjetDecor;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles.Projectile;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Humain;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * La classe niveau permet de genrere les decors, les vaches, les humains, contient une methode qui peut les dessiner et
- * une qui peut les updates.
+ * La classe niveau permet de générer les decors, les vaches, les humains.
+ * Contient une methode qui peut les dessiner et une qui peut les updates.
  */
 public class Niveau {
 
@@ -68,12 +68,6 @@ public class Niveau {
 
     }
 
-
-    /*  *****************************************************************************
-     ***************   Partie pour dessiner les objets etc            ***************
-     ********************************************************************************
-     */
-
     public void dessinerNiveau(GraphicsContext context){
         afficherArrierePlan(context);
 
@@ -108,7 +102,6 @@ public class Niveau {
         }
     }
 
-
     private void afficherArrierePlan(GraphicsContext context){
         // dessiner le sol vert et le ciel en noir
         dessinerEnvironnementPourBackground(context);
@@ -130,12 +123,6 @@ public class Niveau {
         context.fillRect(0, hauteurNiveau - HAUTEUR_SOL_VERT, largeurNiveau, HAUTEUR_SOL_VERT);
     }
 
-
-    /*  *****************************************************************************
-     ***************   Partie pour updates/interagir avec les objets  ***************
-     ********************************************************************************
-     */
-
     public void update(double deltaTime){
 
         // Mettre en application les touches du debogage
@@ -147,14 +134,14 @@ public class Niveau {
         camera.suivre(vaisseau, largeurNiveau);
 
         // Verfifier si le niveau est perdu
-        verifierNiveauPerdue();
+        verifierPartiePerdue();
 
         // Update les objets physiques du niveau (position, vitesse etc)
-        for (ObjetPhysique objetPhysique : this.getObjetPhysiques()) {
-            objetPhysique.update(deltaTime);
+        for (ObjetPhysique elementPhysique : this.getObjetPhysiques()) {
+            elementPhysique.update(deltaTime);
 
             // Dessider si objet doit "voler" vers le vaisseau ou pas
-            objetPhysique.setEstMonter(vaisseau.getRayonEnlevement().estRayonEnColisionAvec(objetPhysique));
+            elementPhysique.setEstEnAscension(vaisseau.getRayonEnlevement().estRayonEnColisionAvec(elementPhysique));
         }
 
         for (Projectile projectile : projectiles) {
@@ -168,9 +155,6 @@ public class Niveau {
         if (vaches.size() <= 0) estTermine = true;
     }
 
-    /**
-     * Gerer les touches de debogages pour le update
-     */
     private void gererTouchesDebogages(){
         // Si W appuye, alors augmenter la vie de 1
         if (Input.ajouterVie ){
@@ -194,7 +178,7 @@ public class Niveau {
         }
     }
 
-    private void verifierNiveauPerdue(){
+    private void verifierPartiePerdue(){
         // Si vaisseau hors limites au complet du camera et que plus de vie, alors partie perdue
         if ((vaisseau.getNombreDeVie() <= 0) && vaisseau.estHorsCamera(camera)){
             this.estPerdue = true;
@@ -203,7 +187,7 @@ public class Niveau {
 
     private void verifierCollisions(){
 
-        // Verifier les collsions entre vaisseau et projectiles: enlever vie et projectile + si hors ecran alors enlever
+        // Verifier les collisions entre vaisseau et projectiles : enlever vie et projectile + si hors écran alors enlever
         projectiles.removeIf(projectile -> {
             if (projectile.estEnCollisionAvec(vaisseau)){
                 // Verifier que pas en mode invincible
@@ -247,12 +231,6 @@ public class Niveau {
 
     }
 
-
-    /*  *****************************************************************
-        ***************   Partie pour generer les objets  ***************
-        *****************************************************************
-     */
-
     private void genererEtoiles(int nbEtoilesVoulues){
         for (int i = 0; i < nbEtoilesVoulues; i++) {
             int positionX = (int) (Math.random() * largeurNiveau);
@@ -286,9 +264,9 @@ public class Niveau {
         }
     }
 
-    private ObjetImage genererObjetImage(int posX, String imagePath, int largeur, int hauteur){
+    private ObjetDecor genererObjetImage(int posX, String imagePath, int largeur, int hauteur){
         int posY = (int) (hauteurNiveau-hauteur-HAUTEUR_SOL_VERT);
-        return new ObjetImage(posX, posY,imagePath, largeur, hauteur);
+        return new ObjetDecor(posX, posY,imagePath, largeur, hauteur);
     }
 
     private void genererObjetsPhysique(){
@@ -304,11 +282,6 @@ public class Niveau {
             humains.add(humain);
         }
     }
-
-    /*  *****************************************************************************
-     ***************   Partie pour calculs et autre                   ***************
-     ********************************************************************************
-     */
 
     private String determinerImageHumain() {
         if (Math.random() < 0.5) {
@@ -332,13 +305,13 @@ public class Niveau {
 
     /**
      * Methode pour former un arraylist des vaches et humains
-     * @return un arraylist des humains et vaches du niveay
+     * @return un arraylist des humains et vaches du niveau
      */
     public ArrayList<ObjetPhysique> getObjetPhysiques() {
-        ArrayList<ObjetPhysique> objetPhysiquesNiveau = new ArrayList<>();
-        objetPhysiquesNiveau.addAll(vaches);
-        objetPhysiquesNiveau.addAll(humains);
-        return objetPhysiquesNiveau;
+        ArrayList<ObjetPhysique> elementPhysiquesNiveaus = new ArrayList<>();
+        elementPhysiquesNiveaus.addAll(vaches);
+        elementPhysiquesNiveaus.addAll(humains);
+        return elementPhysiquesNiveaus;
     }
 
     public ArrayList<Vache> getVaches() {

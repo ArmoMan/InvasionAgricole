@@ -1,8 +1,6 @@
 package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant;
 
-import ca.qc.bdeb.sim.invasionagricole.Camera;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Vache extends ObjetPhysique {
@@ -18,7 +16,7 @@ public class Vache extends ObjetPhysique {
 
         this.posX = genererPositionX();
         this.vX = determinerVitesse();
-        this.ancienVitesse = this.vX;
+        this.ancienneVitesse = this.vX;
         // Changer image selon vitesse
         changerImageSelonVitesse();
     }
@@ -34,18 +32,13 @@ public class Vache extends ObjetPhysique {
             changerImageSelonVitesse();
 
             // Update la vitesse pour le rayon enlevement
-            this.ancienVitesse = this.vX;
+            this.ancienneVitesse = this.vX;
         }
         updateMonterPhysique();
         updatePhysique(deltaTime);
 
         estToucherLimites(this.largeurNiveau, this.hauteurNiveau, true);
-
-
-
     }
-
-
 
     private void changerImageSelonVitesse(){
         if (vX < 0){
@@ -70,13 +63,5 @@ public class Vache extends ObjetPhysique {
         } else {
             return -1;
         }
-    }
-
-    @Override
-    public void dessiner(GraphicsContext context, Camera camera) {
-        double xEcran = camera.calculerEcranX(posX);
-        double yEcran = camera.calculerEcranY(posY);  // le code ici se repete, il faudrait faire un super.dessiner()
-
-        context.drawImage(this.image, xEcran, yEcran, this.largeur, this.hauteur);
     }
 }

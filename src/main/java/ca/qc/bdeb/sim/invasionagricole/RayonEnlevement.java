@@ -63,10 +63,10 @@ public class RayonEnlevement {
 
     /**
      * Methode pour verifier si la rayon est en collision avec un objet
-     * @param objetPhysique
+     * @param elementPhysique
      * @return true si en collision et false si pas en collision
      */
-    public boolean estRayonEnColisionAvec(ObjetPhysique objetPhysique) {
+    public boolean estRayonEnColisionAvec(ObjetPhysique elementPhysique) {
         // Si rayon est inactif, alors ignorer
         if (!estRayonActiver) {
             return false;
@@ -75,17 +75,17 @@ public class RayonEnlevement {
 
         // Verifier si objet est entre les x du rayon
         boolean estCeQuePlusGaucheQuePartieDroiteRayon = vaisseau.getGauche()
-                + largeurRayon > objetPhysique.getGauche();
-        boolean estCeQuePlusDroiteQuePartieGaucheRayon = vaisseau.getGauche() < objetPhysique.getDroite();
+                + largeurRayon > elementPhysique.getGauche();
+        boolean estCeQuePlusDroiteQuePartieGaucheRayon = vaisseau.getGauche() < elementPhysique.getDroite();
 
         // Verifier si objet est entre les y du rayon
         // Verifier si partie le plus bas de l'objet est plus bas que le point le plus haut du rayon
-        boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < objetPhysique.getPosY()
-                + objetPhysique.getHauteur();
+        boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < elementPhysique.getPosY()
+                + elementPhysique.getHauteur();
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas du rayon
-        boolean estCeQuePlusHautQuePartieBasRayon = objetPhysique.getPosY() < vaisseau.getPosY() +vaisseau.getHauteur()+  hauteurRayon;
+        boolean estCeQuePlusHautQuePartieBasRayon = elementPhysique.getPosY() < vaisseau.getPosY() +vaisseau.getHauteur()+  hauteurRayon;
 
-        boolean objetPlusBasQueBasDuVaisseau = vaisseau.getPosY() + vaisseau.getHauteur() < objetPhysique.getPosY();
+        boolean objetPlusBasQueBasDuVaisseau = vaisseau.getPosY() + vaisseau.getHauteur() < elementPhysique.getPosY();
 
         return  estCeQuePlusHautQuePartieBasRayon && estCeQuePlusBasQuePartieHautRayon
                 && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon && objetPlusBasQueBasDuVaisseau;
@@ -148,6 +148,4 @@ public class RayonEnlevement {
         this.chargePresentBatterie = 1;
         estCeQueBatteriePeutEtreUtilisee = true;
     }
-
-
 }

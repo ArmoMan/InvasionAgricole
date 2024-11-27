@@ -5,12 +5,17 @@ import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
 
 public class Girouette extends Projectile {
 
-    public Girouette(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau) {
+    public Girouette(double posX, double posY, String pathImageProjectile, double largeurNiveau,
+                     double hauteurNiveau, Vaisseau vaisseau) {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, vaisseau, 53, 55);
         this.gravite = 0;
 
         // Calcul du direction du centre de girouette vers centre du vaisseau
-        calculerDirectionVersVaisseau(vaisseauTarget.calculerPositionCentre(Position.HORIZONTAL), vaisseauTarget.calculerPositionCentre(Position.VERTICAL), this.calculerPositionCentre(Position.HORIZONTAL), this.calculerPositionCentre(Position.VERTICAL));
+        calculerProprietesDirectionnelles(
+                vaisseau.calculerPositionCentre(Position.HORIZONTAL),
+                vaisseau.calculerPositionCentre(Position.VERTICAL),
+                calculerPositionCentre(Position.HORIZONTAL),
+                calculerPositionCentre(Position.VERTICAL));
 
         // Normalisation et calcul des vitesses
         vX = this.proportionX * 500;
@@ -20,7 +25,6 @@ public class Girouette extends Projectile {
 
     @Override
     public void update(double deltaTime) {
-        // Mise à jour de la position
         updatePhysique(deltaTime);
     }
 }

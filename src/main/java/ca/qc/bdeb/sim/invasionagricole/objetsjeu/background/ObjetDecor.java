@@ -5,13 +5,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * Classe pour les objets qui sont des images à afficher. Exemple: grange, tracteur etc.
+ * Classe pour les objets qui sont des éléments de décor à afficher. Exemple : grange, tracteur, etc.
  */
-public class ObjetImage extends ObjetArrierePlan{
+public class ObjetDecor extends ObjetArrierePlan {
     private double largeur, longeur;
     private Image image;
 
-    public ObjetImage(int posX, int posY,String imagePath, double largeur, double longeur) {
+    public ObjetDecor(int posX, int posY, String imagePath, double largeur, double longeur) {
         super(posX, posY);
         this.image = new Image(imagePath);
         this.largeur = largeur;
@@ -21,6 +21,6 @@ public class ObjetImage extends ObjetArrierePlan{
     @Override
     public void dessiner(GraphicsContext context, Camera camera) {
         super.dessiner(context, camera);
-        context.drawImage(image, this.xEcran, this.yEcran, largeur, longeur);
+        context.drawImage(image, xEcran, yEcran, largeur, longeur);
     }
 }
