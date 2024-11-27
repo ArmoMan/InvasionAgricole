@@ -89,8 +89,10 @@ public class Niveau {
 
         // Dessiner le vaisseau et ses elements
         vaisseau.dessiner(context, camera);
-        vaisseau.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png","icone.png",30, 5);
-        vaisseau.getRayonEnlevement().dessinerBatterie(context,100,30,10,10,"batterie.png");
+        vaisseau.dessinerCompteurVieEtVacheCapturer(context, 130,10, "mini-vache.png",
+                "icone.png",30, 5);
+        vaisseau.getRayonEnlevement().dessinerBatterie(context,100,30,10,10,
+                "batterie.png");
         vaisseau.getRayonEnlevement().dessinerRayon(context, camera);
         if (Input.modeDebogageActif){
             vaisseau.dessinerDebug(context, camera);
@@ -278,7 +280,8 @@ public class Niveau {
 
         // Les humains
         for (int i = 0; i < calculerNombreDeHumains() ; i++) {
-            Humain humain = new Humain(largeurNiveau, hauteurNiveau, determinerImageHumain(), camera, projectiles, vaisseau);
+            Humain humain = new Humain(largeurNiveau, hauteurNiveau, determinerImageHumain(), camera, projectiles,
+                    vaisseau);
             humains.add(humain);
         }
     }

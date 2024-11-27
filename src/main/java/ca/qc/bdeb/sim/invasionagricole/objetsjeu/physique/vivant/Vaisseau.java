@@ -173,18 +173,36 @@ public class Vaisseau extends ObjetPhysique {
 
         // Dessiner et décider quelle base de vaisseau utiliser
         if (estLumiereAllumee){
-            context.drawImage(vaisseauLumiereOn,  (xEcran-( vaisseauLumiereOn.getWidth()- this.largeur)/2), yEcran + (this.hauteur -vaisseauLumiereOn.getHeight()));
+            double xBaseVaisseau = xEcran-( vaisseauLumiereOn.getWidth()- this.largeur)/2;
+            double yBaseVaisseau = yEcran + (this.hauteur -vaisseauLumiereOn.getHeight());
+            context.drawImage(vaisseauLumiereOn,  xBaseVaisseau, yBaseVaisseau);
         } else {
-            context.drawImage(vaisseauLumiereOff,  (xEcran-( vaisseauLumiereOff.getWidth()- this.largeur)/2), yEcran + (this.hauteur -vaisseauLumiereOff.getHeight()));
+            double xBaseVaisseau = xEcran-( vaisseauLumiereOff.getWidth()- this.largeur)/2;
+            double yBaseVaisseau = yEcran + (this.hauteur -vaisseauLumiereOff.getHeight());
+            context.drawImage(vaisseauLumiereOff,  xBaseVaisseau, yBaseVaisseau);
         }
 
         // Dessiner l'alien
-        context.drawImage(this.image, (xEcran+( this.largeur - this.image.getWidth())/2),yEcran + this.hauteur -vaisseauLumiereOff.getHeight()-this.image.getHeight() );
+        double positionXAlienVisage =  xEcran+( this.largeur - this.image.getWidth())/2;
+        double positionYAlienVisage = yEcran + this.hauteur -vaisseauLumiereOff.getHeight()-this.image.getHeight();
+        context.drawImage(this.image,positionXAlienVisage,positionYAlienVisage );
 
     }
 
+    /**
+     * Methode pour dessiner le compteur de vie du vaisseau et le nombre de vaches capturés
+     * @param context est le GraphicsContext
+     * @param posXdessin est la position x du compteur (la partie gauche)
+     * @param posYdessin est la position y du compteur (la partie gauche et haut)
+     * @param pathImageVache est l'image du visage de vache pour afficher à coté du score
+     * @param pathImageAlienIcon est l'image du visage de l'allien pour afficher à coté du score
+     * @param hauteurImages est la hauteur des images à afficher à coté du score
+     * @param espacementDesElements est l'espacement entre les scores et les images
+     */
+    public void dessinerCompteurVieEtVacheCapturer(GraphicsContext context,double posXdessin, double posYdessin,
+                                                   String pathImageVache,String pathImageAlienIcon, double hauteurImages,
+                                                   double espacementDesElements) {
 
-    public void dessinerCompteurVieEtVacheCapturer(GraphicsContext context,double posXdessin, double posYdessin, String pathImageVache,String pathImageAlienIcon, double hauteurImages, double espacementDesElements) {
         Image imageVache = new Image(pathImageVache);
         Image imageAlienIcone = new Image(pathImageAlienIcon);
 
@@ -201,7 +219,7 @@ public class Vaisseau extends ObjetPhysique {
         // Mettre la couleur des textes
         context.setFill(Color.WHITE);
 
-        // A chaque fois le texte est plus bas que voulu, donc le baisser moin
+        // A chaque fois le texte est plus bas que voulu, donc le baisser moins
         double valeurASoustraire = hauteurImages*0.15;
         double  posYTextes = posYdessin+hauteurImages-valeurASoustraire;
         // Texte de vache
@@ -254,13 +272,6 @@ public class Vaisseau extends ObjetPhysique {
     public void augmenterCompteurVache(int nombreAjoute){
         this.nbVachesCapturees += nombreAjoute;
     }
-    public int getNbVachesCapturees() {
-        return nbVachesCapturees;
-    }
-
-    public void setNbVachesCapturees(int nbVachesCapturees) {
-        this.nbVachesCapturees = nbVachesCapturees;
-    }
 
     public double getCHARGE_VAISSEAU() {
         return CHARGE_VAISSEAU;
@@ -268,10 +279,6 @@ public class Vaisseau extends ObjetPhysique {
 
     public RayonEnlevement getRayonEnlevement() {
         return rayonEnlevement;
-    }
-
-    public void setRayonEnlevement(RayonEnlevement rayonEnlevement) {
-        this.rayonEnlevement = rayonEnlevement;
     }
 
     /**

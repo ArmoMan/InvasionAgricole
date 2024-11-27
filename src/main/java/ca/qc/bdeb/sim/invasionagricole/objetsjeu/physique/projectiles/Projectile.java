@@ -1,9 +1,7 @@
 package ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.projectiles;
 
-import ca.qc.bdeb.sim.invasionagricole.Camera;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.ObjetPhysique;
 import ca.qc.bdeb.sim.invasionagricole.objetsjeu.physique.vivant.Vaisseau;
-import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Projectile extends ObjetPhysique {
     // Calcul des composantes de vitesse
@@ -16,7 +14,8 @@ public abstract class Projectile extends ObjetPhysique {
     protected  double proportionY;
     protected Vaisseau vaisseau;
 
-    public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau, Vaisseau vaisseau, double largeur, double hauteur) {
+    public Projectile(double posX, double posY, String pathImageProjectile, double largeurNiveau, double hauteurNiveau,
+                      Vaisseau vaisseau, double largeur, double hauteur) {
         super(posX, posY, pathImageProjectile, largeurNiveau, hauteurNiveau, largeur, hauteur);
         this.posX = this.posX - largeur /2;
         this.posY = this.posY - hauteur /2;
@@ -30,7 +29,8 @@ public abstract class Projectile extends ObjetPhysique {
      * @param posXObjetDeux position x de l'objet 2
      * @param posYObjetDeux position t de l'objet 2
      */
-    protected void calculerProprietesDirectionnelles(double posXObjetUn, double posYObjetUn, double posXObjetDeux, double posYObjetDeux) {
+    protected void calculerProprietesDirectionnelles(double posXObjetUn, double posYObjetUn, double posXObjetDeux,
+                                                     double posYObjetDeux) {
         // Calcul des composantes de vecteur direction
         deltaX = posXObjetUn - posXObjetDeux;
         deltaY = posYObjetUn - posYObjetDeux;

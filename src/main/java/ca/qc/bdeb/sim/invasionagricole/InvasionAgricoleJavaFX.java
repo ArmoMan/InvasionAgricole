@@ -243,13 +243,20 @@ public class InvasionAgricoleJavaFX extends Application {
 
         double tailleTotalImageAjouter = 0;
         boolean estCeTourVache = false;
+
         while (tailleTotalImageAjouter < LARGEUR_FENETRE) {
+
             // Choisir l'image d'apres le boolean
             ImageView imageView = estCeTourVache ? new ImageView(visageVache) : new ImageView(visageAlien);
-            hBoxVisagesAnimaux.getChildren().add(imageView);
 
             // Augmenter le nombre de la taille des images
             tailleTotalImageAjouter += imageView.getImage().getWidth();
+
+            // Avant d'ajouter l'image, vérifier que ca ne dépasse pas l'écran
+            if (tailleTotalImageAjouter > LARGEUR_FENETRE) break;
+
+            // Ajouter l'image
+            hBoxVisagesAnimaux.getChildren().add(imageView);
 
             // Changer le boolean par son inverse, comme ca, ca va faire des images un sur deux
             estCeTourVache = !estCeTourVache;

@@ -83,12 +83,14 @@ public class RayonEnlevement {
         boolean estCeQuePlusBasQuePartieHautRayon = vaisseau.getPosY() < elementPhysique.getPosY()
                 + elementPhysique.getHauteur();
         // Verifier si partie le plus haut de l'objet est plus haut que le point le plus bas du rayon
-        boolean estCeQuePlusHautQuePartieBasRayon = elementPhysique.getPosY() < vaisseau.getPosY() +vaisseau.getHauteur()+  hauteurRayon;
+        boolean estCeQuePlusHautQuePartieBasRayon = elementPhysique.getPosY() < vaisseau.getPosY() +
+                vaisseau.getHauteur() +  hauteurRayon;
 
         boolean objetPlusBasQueBasDuVaisseau = vaisseau.getPosY() + vaisseau.getHauteur() < elementPhysique.getPosY();
 
         return  estCeQuePlusHautQuePartieBasRayon && estCeQuePlusBasQuePartieHautRayon
-                && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon && objetPlusBasQueBasDuVaisseau;
+                && estCeQuePlusDroiteQuePartieGaucheRayon && estCeQuePlusGaucheQuePartieDroiteRayon
+                && objetPlusBasQueBasDuVaisseau;
 
     }
 

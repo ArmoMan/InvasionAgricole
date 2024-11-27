@@ -6,6 +6,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+/**
+ * La classe ObjetPhysique représente un objet avec des propriétés physiques,
+ * telles que l'effet de la gravité, une largeur, une hauteur, une position (x, y), une vitesse et une accélération.
+ *
+ * Elle contient des fonctionnalités liées au mouvement (update), à la gestion des collisions et à l'affichage graphique
+ * (dessiner).
+ */
 public abstract class ObjetPhysique {
 
     protected double posX, posY;
@@ -29,7 +36,8 @@ public abstract class ObjetPhysique {
     // Le pourcentage de la limite verticale maximale que peut atteindre cet objet. Par defaut: 100%
     protected double pourcentageHauteurANePasDepasser = 100;
 
-    public ObjetPhysique(double posX, double posY, String pathImage, double largeurNiveau, double hauteurNiveau, double largeurImage, double hauteurImage) {
+    public ObjetPhysique(double posX, double posY, String pathImage, double largeurNiveau, double hauteurNiveau,
+                         double largeurImage, double hauteurImage) {
         this.posY = posY;
         this.posX = posX;
         this.image = new Image(pathImage);

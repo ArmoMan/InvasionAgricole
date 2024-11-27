@@ -46,7 +46,8 @@ public class MiniCarte {
             }
             // Adapter la position de l'objet pour la carte
             double posXObj = obj.getPosX()/largeurNiveau * this.largeurMiniCarte;
-            context.fillOval(posX + posXObj, posY-diametreDesObjetsDessiner/2, diametreDesObjetsDessiner, diametreDesObjetsDessiner);
+            context.fillOval(posX + posXObj, posY-diametreDesObjetsDessiner/2, diametreDesObjetsDessiner,
+                    diametreDesObjetsDessiner);
         }
     }
 }

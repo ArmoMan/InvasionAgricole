@@ -40,6 +40,9 @@ public class Vache extends ObjetPhysique {
         estToucherLimites(this.largeurNiveau, this.hauteurNiveau, true);
     }
 
+    /**
+     * Methode pour changer l'image de vache si elle va à gauche ou à droite
+     */
     private void changerImageSelonVitesse(){
         if (vX < 0){
             this.image = new Image("vache.png");

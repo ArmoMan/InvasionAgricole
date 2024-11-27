@@ -19,7 +19,9 @@ public class Humain extends ObjetPhysique {
     private ArrayList<Projectile> projectiles;
     private Vaisseau vaisseau;
 
-    public Humain(double largeurNiveau, double hauteurNiveau, String pathImageHumain, Camera camera, ArrayList<Projectile> projectiles, Vaisseau vaisseau) {
+    public Humain(double largeurNiveau, double hauteurNiveau, String pathImageHumain, Camera camera,
+                  ArrayList<Projectile> projectiles, Vaisseau vaisseau) {
+
         super(0 , hauteurNiveau, pathImageHumain,largeurNiveau,hauteurNiveau, 83, 185);
         this.nombreDeVie = 1;
         this.posX = genererPositionX();
@@ -40,7 +42,8 @@ public class Humain extends ObjetPhysique {
 
             tempsDepuisDernierProjectile += deltaTime;
             if (tempsDepuisDernierProjectile >= delaiProjectile) {
-                lancerProjectile(this.calculerPositionCentre(Position.HORIZONTAL), this.calculerPositionCentre(Position.VERTICAL), projectiles);
+                lancerProjectile(this.calculerPositionCentre(Position.HORIZONTAL),
+                        this.calculerPositionCentre(Position.VERTICAL), projectiles);
                 tempsDepuisDernierProjectile = 0;
             }
         }
@@ -50,6 +53,12 @@ public class Humain extends ObjetPhysique {
         projectiles.add(creerProjectile(posX, posY));
     }
 
+    /**
+     * Génère un projectile au hasard : soit Girouette, soit AimantFerCheval, soit PotDeFleurs.
+     * @param posX Position en X du projectile.
+     * @param posY Position en Y du projectile.
+     * @return Le projectile généré.
+     */
     private Projectile creerProjectile(double posX, double posY) {
         int choix = (1 + (int) (Math.random() * 3)); // génère un chiffre au hasard entre 1 et 3.
         switch (choix) {
